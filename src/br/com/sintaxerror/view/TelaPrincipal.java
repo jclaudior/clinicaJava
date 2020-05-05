@@ -115,6 +115,7 @@ public class TelaPrincipal extends JFrame {
 		btnNewButton.setIcon(iconDentista);
 		btnNewButton.setBounds(20, 65, 686, 342);
 		contentPane.add(btnNewButton);
+		
 	}
 	
 	
