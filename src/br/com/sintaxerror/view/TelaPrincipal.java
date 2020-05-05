@@ -16,6 +16,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JLabel;
 import java.awt.Font;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
 
 public class TelaPrincipal extends JFrame {
 
@@ -27,6 +29,7 @@ public class TelaPrincipal extends JFrame {
 	private JMenu mnSobre;
 	private JLabel lblcopyrightSintaxError;
 	private JLabel lblSistemaDeGerenciamento;
+	private JButton btnNewButton;
 
 	/**
 	 * Launch the application.
@@ -50,14 +53,14 @@ public class TelaPrincipal extends JFrame {
 	 */
 	public TelaPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 303);
+		setBounds(100, 100, 724, 481);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 434, 21);
+		menuBar.setBounds(0, 0, 706, 21);
 		contentPane.add(menuBar);
 		
 		mnPaciente = new JMenu("Paciente");
@@ -98,13 +101,20 @@ public class TelaPrincipal extends JFrame {
 		menuBar.add(mnSobre);
 		
 		lblcopyrightSintaxError = new JLabel("@Copyright Sintax Error");
-		lblcopyrightSintaxError.setBounds(146, 236, 147, 14);
+		lblcopyrightSintaxError.setBounds(287, 418, 147, 14);
 		contentPane.add(lblcopyrightSintaxError);
 		
 		lblSistemaDeGerenciamento = new JLabel("Sistema de Gerenciamento Cl\u00EDnica Odontologica");
 		lblSistemaDeGerenciamento.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		lblSistemaDeGerenciamento.setBounds(10, 26, 414, 28);
+		lblSistemaDeGerenciamento.setBounds(20, 26, 414, 28);
 		contentPane.add(lblSistemaDeGerenciamento);
+		
+		btnNewButton = new JButton("");
+		ImageIcon iconDentista = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/dentista.jpg"));
+		iconDentista.setImage(iconDentista.getImage().getScaledInstance(600, 300, 300));
+		btnNewButton.setIcon(iconDentista);
+		btnNewButton.setBounds(20, 65, 686, 342);
+		contentPane.add(btnNewButton);
 	}
 	
 	
