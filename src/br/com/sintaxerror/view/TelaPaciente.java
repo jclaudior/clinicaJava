@@ -7,7 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
 import java.awt.Font;
@@ -16,6 +18,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.TextArea;
+import java.text.ParseException;
+import javax.swing.ImageIcon;
 
 public class TelaPaciente extends JFrame {
 
@@ -51,6 +55,10 @@ public class TelaPaciente extends JFrame {
 	private JButton btnExcluir;
 	private JButton btnListar;
 	private TextArea txtMostar;
+	private JButton btnLimpar;
+	private MaskFormatter ftmData;// Atributo formatador para data
+	private MaskFormatter ftmCpf;// Atributo formatador para cpf
+	private MaskFormatter ftmCel;// Atributo formatador para Celular
 
 	/**
 	 * Launch the application.
@@ -70,29 +78,35 @@ public class TelaPaciente extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws ParseException 
 	 */
-	public TelaPaciente() {
+	public TelaPaciente(){
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 556, 488);
+		setBounds(100, 100, 649, 470);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		lblCpf = new JLabel("CPF:");
-		lblCpf.setBounds(10, 27, 33, 14);
+		lblCpf = new JLabel("            CPF:");
+		lblCpf.setBounds(10, 27, 70, 14);
 		contentPane.add(lblCpf);
 		
 		lblNome = new JLabel("Nome:");
-		lblNome.setBounds(148, 27, 46, 14);
+		lblNome.setBounds(228, 27, 46, 14);
 		contentPane.add(lblNome);
 		
-		txtCPF = new JFormattedTextField();
-		txtCPF.setBounds(39, 24, 105, 20);
+		try {
+			ftmCpf = new MaskFormatter("###.###.###-##");
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(null, "Erro na mascara CPF\n");
+		}
+		txtCPF = new JFormattedTextField(ftmCpf);
+		txtCPF.setBounds(83, 24, 125, 20);
 		contentPane.add(txtCPF);
 		
 		txtNome = new JTextField();
-		txtNome.setBounds(191, 24, 252, 20);
+		txtNome.setBounds(274, 24, 252, 20);
 		contentPane.add(txtNome);
 		txtNome.setColumns(10);
 		
@@ -102,115 +116,157 @@ public class TelaPaciente extends JFrame {
 		contentPane.add(lblCadastroDePacientes);
 		
 		lblSexo = new JLabel("Sexo:");
-		lblSexo.setBounds(453, 27, 39, 14);
+		lblSexo.setBounds(543, 27, 39, 14);
 		contentPane.add(lblSexo);
 		
 		comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"M", "F"}));
-		comboBox.setBounds(491, 24, 39, 20);
+		comboBox.setBounds(585, 24, 46, 20);
 		contentPane.add(comboBox);
 		
-		lblRua = new JLabel("Rua:");
-		lblRua.setBounds(10, 52, 33, 14);
+		lblRua = new JLabel("            Rua:");
+		lblRua.setBounds(10, 52, 70, 14);
 		contentPane.add(lblRua);
 		
 		txtRua = new JTextField();
-		txtRua.setBounds(39, 49, 303, 20);
+		txtRua.setBounds(83, 49, 252, 20);
 		contentPane.add(txtRua);
 		txtRua.setColumns(10);
 		
-		lblCidade = new JLabel("Cidade:");
-		lblCidade.setBounds(10, 77, 46, 14);
+		lblCidade = new JLabel("       Cidade:");
+		lblCidade.setBounds(10, 77, 70, 14);
 		contentPane.add(lblCidade);
 		
 		txtCidade = new JTextField();
-		txtCidade.setBounds(58, 74, 151, 20);
+		txtCidade.setBounds(83, 74, 252, 20);
 		contentPane.add(txtCidade);
 		txtCidade.setColumns(10);
 		
 		lblComplemento = new JLabel("Complemento:");
-		lblComplemento.setBounds(361, 52, 82, 14);
+		lblComplemento.setBounds(345, 52, 98, 14);
 		contentPane.add(lblComplemento);
 		
 		txtComple = new JTextField();
-		txtComple.setBounds(444, 49, 86, 20);
+		txtComple.setBounds(440, 49, 86, 20);
 		contentPane.add(txtComple);
 		txtComple.setColumns(10);
 		
-		lblUf = new JLabel("UF");
-		lblUf.setBounds(219, 77, 26, 14);
+		lblUf = new JLabel("     UF:");
+		lblUf.setBounds(543, 52, 39, 14);
 		contentPane.add(lblUf);
 		
 		cbmUF = new JComboBox();
 		cbmUF.setModel(new DefaultComboBoxModel(new String[] {"UF"}));
-		cbmUF.setBounds(241, 74, 46, 20);
+		cbmUF.setBounds(585, 49, 46, 20);
 		contentPane.add(cbmUF);
 		
 		lblBairro = new JLabel("Bairro:");
-		lblBairro.setBounds(297, 77, 39, 14);
+		lblBairro.setBounds(391, 77, 46, 14);
 		contentPane.add(lblBairro);
 		
 		txtBairro = new JTextField();
-		txtBairro.setBounds(339, 74, 191, 20);
+		txtBairro.setBounds(440, 74, 191, 20);
 		contentPane.add(txtBairro);
 		txtBairro.setColumns(10);
+		
 		
 		lblDataNasc = new JLabel("Data Nasc.:");
 		lblDataNasc.setBounds(10, 102, 70, 14);
 		contentPane.add(lblDataNasc);
 		
-		txtDta = new JFormattedTextField();
+		try {
+			ftmData = new MaskFormatter("##/##/####");
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, "Erro na mascara Data Nascimento\n");
+		}
+		txtDta = new JFormattedTextField(ftmData);
 		txtDta.setBounds(82, 99, 82, 20);
 		contentPane.add(txtDta);
 		
+		
 		lblCelular = new JLabel("Celular:");
-		lblCelular.setBounds(184, 102, 46, 14);
+		lblCelular.setBounds(385, 102, 52, 14);
 		contentPane.add(lblCelular);
 		
-		formattedTextField = new JFormattedTextField();
-		formattedTextField.setBounds(229, 99, 119, 20);
+		try {
+			ftmCel = new MaskFormatter("(##)#####-####");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, "Erro na mascara Celular\n");
+		}
+		formattedTextField = new JFormattedTextField(ftmCel);
+		formattedTextField.setBounds(440, 99, 119, 20);
 		contentPane.add(formattedTextField);
 		
-		lblEmail = new JLabel("E-mail:");
-		lblEmail.setBounds(10, 127, 46, 14);
+		lblEmail = new JLabel("        E-mail:");
+		lblEmail.setBounds(10, 127, 70, 14);
 		contentPane.add(lblEmail);
 		
 		txtEmail = new JTextField();
-		txtEmail.setBounds(52, 124, 296, 20);
+		txtEmail.setBounds(82, 124, 296, 20);
 		contentPane.add(txtEmail);
 		txtEmail.setColumns(10);
 		
-		lblSenha = new JLabel("Senha:");
-		lblSenha.setBounds(359, 127, 46, 14);
+		lblSenha = new JLabel(" Senha:");
+		lblSenha.setBounds(385, 127, 45, 14);
 		contentPane.add(lblSenha);
 		
 		txtPass = new JPasswordField();
-		txtPass.setBounds(400, 124, 130, 20);
+		txtPass.setBounds(440, 124, 191, 20);
 		contentPane.add(txtPass);
 		
-		btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar = new JButton();
+		btnCadastrar.setToolTipText("Cadastrar");
+		ImageIcon iconSalvar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/salvar.png"));
+		iconSalvar.setImage(iconSalvar.getImage().getScaledInstance(50, 50, 50));
+		btnCadastrar.setIcon(iconSalvar);
 		btnCadastrar.setBounds(30, 351, 89, 87);
 		contentPane.add(btnCadastrar);
 		
-		btnAlterar = new JButton("Alterar");
+		btnAlterar = new JButton();
+		btnAlterar.setToolTipText("Alterar");
+		ImageIcon iconAlterar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/alterar.png"));
+		iconAlterar.setImage(iconAlterar.getImage().getScaledInstance(50, 50, 50));
+		btnAlterar.setIcon(iconAlterar);
 		btnAlterar.setBounds(129, 351, 89, 87);
 		contentPane.add(btnAlterar);
 		
-		btnConsultar = new JButton("Consultar");
+		btnConsultar = new JButton();
+		btnConsultar.setToolTipText("Consultar");
+		ImageIcon iconConsultar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/consultar.png"));
+		iconConsultar.setImage(iconConsultar.getImage().getScaledInstance(50, 50, 50));
+		btnConsultar.setIcon(iconConsultar);
 		btnConsultar.setBounds(228, 351, 89, 87);
 		contentPane.add(btnConsultar);
 		
-		btnExcluir = new JButton("Excluir");
+		btnExcluir = new JButton();
+		btnExcluir.setToolTipText("Excluir");
+		ImageIcon iconExcluir = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/excluir.png"));
+		iconExcluir.setImage(iconExcluir.getImage().getScaledInstance(50, 50, 50));
+		btnExcluir.setIcon(iconExcluir);
 		btnExcluir.setBounds(327, 351, 89, 87);
 		contentPane.add(btnExcluir);
 		
-		btnListar = new JButton("Listar");
+		btnListar = new JButton();
+		btnListar.setToolTipText("Listar");
+		ImageIcon iconListar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/listar.png"));
+		iconListar.setImage(iconListar.getImage().getScaledInstance(50, 50, 50));
+		btnListar.setIcon(iconListar);
 		btnListar.setBounds(426, 351, 89, 87);
 		contentPane.add(btnListar);
 		
 		txtMostar = new TextArea();
-		txtMostar.setBounds(10, 153, 520, 192);
+		txtMostar.setBounds(10, 153, 621, 192);
 		contentPane.add(txtMostar);
+		
+		btnLimpar = new JButton();
+		btnLimpar.setToolTipText("Limpar");
+		ImageIcon iconLimpar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/limpar.png"));
+		iconLimpar.setImage(iconLimpar.getImage().getScaledInstance(50, 50, 50));
+		btnLimpar.setIcon(iconLimpar);
+		btnLimpar.setBounds(525, 351, 89, 87);
+		contentPane.add(btnLimpar);
 		
 		
 	}

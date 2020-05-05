@@ -12,6 +12,8 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import java.awt.TextArea;
 import java.awt.Button;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class TelaDentista extends JFrame {
@@ -30,6 +32,7 @@ public class TelaDentista extends JFrame {
 	private JButton btnConsultar;
 	private JButton btnExcluir;
 	private JButton btnListar;
+	private JButton btnLimpar;
 
 	/**
 	 * Launch the application.
@@ -52,7 +55,7 @@ public class TelaDentista extends JFrame {
 	 */
 	public TelaDentista() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 465, 365);
+		setBounds(100, 100, 555, 365);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -77,7 +80,7 @@ public class TelaDentista extends JFrame {
 		contentPane.add(lblNome);
 		
 		txtNome = new JTextField();
-		txtNome.setBounds(197, 37, 255, 20);
+		txtNome.setBounds(197, 37, 344, 20);
 		contentPane.add(txtNome);
 		txtNome.setColumns(10);
 		
@@ -86,31 +89,59 @@ public class TelaDentista extends JFrame {
 		contentPane.add(lblEspecialidade);
 		
 		cbmEsp = new JComboBox();
-		cbmEsp.setBounds(95, 61, 357, 22);
+		cbmEsp.setBounds(95, 61, 446, 22);
 		contentPane.add(cbmEsp);
 		
 		txtMostrar = new TextArea();
-		txtMostrar.setBounds(10, 89, 442, 160);
+		txtMostrar.setBounds(10, 89, 531, 160);
 		contentPane.add(txtMostrar);
 		
-		btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar = new JButton();
+		btnCadastrar.setToolTipText("Cadastrar");
+		ImageIcon iconSalvar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/salvar.png"));
+		iconSalvar.setImage(iconSalvar.getImage().getScaledInstance(50, 50, 50));
+		btnCadastrar.setIcon(iconSalvar);
 		btnCadastrar.setBounds(5, 255, 83, 74);
 		contentPane.add(btnCadastrar);
 		
-		btnAlterar = new JButton("Alterar");
-		btnAlterar.setBounds(95, 255, 83, 74);
+		btnAlterar = new JButton();
+		btnAlterar.setToolTipText("Alterar");
+		ImageIcon iconAlterar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/alterar.png"));
+		iconAlterar.setImage(iconAlterar.getImage().getScaledInstance(50, 50, 50));
+		btnAlterar.setIcon(iconAlterar);
+		btnAlterar.setBounds(98, 255, 83, 74);
 		contentPane.add(btnAlterar);
 		
-		btnConsultar = new JButton("Consultar");
-		btnConsultar.setBounds(185, 255, 83, 74);
+		btnConsultar = new JButton();
+		btnConsultar.setToolTipText("Consultar");
+		ImageIcon iconConsultar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/consultar.png"));
+		iconConsultar.setImage(iconConsultar.getImage().getScaledInstance(50, 50, 50));
+		btnConsultar.setIcon(iconConsultar);
+		btnConsultar.setBounds(188, 255, 83, 74);
 		contentPane.add(btnConsultar);
 		
-		btnExcluir = new JButton("Excluir");
-		btnExcluir.setBounds(275, 255, 83, 74);
+		btnExcluir = new JButton();
+		btnExcluir.setToolTipText("Excluir");
+		ImageIcon iconExcluir = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/excluir.png"));
+		iconExcluir.setImage(iconExcluir.getImage().getScaledInstance(50, 50, 50));
+		btnExcluir.setIcon(iconExcluir);
+		btnExcluir.setBounds(278, 255, 83, 74);
 		contentPane.add(btnExcluir);
 		
-		btnListar = new JButton("Listar");
-		btnListar.setBounds(369, 255, 83, 74);
+		btnListar = new JButton();
+		btnListar.setToolTipText("Listar");
+		ImageIcon iconListar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/listar.png"));
+		iconListar.setImage(iconListar.getImage().getScaledInstance(50, 50, 50));
+		btnListar.setIcon(iconListar);
+		btnListar.setBounds(368, 255, 83, 74);
 		contentPane.add(btnListar);
+		
+		btnLimpar = new JButton();
+		btnLimpar.setToolTipText("Limpar");
+		ImageIcon iconLimpar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/limpar.png"));
+		iconLimpar.setImage(iconLimpar.getImage().getScaledInstance(50, 50, 50));
+		btnLimpar.setIcon(iconLimpar);
+		btnLimpar.setBounds(458, 255, 83, 74);
+		contentPane.add(btnLimpar);
 	}
 }

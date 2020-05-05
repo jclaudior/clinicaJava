@@ -6,7 +6,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
@@ -14,6 +17,9 @@ import java.awt.Color;
 import javax.swing.JFormattedTextField;
 import javax.swing.JComboBox;
 import java.awt.TextArea;
+import java.text.ParseException;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class TelaPagamento extends JFrame {
@@ -23,7 +29,6 @@ public class TelaPagamento extends JFrame {
 	private JLabel lblCodigo;
 	private JTextField txtCod;
 	private JLabel lblCodPaciente;
-	private JTextField txtCodPac;
 	private JLabel lblNome;
 	private JLabel lblValor;
 	private JTextField txtValor;
@@ -37,6 +42,10 @@ public class TelaPagamento extends JFrame {
 	private JButton btnConsultar;
 	private JButton btnExcluir;
 	private JButton btnListar;
+	private MaskFormatter ftmData;// Atributo formatador para data
+	private MaskFormatter ftmCpf;// Atributo formatador para cpf
+	private JFormattedTextField txtCPF;
+	private JButton btnLimpar;
 
 	/**
 	 * Launch the application.
@@ -79,14 +88,10 @@ public class TelaPagamento extends JFrame {
 		contentPane.add(txtCod);
 		txtCod.setColumns(10);
 		
-		lblCodPaciente = new JLabel("Cod. Paciente:");
-		lblCodPaciente.setBounds(168, 48, 86, 14);
-		contentPane.add(lblCodPaciente);
 		
-		txtCodPac = new JTextField();
-		txtCodPac.setBounds(251, 45, 86, 20);
-		contentPane.add(txtCodPac);
-		txtCodPac.setColumns(10);
+		lblCodPaciente = new JLabel("CPF Paciente:");
+		lblCodPaciente.setBounds(153, 48, 86, 14);
+		contentPane.add(lblCodPaciente);
 		
 		lblNome = new JLabel("Nome do Paciente");
 		lblNome.setBorder(new BevelBorder(BevelBorder.LOWERED, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK));
@@ -94,20 +99,26 @@ public class TelaPagamento extends JFrame {
 		contentPane.add(lblNome);
 		
 		lblValor = new JLabel("Valor:");
-		lblValor.setBounds(208, 113, 46, 14);
+		lblValor.setBounds(193, 110, 46, 14);
 		contentPane.add(lblValor);
 		
 		txtValor = new JTextField();
-		txtValor.setBounds(251, 110, 86, 20);
+		txtValor.setBounds(239, 107, 98, 20);
 		contentPane.add(txtValor);
 		txtValor.setColumns(10);
 		
 		lblData = new JLabel("Data:");
-		lblData.setBounds(10, 113, 46, 14);
+		lblData.setBounds(10, 113, 36, 14);
 		contentPane.add(lblData);
 		
-		txtDta = new JFormattedTextField();
-		txtDta.setBounds(57, 110, 106, 20);
+		try {
+			ftmData = new MaskFormatter("##/##/####");
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(null, "Erro na mascara Data Nascimento\n");
+		}
+		txtDta = new JFormattedTextField(ftmData);
+		txtDta.setBounds(44, 110, 106, 20);
 		contentPane.add(txtDta);
 		
 		lblFormaPag = new JLabel("Forma Pag:");
@@ -122,24 +133,61 @@ public class TelaPagamento extends JFrame {
 		textArea.setBounds(353, 11, 383, 160);
 		contentPane.add(textArea);
 		
-		btnCadastrar = new JButton("Cadastrar");
-		btnCadastrar.setBounds(119, 181, 91, 81);
+		btnCadastrar = new JButton();
+		btnCadastrar.setToolTipText("Cadastrar");
+		ImageIcon iconSalvar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/salvar.png"));
+		iconSalvar.setImage(iconSalvar.getImage().getScaledInstance(50, 50, 50));
+		btnCadastrar.setIcon(iconSalvar);
+		btnCadastrar.setBounds(78, 181, 91, 81);
 		contentPane.add(btnCadastrar);
 		
-		btnAlterar = new JButton("Alterar");
-		btnAlterar.setBounds(222, 181, 91, 81);
+		btnAlterar = new JButton();
+		btnAlterar.setToolTipText("Alterar");
+		ImageIcon iconAlterar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/alterar.png"));
+		iconAlterar.setImage(iconAlterar.getImage().getScaledInstance(50, 50, 50));
+		btnAlterar.setIcon(iconAlterar);
+		btnAlterar.setBounds(179, 181, 91, 81);
 		contentPane.add(btnAlterar);
 		
-		btnConsultar = new JButton("Consultar");
-		btnConsultar.setBounds(326, 181, 91, 81);
+		btnConsultar = new JButton();
+		btnConsultar.setToolTipText("Consultar");
+		ImageIcon iconConsultar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/consultar.png"));
+		iconConsultar.setImage(iconConsultar.getImage().getScaledInstance(50, 50, 50));
+		btnConsultar.setIcon(iconConsultar);
+		btnConsultar.setBounds(280, 181, 91, 81);
 		contentPane.add(btnConsultar);
 		
-		btnExcluir = new JButton("Excluir");
-		btnExcluir.setBounds(433, 181, 91, 81);
+		btnExcluir = new JButton();
+		btnExcluir.setToolTipText("Excluir");
+		ImageIcon iconExcluir = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/excluir.png"));
+		iconExcluir.setImage(iconExcluir.getImage().getScaledInstance(50, 50, 50));
+		btnExcluir.setIcon(iconExcluir);
+		btnExcluir.setBounds(381, 181, 91, 81);
 		contentPane.add(btnExcluir);
 		
-		btnListar = new JButton("Listar");
-		btnListar.setBounds(534, 181, 91, 81);
+		btnListar = new JButton();
+		btnListar.setToolTipText("Listar");
+		ImageIcon iconListar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/listar.png"));
+		iconListar.setImage(iconListar.getImage().getScaledInstance(50, 50, 50));
+		btnListar.setIcon(iconListar);
+		btnListar.setBounds(483, 181, 91, 81);
 		contentPane.add(btnListar);
+		
+		try {
+			ftmCpf = new MaskFormatter("###.###.###-##");
+		} catch (ParseException e) {
+			JOptionPane.showMessageDialog(null, "Erro na mascara CPF\n");
+		}
+		txtCPF = new JFormattedTextField(ftmCpf);
+		txtCPF.setBounds(239, 48, 98, 17);
+		contentPane.add(txtCPF);
+		
+		btnLimpar = new JButton();
+		btnLimpar.setToolTipText("Limpar");
+		ImageIcon iconLimpar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/limpar.png"));
+		iconLimpar.setImage(iconLimpar.getImage().getScaledInstance(50, 50, 50));
+		btnLimpar.setIcon(iconLimpar);
+		btnLimpar.setBounds(584, 181, 91, 81);
+		contentPane.add(btnLimpar);
 	}
 }
