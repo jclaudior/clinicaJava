@@ -43,6 +43,7 @@ public class TelaDentista extends JFrame {
 				try {
 					TelaDentista frame = new TelaDentista();
 					frame.setVisible(true);
+					frame.setTitle("Dentista");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

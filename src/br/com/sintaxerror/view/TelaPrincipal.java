@@ -30,6 +30,7 @@ public class TelaPrincipal extends JFrame {
 	private JLabel lblcopyrightSintaxError;
 	private JLabel lblSistemaDeGerenciamento;
 	private JButton btnNewButton;
+	private JMenu mnConsulta;
 
 	/**
 	 * Launch the application.
@@ -40,6 +41,7 @@ public class TelaPrincipal extends JFrame {
 				try {
 					TelaPrincipal frame = new TelaPrincipal();
 					frame.setVisible(true);
+					frame.setTitle("Gerenciamento Odontologico");
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -69,6 +71,7 @@ public class TelaPrincipal extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				TelaPaciente telaPaciente = new TelaPaciente();
 				telaPaciente.setVisible(true);
+				telaPaciente.setTitle("Paciente");
 				telaPaciente.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			}
 		});
@@ -81,6 +84,7 @@ public class TelaPrincipal extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				TelaDentista telaDentista = new TelaDentista();
 				telaDentista.setVisible(true);
+				telaDentista.setTitle("Dentista");
 				telaDentista.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			}
 		});
@@ -92,9 +96,22 @@ public class TelaPrincipal extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				TelaPagamento telaPagamento = new TelaPagamento();
 				telaPagamento.setVisible(true);
+				telaPagamento.setTitle("Pagamento");
 				telaPagamento.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			}
 		});
+		
+		mnConsulta = new JMenu("Consulta");
+		mnConsulta.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				TelaConsulta telaConsulta = new TelaConsulta();
+				telaConsulta.setVisible(true);
+				telaConsulta.setTitle("Consulta");
+				telaConsulta.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+			}
+		});
+		menuBar.add(mnConsulta);
 		menuBar.add(mnPagamento);
 		
 		mnSobre = new JMenu("Sobre");
@@ -117,6 +134,4 @@ public class TelaPrincipal extends JFrame {
 		contentPane.add(btnNewButton);
 		
 	}
-	
-	
 }
