@@ -162,12 +162,12 @@ public class TelaPaciente extends JFrame {
 		txtComple.setColumns(10);
 		
 		lblUf = new JLabel("     UF:");
-		lblUf.setBounds(293, 77, 39, 14);
+		lblUf.setBounds(283, 77, 39, 14);
 		contentPane.add(lblUf);
 		
 		cbmUF = new JComboBox();
 		cbmUF.setModel(new DefaultComboBoxModel(new String[] {"UF"}));
-		cbmUF.setBounds(335, 74, 46, 20);
+		cbmUF.setBounds(327, 74, 46, 20);
 		contentPane.add(cbmUF);
 		
 		lblBairro = new JLabel("Bairro:");
