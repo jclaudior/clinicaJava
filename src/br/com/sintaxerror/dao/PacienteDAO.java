@@ -41,13 +41,13 @@ public class PacienteDAO {
 			st.setString(4, paciente.getRua());
 			st.setString(5, paciente.getNumero());
 			st.setString(6, paciente.getComplemento());
-			st.setString(7, paciente.getUf());
-			st.setString(8, paciente.getBairro());
-			st.setString(9, paciente.getCelular());
-			st.setString(10, paciente.getDataNasc());
-			st.setString(11, paciente.getEmail());
-			st.setString(12, paciente.getSenha());
-			st.setString(13,  paciente.getCidade());
+			st.setString(7,  paciente.getCidade());
+			st.setString(8, paciente.getUf());
+			st.setString(9, paciente.getBairro());
+			st.setString(10, paciente.getCelular());
+			st.setString(11, paciente.getDataNasc());
+			st.setString(12, paciente.getEmail());
+			st.setString(13, paciente.getSenha());
 			
 			st.executeUpdate();
 			

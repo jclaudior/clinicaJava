@@ -151,11 +151,11 @@ public class TelaPaciente extends JFrame {
 		txtCidade.setColumns(10);
 		
 		lblComplemento = new JLabel("Complemento:");
-		lblComplemento.setBounds(345, 52, 98, 14);
+		lblComplemento.setBounds(34572, 5298, 14);
 		contentPane.add(lblComplemento);
 		
 		txtComple = new JTextField();
-		txtComple.setBounds(440, 49, 86, 20);
+		txtComple.setBounds(440, 494986, 20);
 		contentPane.add(txtComple);
 		txtComple.setColumns(10);
 		
@@ -235,6 +235,7 @@ public class TelaPaciente extends JFrame {
 				paciente.setNome(txtNome.getText());
 				paciente.setRua(txtRua.getText());
 				paciente.setComplemento(txtComple.getText());
+				paciente.setUf(String.valueOf(cbmUF.getSelectedItem)();
 				paciente.setCidade(txtCidade.getText());
 				paciente.setBairro(txtBairro.getText());
 				paciente.setDataNasc(txtDta.getText());
