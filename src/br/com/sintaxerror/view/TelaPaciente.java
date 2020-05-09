@@ -9,6 +9,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
+import br.com.sintaxerror.dao.PacienteDAO;
 import br.com.sintaxerror.model.Paciente;
 
 import javax.swing.JLabel;
@@ -65,6 +66,7 @@ public class TelaPaciente extends JFrame {
 	private MaskFormatter ftmCpf;// Atributo formatador para cpf
 	private MaskFormatter ftmCel;// Atributo formatador para Celular
 	private Paciente paciente;
+	private PacienteDAO pacientedao;
 
 	/**
 	 * Launch the application.
@@ -227,6 +229,7 @@ public class TelaPaciente extends JFrame {
 			
 			public void actionPerformed(ActionEvent arg0) {
 				//########################################
+				try {
 				paciente = new Paciente ();
 				paciente.setCpf(txtCPF.getText());
 				paciente.setNome(txtNome.getText());
@@ -239,7 +242,14 @@ public class TelaPaciente extends JFrame {
 				paciente.setEmail(txtEmail.getText());
 				paciente.setSenha(txtPass.getText());
 				
-								
+				pacientedao= new PacienteDAO ();
+				pacientedao.salvar(paciente);
+				}
+				catch ( Exception e ) {
+					JOptionPane.showMessageDialog(null, "Erro ao gravar paciente!!\n" + e.getMessage());
+					
+				
+				}
 				//########################################
 				
 			}
