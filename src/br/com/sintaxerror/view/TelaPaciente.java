@@ -67,6 +67,8 @@ public class TelaPaciente extends JFrame {
 	private MaskFormatter ftmCel;// Atributo formatador para Celular
 	private Paciente paciente;
 	private PacienteDAO pacientedao;
+	private JTextField txtNumero;
+	private JLabel lblNumero;
 
 	/**
 	 * Launch the application.
@@ -137,7 +139,7 @@ public class TelaPaciente extends JFrame {
 		contentPane.add(lblRua);
 		
 		txtRua = new JTextField();
-		txtRua.setBounds(83, 49, 252, 20);
+		txtRua.setBounds(83, 49, 239, 20);
 		contentPane.add(txtRua);
 		txtRua.setColumns(10);
 		
@@ -146,26 +148,26 @@ public class TelaPaciente extends JFrame {
 		contentPane.add(lblCidade);
 		
 		txtCidade = new JTextField();
-		txtCidade.setBounds(83, 74, 252, 20);
+		txtCidade.setBounds(83, 74, 200, 20);
 		contentPane.add(txtCidade);
 		txtCidade.setColumns(10);
 		
-		lblComplemento = new JLabel("Complemento:");
-		lblComplemento.setBounds(34572, 5298, 14);
+		lblComplemento = new JLabel("Comple:");
+		lblComplemento.setBounds(489,52, 53, 14);
 		contentPane.add(lblComplemento);
 		
 		txtComple = new JTextField();
-		txtComple.setBounds(440, 494986, 20);
+		txtComple.setBounds(543, 49,86, 20);
 		contentPane.add(txtComple);
 		txtComple.setColumns(10);
 		
 		lblUf = new JLabel("     UF:");
-		lblUf.setBounds(543, 52, 39, 14);
+		lblUf.setBounds(293, 77, 39, 14);
 		contentPane.add(lblUf);
 		
 		cbmUF = new JComboBox();
 		cbmUF.setModel(new DefaultComboBoxModel(new String[] {"UF"}));
-		cbmUF.setBounds(585, 49, 46, 20);
+		cbmUF.setBounds(335, 74, 46, 20);
 		contentPane.add(cbmUF);
 		
 		lblBairro = new JLabel("Bairro:");
@@ -235,7 +237,7 @@ public class TelaPaciente extends JFrame {
 				paciente.setNome(txtNome.getText());
 				paciente.setRua(txtRua.getText());
 				paciente.setComplemento(txtComple.getText());
-				paciente.setUf(String.valueOf(cbmUF.getSelectedItem)();
+				paciente.setUf(String.valueOf(cbmUF.getSelectedItem()));
 				paciente.setCidade(txtCidade.getText());
 				paciente.setBairro(txtBairro.getText());
 				paciente.setDataNasc(txtDta.getText());
@@ -306,6 +308,15 @@ public class TelaPaciente extends JFrame {
 		btnLimpar.setIcon(iconLimpar);
 		btnLimpar.setBounds(525, 351, 89, 87);
 		contentPane.add(btnLimpar);
+		
+		txtNumero = new JTextField();
+		txtNumero.setBounds(393, 49, 86, 20);
+		contentPane.add(txtNumero);
+		txtNumero.setColumns(10);
+		
+		lblNumero = new JLabel("Numero:");
+		lblNumero.setBounds(335, 52, 63, 14);
+		contentPane.add(lblNumero);
 		
 		
 	}
