@@ -31,7 +31,7 @@ public class PacienteDAO {
 		boolean state = false;
 		
 		try {
-			String sql = "insert into paciente value(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into paciente value(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			st = con.prepareStatement(sql);
 			
@@ -47,6 +47,7 @@ public class PacienteDAO {
 			st.setString(10, paciente.getDataNasc());
 			st.setString(11, paciente.getEmail());
 			st.setString(12, paciente.getSenha());
+			st.setString(13,  paciente.getCidade());
 			
 			st.executeUpdate();
 			
@@ -80,8 +81,9 @@ public class PacienteDAO {
 				String data = rs.getString("dataNasc");
 				String email = rs.getString("email");
 				String senha = rs.getString("senha");
+				String cidade = rs.getNString("cidade");
 				
-				Paciente paciente = new Paciente(cpf2, nome, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha);
+				Paciente paciente = new Paciente(cpf2, nome, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha, cidade);
 				
 				return paciente;
 			}
@@ -107,7 +109,7 @@ public class PacienteDAO {
 	
 	public void alterar(Paciente paciente) throws Exception {
 		try {
-			String sql = "update paciente set nome = ?, sexo = ?, rua = ?, numero = ?, complemento = ?, uf = ?, bairro = ?, celular = ?, dataNasc = ?, email = ?, senha = ?"
+			String sql = "update paciente set nome = ?, sexo = ?, rua = ?, numero = ?, complemento = ?, uf = ?, bairro = ?, celular = ?, dataNasc = ?, email = ?, senha = ?, cidade = ?"
 					+ "where cpf = ?)";
 			
 			st = con.prepareStatement(sql);
@@ -124,6 +126,7 @@ public class PacienteDAO {
 			st.setString(10, paciente.getEmail());
 			st.setString(11, paciente.getSenha());
 			st.setString(12, paciente.getCpf());
+			st.setString(13, paciente.getCidade());
 			
 			st.executeUpdate();
 		}
@@ -155,8 +158,9 @@ public class PacienteDAO {
 				String data = rs.getString("dataNasc");
 				String email = rs.getString("email");
 				String senha = rs.getString("senha");
+				String cidade = rs.getString("cidade");
 				
-				listaPaciente.add(new Paciente(cpf2, nome, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha));
+				listaPaciente.add(new Paciente(cpf2, nome, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha, cidade));
 			}
 			return listaPaciente;
 		}

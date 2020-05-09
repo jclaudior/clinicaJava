@@ -8,6 +8,9 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
+
+import br.com.sintaxerror.model.Paciente;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JFormattedTextField;
@@ -20,6 +23,8 @@ import javax.swing.JButton;
 import java.awt.TextArea;
 import java.text.ParseException;
 import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaPaciente extends JFrame {
 
@@ -44,7 +49,7 @@ public class TelaPaciente extends JFrame {
 	private JLabel lblDataNasc;
 	private JFormattedTextField txtDta;
 	private JLabel lblCelular;
-	private JFormattedTextField formattedTextField;
+	private JFormattedTextField txtCelular;
 	private JLabel lblEmail;
 	private JTextField txtEmail;
 	private JLabel lblSenha;
@@ -59,6 +64,7 @@ public class TelaPaciente extends JFrame {
 	private MaskFormatter ftmData;// Atributo formatador para data
 	private MaskFormatter ftmCpf;// Atributo formatador para cpf
 	private MaskFormatter ftmCel;// Atributo formatador para Celular
+	private Paciente paciente;
 
 	/**
 	 * Launch the application.
@@ -195,9 +201,9 @@ public class TelaPaciente extends JFrame {
 			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(null, "Erro na mascara Celular\n");
 		}
-		formattedTextField = new JFormattedTextField(ftmCel);
-		formattedTextField.setBounds(440, 99, 119, 20);
-		contentPane.add(formattedTextField);
+		txtCelular = new JFormattedTextField(ftmCel);
+		txtCelular.setBounds(440, 99, 119, 20);
+		contentPane.add(txtCelular);
 		
 		lblEmail = new JLabel("        E-mail:");
 		lblEmail.setBounds(10, 127, 70, 14);
@@ -217,6 +223,28 @@ public class TelaPaciente extends JFrame {
 		contentPane.add(txtPass);
 		
 		btnCadastrar = new JButton();
+		btnCadastrar.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent arg0) {
+				//########################################
+				paciente = new Paciente ();
+				paciente.setCpf(txtCPF.getText());
+				paciente.setNome(txtNome.getText());
+				paciente.setRua(txtRua.getText());
+				paciente.setComplemento(txtComple.getText());
+				paciente.setCidade(txtCidade.getText());
+				paciente.setBairro(txtBairro.getText());
+				paciente.setDataNasc(txtDta.getText());
+				paciente.setCelular(txtCelular.getText());
+				paciente.setEmail(txtEmail.getText());
+				paciente.setSenha(txtPass.getText());
+				
+								
+				//########################################
+				
+			}
+			
+		});
 		btnCadastrar.setToolTipText("Cadastrar");
 		ImageIcon iconSalvar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/salvar.png"));
 		iconSalvar.setImage(iconSalvar.getImage().getScaledInstance(50, 50, 50));

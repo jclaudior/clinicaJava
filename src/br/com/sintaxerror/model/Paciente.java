@@ -13,13 +13,13 @@ public class Paciente {
 	private String dataNasc;
 	private String email;
 	private String senha;
-	
+	private String cidade;
 	public Paciente() {
-		
+		super();
+		// TODO Auto-generated constructor stub
 	}
-	
 	public Paciente(String cpf, String nome, String sexo, String rua, String numero, String complemento, String uf,
-			String bairro, String celular, String dataNasc, String email, String senha) {
+			String bairro, String celular, String dataNasc, String email, String senha, String cidade) {
 		super();
 		this.cpf = cpf;
 		this.nome = nome;
@@ -33,8 +33,8 @@ public class Paciente {
 		this.dataNasc = dataNasc;
 		this.email = email;
 		this.senha = senha;
+		this.cidade = cidade;
 	}
-
 	public String getCpf() {
 		return cpf;
 	}
@@ -107,5 +107,13 @@ public class Paciente {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+	public String getCidade() {
+		return cidade;
+	}
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
+	
+	
 	
 }
