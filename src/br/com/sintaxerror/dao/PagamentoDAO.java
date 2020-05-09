@@ -8,59 +8,52 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.sintaxerror.model.Paciente;
+import br.com.sintaxerror.model.Pagamento;
 import br.com.sintaxerror.util.ConnectionFactory;
 
-public class PacienteDAO {
+public class PagamentoDAO {
 	
 	private Connection con;
 	private PreparedStatement st;
 	private ResultSet rs;
 	
-	public PacienteDAO() throws Exception {
-		
+	public PagamentoDAO() throws Exception {
 		try {
 			con = ConnectionFactory.getConnection();
 		}
 		catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
-		
 	}
 	
-	public boolean salvar(Paciente paciente) throws Exception {
-		boolean state = false;
-		
+	public boolean salvar(Pagamento pagamento) throws Exception {
 		try {
-			String sql = "insert into paciente value(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into pagamento values (?, ?, ?, ?, ?)";
 			
 			st = con.prepareStatement(sql);
-			
-			st.setString(1, paciente.getCpf());
-			st.setString(2, paciente.getNome());
-			st.setString(3, paciente.getSexo());
-			st.setString(4, paciente.getRua());
-			st.setString(5, paciente.getNumero());
-			st.setString(6, paciente.getComplemento());
-			st.setString(7, paciente.getUf());
-			st.setString(8, paciente.getBairro());
-			st.setString(9, paciente.getCelular());
-			st.setString(10, paciente.getDataNasc());
-			st.setString(11, paciente.getEmail());
-			st.setString(12, paciente.getSenha());
+			st.setInt(1, pagamento.getCodPagamento());
+			st.setString(2, pagamento.getPaciente().getCpf());
+			st.setDouble(3, pagamento.getValor());
+			st.setString(4, pagamento.getDia());
+			st.setString(5, pagamento.getFormaPagamento());
 			
 			st.executeUpdate();
 			
-			state = true;
-			return state;
+			return true;
 		}
 		catch (SQLIntegrityConstraintViolationException e) {
-			return state;
+			return false;
+		}
+		catch (Exception e1) {
+			throw new Exception(e1.getMessage());
 		}
 	}
 	
-	public Paciente consultar(String cpf) throws Exception{
+	public Pagamento consultar(String cpf) throws Exception{
 		try {
-			String sql = "select * from paciente where cpf = ?";
+			String sql = "select * from pagamento"
+					+ "join paciente on pagamento.paciente_FK = paciente.cpf"
+					+ "where paciente.cpf = ?";
 			
 			st = con.prepareStatement(sql);
 			st.setString(1, cpf);
@@ -68,6 +61,81 @@ public class PacienteDAO {
 			rs = st.executeQuery();
 			
 			while (rs.next()) {
+				//dados paciente
+				String cpf2 = rs.getString("cpf");
+				String nome = rs.getString("nome");
+				String sexo = rs.getString("uf");
+				String rua = rs.getString("rua");
+				String numero = rs.getString("numero");
+				String complemento = rs.getString("complemento");
+				String uf = rs.getString("uf");
+				String bairro = rs.getString("bairro");
+				String celular = rs.getString("celular");
+				String data = rs.getString("dataNasc");
+				String email = rs.getString("email");
+				String senha = rs.getString("senha");
+				
+				Paciente paciente = new Paciente(cpf2, nome, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha);
+				// dados pagamento
+				int cod = rs.getInt("codPagamento");
+				double valor = rs.getDouble("valor");
+				String dia = rs.getString("dia");
+				String forma = rs.getString("formaPagamento");
+				
+				Pagamento pagamento = new Pagamento(cod, paciente, valor, dia, forma);
+				
+				return pagamento;
+			}
+		}
+		catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+		return null;
+	}
+	
+	public void excluir (int codPagamento) throws Exception {
+		try {
+			String sql = "delete from pagamento where codPagamento = ?";
+			
+			st = con.prepareStatement(sql);
+			st.setInt(1, codPagamento);
+			
+			st.executeUpdate();
+		}
+		catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+	}
+	
+	public void alterar(Pagamento pagamento) throws Exception {
+		try {
+			String sql = "update pagamento set paciente_FK = ?, valor = ?, dia = ?, formaPagamento = ? where codPagamento = ?";
+			
+			st = con.prepareStatement(sql);
+			st.setString(1, pagamento.getPaciente().getCpf());
+			st.setDouble(2, pagamento.getValor());
+			st.setString(3, pagamento.getDia());
+			st.setString(4, pagamento.getFormaPagamento());
+			st.setInt(5, pagamento.getCodPagamento());
+			
+			st.executeUpdate();
+		}
+		catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+	}
+	
+	public List<Pagamento> listarTodos() throws Exception {
+		try {
+			List<Pagamento> lista = new ArrayList<Pagamento>();
+			String sql = "select * from pagamento";
+			
+			st = con.prepareStatement(sql);
+			
+			rs = st.executeQuery();
+			
+			while (rs.next()) {
+				//dados paciente
 				String cpf2 = rs.getString("cpf");
 				String nome = rs.getString("nome");
 				String sexo = rs.getString("uf");
@@ -83,85 +151,18 @@ public class PacienteDAO {
 				
 				Paciente paciente = new Paciente(cpf2, nome, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha);
 				
-				return paciente;
-			}
-		}
-		catch (Exception e) {
-			throw new Exception();
-		}
-		return null;
-	}
-	
-	public void excluir(String cpf) throws Exception {
-		try {
-			String sql = "delete * from paciente where cpf = ?";
-			 st = con.prepareStatement(sql);
-			 st.setString(1, cpf);
-			 
-			 st.executeUpdate();
-		}
-		catch (Exception e) {
-			throw new Exception(e.getMessage());
-		}
-	}
-	
-	public void alterar(Paciente paciente) throws Exception {
-		try {
-			String sql = "update paciente set nome = ?, sexo = ?, rua = ?, numero = ?, complemento = ?, uf = ?, bairro = ?, celular = ?, dataNasc = ?, email = ?, senha = ?"
-					+ "where cpf = ?)";
-			
-			st = con.prepareStatement(sql);
-			
-			st.setString(1, paciente.getNome());
-			st.setString(2, paciente.getSexo());
-			st.setString(3, paciente.getRua());
-			st.setString(4, paciente.getNumero());
-			st.setString(5, paciente.getComplemento());
-			st.setString(6, paciente.getUf());
-			st.setString(7, paciente.getBairro());
-			st.setString(8, paciente.getCelular());
-			st.setString(9, paciente.getDataNasc());
-			st.setString(10, paciente.getEmail());
-			st.setString(11, paciente.getSenha());
-			st.setString(12, paciente.getCpf());
-			
-			st.executeUpdate();
-		}
-		catch (Exception e) {
-			throw new Exception(e.getMessage());
-		}
-	}
-	
-	public List<Paciente> listarTodos() throws Exception{
-		List<Paciente> listaPaciente = new ArrayList<Paciente>();
-		
-		try {
-			String sql = "select * from paciente";
-			
-			st = con.prepareStatement(sql);
-			
-			rs = st.executeQuery();
-			
-			while (rs.next()) {
-				String cpf2 = rs.getString("cpf");
-				String nome = rs.getString("nome");
-				String sexo = rs.getString("uf");
-				String rua = rs.getString("rua");
-				String numero = rs.getString("numero");
-				String complemento = rs.getString("complemento");
-				String uf = rs.getString("uf");
-				String bairro = rs.getString("bairro");
-				String celular = rs.getString("celular");
-				String data = rs.getString("dataNasc");
-				String email = rs.getString("email");
-				String senha = rs.getString("senha");
+				// dados pagamento
+				int cod = rs.getInt("codPagamento");
+				double valor = rs.getDouble("valor");
+				String dia = rs.getString("dia");
+				String forma = rs.getString("formaPagamento");
 				
-				listaPaciente.add(new Paciente(cpf2, nome, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha));
+				lista.add(new Pagamento(cod, paciente, valor, dia, forma));
 			}
-			return listaPaciente;
+			return lista;
 		}
 		catch (Exception e) {
-			throw new Exception();
+			throw new Exception(e.getMessage());
 		}
 	}
 }

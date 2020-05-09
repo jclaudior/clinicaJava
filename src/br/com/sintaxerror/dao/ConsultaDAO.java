@@ -7,10 +7,10 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.clinica.model.Consulta;
-import br.com.clinica.model.Dentista;
-import br.com.clinica.model.Paciente;
-import br.com.clinica.util.ConnectionFactory;
+import br.com.sintaxerror.model.Consulta;
+import br.com.sintaxerror.model.Dentista;
+import br.com.sintaxerror.model.Paciente;
+import br.com.sintaxerror.util.ConnectionFactory;
 
 public class ConsultaDAO {
 	
@@ -250,7 +250,6 @@ public class ConsultaDAO {
 			return listaConsulta;
 		}
 		catch (Exception e) {
-			e.printStackTrace();
 			throw new Exception();
 		}
 	}
