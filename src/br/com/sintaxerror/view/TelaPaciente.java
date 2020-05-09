@@ -36,7 +36,7 @@ public class TelaPaciente extends JFrame {
 	private JTextField txtNome;
 	private JLabel lblCadastroDePacientes;
 	private JLabel lblSexo;
-	private JComboBox comboBox;
+	private JComboBox cbmSexo;
 	private JLabel lblRua;
 	private JTextField txtRua;
 	private JLabel lblCidade;
@@ -129,10 +129,10 @@ public class TelaPaciente extends JFrame {
 		lblSexo.setBounds(543, 27, 39, 14);
 		contentPane.add(lblSexo);
 		
-		comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"M", "F"}));
-		comboBox.setBounds(585, 24, 46, 20);
-		contentPane.add(comboBox);
+		cbmSexo = new JComboBox();
+		cbmSexo.setModel(new DefaultComboBoxModel(new String[] {"M", "F"}));
+		cbmSexo.setBounds(585, 24, 46, 20);
+		contentPane.add(cbmSexo);
 		
 		lblRua = new JLabel("            Rua:");
 		lblRua.setBounds(10, 52, 70, 14);
@@ -244,6 +244,8 @@ public class TelaPaciente extends JFrame {
 				paciente.setCelular(txtCelular.getText());
 				paciente.setEmail(txtEmail.getText());
 				paciente.setSenha(txtPass.getText());
+				paciente.setNumero(txtNumero.getText());
+				paciente.setSexo(String.valueOf(cbmSexo.getSelectedItem()));
 				
 				pacientedao= new PacienteDAO ();
 				pacientedao.salvar(paciente);
