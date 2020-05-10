@@ -130,6 +130,9 @@ public class TelaPagamento extends JFrame {
 		contentPane.add(cbmFormPag);
 		
 		textArea = new TextArea();
+		textArea.setFocusable(false);
+		textArea.setFocusTraversalKeysEnabled(false);
+		textArea.setEditable(false);
 		textArea.setBounds(353, 11, 383, 160);
 		contentPane.add(textArea);
 		

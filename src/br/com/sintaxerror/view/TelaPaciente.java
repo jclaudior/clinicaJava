@@ -418,6 +418,9 @@ public class TelaPaciente extends JFrame {
 		contentPane.add(btnListar);
 		
 		txtMostar = new TextArea();
+		txtMostar.setFocusable(false);
+		txtMostar.setFocusTraversalKeysEnabled(false);
+		txtMostar.setEditable(false);
 		txtMostar.setBounds(10, 153, 621, 192);
 		contentPane.add(txtMostar);
 		
