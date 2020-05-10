@@ -32,7 +32,7 @@ create table CONSULTA (
 	codConsulta int,
     paciente_FK varchar(16),
     dentista_FK int,
-    dia varchar(5),
+    dia DATE,
     horario varchar(10),
     obs text,
 	constraint PK_Consulta primary key (codConsulta),
