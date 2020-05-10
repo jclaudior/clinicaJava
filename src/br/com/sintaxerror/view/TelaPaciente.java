@@ -23,6 +23,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.TextArea;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -69,6 +72,8 @@ public class TelaPaciente extends JFrame {
 	private PacienteDAO pacientedao;
 	private JTextField txtNumero;
 	private JLabel lblNumero;
+	private SimpleDateFormat formatDate;
+	private SimpleDateFormat formatDateSql;
 
 	/**
 	 * Launch the application.
@@ -166,7 +171,7 @@ public class TelaPaciente extends JFrame {
 		contentPane.add(lblUf);
 		
 		cbmUF = new JComboBox();
-		cbmUF.setModel(new DefaultComboBoxModel(new String[] {"UF"}));
+		cbmUF.setModel(new DefaultComboBoxModel(new String[] {"UF", "SP"}));
 		cbmUF.setBounds(327, 74, 46, 20);
 		contentPane.add(cbmUF);
 		
@@ -284,7 +289,10 @@ public class TelaPaciente extends JFrame {
 				paciente.setUf(String.valueOf(cbmUF.getSelectedItem()));
 				paciente.setCidade(txtCidade.getText());
 				paciente.setBairro(txtBairro.getText());
-				paciente.setDataNasc(txtDta.getText());
+				formatDate = new SimpleDateFormat("dd/MM/yyyy");
+				formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
+				Date date = formatDate.parse(txtDta.getText());
+				paciente.setDataNasc(formatDateSql.format(date));
 				paciente.setCelular(txtCelular.getText());
 				paciente.setEmail(txtEmail.getText());
 				paciente.setSenha(txtPass.getText());
@@ -368,7 +376,10 @@ public class TelaPaciente extends JFrame {
 					paciente.setUf(String.valueOf(cbmUF.getSelectedItem()));
 					paciente.setCidade(txtCidade.getText());
 					paciente.setBairro(txtBairro.getText());
-					paciente.setDataNasc(txtDta.getText());
+					formatDate = new SimpleDateFormat("dd/MM/yyyy");
+					formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
+					Date date = formatDate.parse(txtDta.getText());
+					paciente.setDataNasc(formatDateSql.format(date));
 					paciente.setCelular(txtCelular.getText());
 					paciente.setEmail(txtEmail.getText());
 					paciente.setSenha(txtPass.getText());
@@ -381,7 +392,7 @@ public class TelaPaciente extends JFrame {
 					}
 					catch ( Exception e1 ) {
 						JOptionPane.showMessageDialog(null, "Erro ao alterar paciente!!\n" + e1.getMessage());
-						
+					
 					
 					}
 			}
@@ -394,6 +405,42 @@ public class TelaPaciente extends JFrame {
 		contentPane.add(btnAlterar);
 		
 		btnConsultar = new JButton();
+		btnConsultar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//============================================
+				
+				
+				try {
+					paciente = new Paciente();
+					pacientedao = new PacienteDAO();
+					paciente = pacientedao.consultar(txtCPF.getText());
+					txtNome.setText(paciente.getNome());
+					cbmSexo.setSelectedItem(paciente.getSexo());
+					txtRua.setText(paciente.getRua());
+					txtNumero.setText(paciente.getNumero());
+					txtComple.setText(paciente.getComplemento());
+					txtCidade.setText(paciente.getCidade());
+					cbmUF.setSelectedItem(paciente.getUf());
+					txtBairro.setText(paciente.getBairro());
+					formatDate = new SimpleDateFormat("dd/MM/yyyy");
+					formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
+					Date date = formatDateSql.parse(paciente.getDataNasc());
+					txtDta.setText(formatDate.format(date));
+					txtCelular.setText(paciente.getCelular());
+					txtEmail.setText(paciente.getEmail());
+					
+					
+									
+					
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "CPF NÃO CADASTRADO!!!");
+				}
+				
+							
+				
+				//============================================
+			}
+		});
 		btnConsultar.setToolTipText("Consultar");
 		ImageIcon iconConsultar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/consultar.png"));
 		iconConsultar.setImage(iconConsultar.getImage().getScaledInstance(50, 50, 50));
