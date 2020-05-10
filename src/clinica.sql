@@ -9,6 +9,7 @@ create table PACIENTE (
 	rua varchar(100),
 	numero varchar(5),
 	complemento varchar(20),
+	cidade varchar(20),
 	uf char(2),
 	bairro varchar(40),
 	celular varchar(15),

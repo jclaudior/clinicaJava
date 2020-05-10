@@ -104,13 +104,13 @@ public class ConsultaDAO {
 				String data = rs.getString("dataNasc");
 				String email = rs.getString("email");
 				String senha = rs.getString("senha");
-				
+				String cidade = rs.getString("cidade");
 				//dados dentista
 				int codDentista = rs.getInt("codDentista");
 				String nomeDentista = rs.getString("nomeDentista");
 				String especialidade = rs.getString("especialidade");
 				
-				Paciente paciente = new Paciente(cpf, nomePaciente, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha);
+				Paciente paciente = new Paciente(cpf, nomePaciente, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha, cidade);
 				Dentista dentista = new Dentista(codDentista, nomeDentista, especialidade);
 				
 				Consulta consulta = new Consulta(cod, paciente, dentista, dia, horario, obs);
@@ -156,13 +156,14 @@ public class ConsultaDAO {
 				String data = rs.getString("dataNasc");
 				String email = rs.getString("email");
 				String senha = rs.getString("senha");
+				String cidade = rs.getString("cidade");
 				
 				//dados dentista
 				int codDentista = rs.getInt("codDentista");
 				String nomeDentista = rs.getString("nomeDentista");
 				String especialidade = rs.getString("especialidade");
 				
-				Paciente paciente = new Paciente(cpf, nomePaciente, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha);
+				Paciente paciente = new Paciente(cpf, nomePaciente, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha, cidade);
 				Dentista dentista = new Dentista(codDentista, nomeDentista, especialidade);
 				
 				Consulta consulta = new Consulta(cod, paciente, dentista, dia, horario, obs);
@@ -236,13 +237,14 @@ public class ConsultaDAO {
 				String data = rs.getString("dataNasc");
 				String email = rs.getString("email");
 				String senha = rs.getString("senha");
+				String cidade = rs.getString("cidade");
 				
 				//dados dentista
 				int codDentista = rs.getInt("codDentista");
 				String nomeDentista = rs.getString("nomeDentista");
 				String especialidade = rs.getString("especialidade");
 				
-				Paciente paciente = new Paciente(cpf, nomePaciente, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha);
+				Paciente paciente = new Paciente(cpf, nomePaciente, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha,cidade);
 				Dentista dentista = new Dentista(codDentista, nomeDentista, especialidade);
 				
 				listaConsulta.add(new Consulta(cod, paciente, dentista, dia, horario, obs));

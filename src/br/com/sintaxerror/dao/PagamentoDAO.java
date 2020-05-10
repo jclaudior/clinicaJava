@@ -74,8 +74,9 @@ public class PagamentoDAO {
 				String data = rs.getString("dataNasc");
 				String email = rs.getString("email");
 				String senha = rs.getString("senha");
+				String cidade = rs.getString("cidade");
 				
-				Paciente paciente = new Paciente(cpf2, nome, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha);
+				Paciente paciente = new Paciente(cpf2, nome, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha,cidade);
 				// dados pagamento
 				int cod = rs.getInt("codPagamento");
 				double valor = rs.getDouble("valor");
@@ -148,8 +149,9 @@ public class PagamentoDAO {
 				String data = rs.getString("dataNasc");
 				String email = rs.getString("email");
 				String senha = rs.getString("senha");
+				String cidade = rs.getString("cidade");
 				
-				Paciente paciente = new Paciente(cpf2, nome, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha);
+				Paciente paciente = new Paciente(cpf2, nome, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha, cidade);
 				
 				// dados pagamento
 				int cod = rs.getInt("codPagamento");
