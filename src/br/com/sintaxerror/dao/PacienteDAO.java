@@ -109,8 +109,8 @@ public class PacienteDAO {
 	
 	public void alterar(Paciente paciente) throws Exception {
 		try {
-			String sql = "update paciente set nome = ?, sexo = ?, rua = ?, numero = ?, complemento = ?, uf = ?, bairro = ?, celular = ?, dataNasc = ?, email = ?, senha = ?, cidade = ?"
-					+ "where cpf = ?)";
+			String sql = "update paciente set nome = ?, sexo = ?, rua = ?, numero = ?, complemento = ?, cidade = ?, uf = ?, bairro = ?, celular = ?, dataNasc = ?, email = ?, senha = ?"
+					+ "where cpf = ?";
 			
 			st = con.prepareStatement(sql);
 			
@@ -119,14 +119,15 @@ public class PacienteDAO {
 			st.setString(3, paciente.getRua());
 			st.setString(4, paciente.getNumero());
 			st.setString(5, paciente.getComplemento());
-			st.setString(6, paciente.getUf());
-			st.setString(7, paciente.getBairro());
-			st.setString(8, paciente.getCelular());
-			st.setString(9, paciente.getDataNasc());
-			st.setString(10, paciente.getEmail());
-			st.setString(11, paciente.getSenha());
-			st.setString(12, paciente.getCpf());
-			st.setString(13, paciente.getCidade());
+			st.setString(6, paciente.getCidade());
+			st.setString(7, paciente.getUf());
+			st.setString(8, paciente.getBairro());
+			st.setString(9, paciente.getCelular());
+			st.setString(10, paciente.getDataNasc());
+			st.setString(11, paciente.getEmail());
+			st.setString(12, paciente.getSenha());
+			st.setString(13, paciente.getCpf());
+			
 			
 			st.executeUpdate();
 		}

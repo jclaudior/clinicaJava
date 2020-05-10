@@ -232,6 +232,50 @@ public class TelaPaciente extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				//########################################
 				try {
+				if(txtCPF.getText().equals("   .   .   -  "))	{
+					JOptionPane.showMessageDialog(null,"Preencher CPF Válido!!!");
+					return;
+				}
+				if(txtNome.getText().equals(""))	{
+					JOptionPane.showMessageDialog(null,"Preencher NOME Válido!!!");
+					return;
+				}
+				if(txtRua.getText().equals(""))	{
+					JOptionPane.showMessageDialog(null,"Preencher Nome da Rua Válido!!!");
+					return;
+				}
+				if(cbmUF.getSelectedIndex()==0)	{
+					JOptionPane.showMessageDialog(null,"Preencher UF Válido!!!");
+					return;
+				}
+				if(txtCidade.getText().equals(""))	{
+					JOptionPane.showMessageDialog(null,"Preencher CIDADE Válida!!");
+					return;
+				}
+				if(txtBairro.getText().equals(""))	{
+					JOptionPane.showMessageDialog(null,"Preencher BAIRRO Válido!!!");
+					return;
+				}
+				if(txtDta.getText().equals("  /  /    "))	{
+					JOptionPane.showMessageDialog(null,"Preencher Data de Nascimento Válida!!!");
+					return;
+				}
+				if(txtCelular.getText().equals("(  )     -    "))	{
+					JOptionPane.showMessageDialog(null,"Preencher CELULAR Válido!!!");
+					return;
+				}
+				if(txtEmail.getText().equals(""))	{
+					JOptionPane.showMessageDialog(null,"Preencher E-MAIL Válido!!!");
+					return;
+				}
+				if(txtPass.getText().equals(""))	{
+					JOptionPane.showMessageDialog(null,"Preencher SENHA Válida!!!");
+					return;
+				}
+				if(txtNumero.getText().equals(""))	{
+					JOptionPane.showMessageDialog(null,"Preencher NÚMERO Válido!!!");
+					return;
+				}
 				paciente = new Paciente ();
 				paciente.setCpf(txtCPF.getText());
 				paciente.setNome(txtNome.getText());
@@ -249,6 +293,7 @@ public class TelaPaciente extends JFrame {
 				
 				pacientedao= new PacienteDAO ();
 				pacientedao.salvar(paciente);
+				JOptionPane.showMessageDialog(null,"Gravado com Sucesso!!!");
 				}
 				catch ( Exception e ) {
 					JOptionPane.showMessageDialog(null, "Erro ao gravar paciente!!\n" + e.getMessage());
@@ -268,6 +313,79 @@ public class TelaPaciente extends JFrame {
 		contentPane.add(btnCadastrar);
 		
 		btnAlterar = new JButton();
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if(txtCPF.getText().equals("   .   .   -  "))	{
+						JOptionPane.showMessageDialog(null,"Preencher CPF Válido!!!");
+						return;
+					}
+					if(txtNome.getText().equals(""))	{
+						JOptionPane.showMessageDialog(null,"Preencher NOME Válido!!!");
+						return;
+					}
+					if(txtRua.getText().equals(""))	{
+						JOptionPane.showMessageDialog(null,"Preencher Nome da Rua Válido!!!");
+						return;
+					}
+					if(cbmUF.getSelectedIndex()==0)	{
+						JOptionPane.showMessageDialog(null,"Preencher UF Válido!!!");
+						return;
+					}
+					if(txtCidade.getText().equals(""))	{
+						JOptionPane.showMessageDialog(null,"Preencher CIDADE Válida!!");
+						return;
+					}
+					if(txtBairro.getText().equals(""))	{
+						JOptionPane.showMessageDialog(null,"Preencher BAIRRO Válido!!!");
+						return;
+					}
+					if(txtDta.getText().equals("  /  /    "))	{
+						JOptionPane.showMessageDialog(null,"Preencher Data de Nascimento Válida!!!");
+						return;
+					}
+					if(txtCelular.getText().equals("(  )     -    "))	{
+						JOptionPane.showMessageDialog(null,"Preencher CELULAR Válido!!!");
+						return;
+					}
+					if(txtEmail.getText().equals(""))	{
+						JOptionPane.showMessageDialog(null,"Preencher E-MAIL Válido!!!");
+						return;
+					}
+					if(txtPass.getText().equals(""))	{
+						JOptionPane.showMessageDialog(null,"Preencher SENHA Válida!!!");
+						return;
+					}
+					if(txtNumero.getText().equals(""))	{
+						JOptionPane.showMessageDialog(null,"Preencher NÚMERO Válido!!!");
+						return;
+					}
+					paciente = new Paciente ();
+					paciente.setCpf(txtCPF.getText());
+					paciente.setNome(txtNome.getText());
+					paciente.setRua(txtRua.getText());
+					paciente.setComplemento(txtComple.getText());
+					paciente.setUf(String.valueOf(cbmUF.getSelectedItem()));
+					paciente.setCidade(txtCidade.getText());
+					paciente.setBairro(txtBairro.getText());
+					paciente.setDataNasc(txtDta.getText());
+					paciente.setCelular(txtCelular.getText());
+					paciente.setEmail(txtEmail.getText());
+					paciente.setSenha(txtPass.getText());
+					paciente.setNumero(txtNumero.getText());
+					paciente.setSexo(String.valueOf(cbmSexo.getSelectedItem()));
+					
+					pacientedao= new PacienteDAO ();
+					pacientedao.alterar(paciente);
+					JOptionPane.showMessageDialog(null,"Alterado com Sucesso!!!");
+					}
+					catch ( Exception e1 ) {
+						JOptionPane.showMessageDialog(null, "Erro ao alterar paciente!!\n" + e1.getMessage());
+						
+					
+					}
+			}
+		});
 		btnAlterar.setToolTipText("Alterar");
 		ImageIcon iconAlterar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/alterar.png"));
 		iconAlterar.setImage(iconAlterar.getImage().getScaledInstance(50, 50, 50));
