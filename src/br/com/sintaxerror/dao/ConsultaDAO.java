@@ -74,9 +74,9 @@ public class ConsultaDAO {
 	
 	public Consulta consultar(String cpfPaciente) throws Exception {
 		try {
-			String sql = "select * from paciente\r\n" + 
-					"join consulta on paciente.cpf = consulta.paciente_fk\r\n" + 
-					"join dentista on consulta.dentista_fk = dentista.codDentista\r\n" + 
+			String sql = "select * from paciente " + 
+					"join consulta on paciente.cpf = consulta.paciente_fk " + 
+					"join dentista on consulta.dentista_fk = dentista.codDentista " + 
 					"where paciente.cpf = ?";
 			
 			st = con.prepareStatement(sql);
