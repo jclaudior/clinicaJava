@@ -534,6 +534,27 @@ public class TelaPaciente extends JFrame {
 		contentPane.add(txtMostar);
 		
 		btnLimpar = new JButton();
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//=============================================
+				String t=null;
+				txtCPF.setText(t);
+				txtNome.setText(t);
+				cbmSexo.setSelectedIndex(0);
+				txtRua.setText(t);
+				txtNumero.setText(t);
+				txtComple.setText(t);
+				txtCidade.setText(t);
+				cbmUF.setSelectedIndex(0);
+				txtBairro.setText(t);
+				txtDta.setText(t);
+				txtCelular.setText(t);
+				txtEmail.setText(t);
+				txtPass.setText(t);	
+				
+				//=============================================
+			}
+		});
 		btnLimpar.setToolTipText("Limpar");
 		ImageIcon iconLimpar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/limpar.png"));
 		iconLimpar.setImage(iconLimpar.getImage().getScaledInstance(50, 50, 50));
