@@ -96,7 +96,7 @@ public class PacienteDAO {
 	
 	public void excluir(String cpf) throws Exception {
 		try {
-			String sql = "delete * from paciente where cpf = ?";
+			String sql = "delete from paciente where cpf = ?";
 			 st = con.prepareStatement(sql);
 			 st.setString(1, cpf);
 			 

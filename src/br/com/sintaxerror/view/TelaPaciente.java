@@ -24,7 +24,9 @@ import javax.swing.JButton;
 import java.awt.TextArea;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
@@ -433,7 +435,7 @@ public class TelaPaciente extends JFrame {
 									
 					
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "CPF NÃO CADASTRADO!!!");
+					JOptionPane.showMessageDialog(null, "Erro ao realizar Consulta");
 				}
 				
 							
@@ -449,6 +451,25 @@ public class TelaPaciente extends JFrame {
 		contentPane.add(btnConsultar);
 		
 		btnExcluir = new JButton();
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//========================================
+				
+				try {
+					pacientedao = new PacienteDAO();
+					pacientedao.excluir(txtCPF.getText());
+					JOptionPane.showMessageDialog(null, "Paciente excluído com sucesso!!!");
+				}
+				catch(Exception e) {
+					JOptionPane.showMessageDialog(null, "Erro ao excluir paciente!!!\n"+e.getMessage());
+					
+				}
+				
+				
+				
+				//========================================
+			}
+		});
 		btnExcluir.setToolTipText("Excluir");
 		ImageIcon iconExcluir = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/excluir.png"));
 		iconExcluir.setImage(iconExcluir.getImage().getScaledInstance(50, 50, 50));
@@ -457,6 +478,47 @@ public class TelaPaciente extends JFrame {
 		contentPane.add(btnExcluir);
 		
 		btnListar = new JButton();
+		btnListar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//===========================================
+				try {
+					txtMostar.setText(null);
+					List<Paciente> lista = new ArrayList<Paciente>();
+					pacientedao = new PacienteDAO();
+					lista = pacientedao.listarTodos();
+					for(Paciente paciente : lista) {
+						formatDate = new SimpleDateFormat("dd/MM/yyyy");
+						formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
+						Date date = formatDateSql.parse(paciente.getDataNasc());
+						txtMostar.append("CPF: "+ paciente.getCpf()+" ");
+						txtMostar.append("Nome: "+ paciente.getNome()+" ");
+						txtMostar.append("Sexo: "+ paciente.getSexo()+" ");
+						txtMostar.append("Rua: "+ paciente.getRua()+" ");
+						txtMostar.append("Numero: "+ paciente.getNumero()+" ");
+						txtMostar.append("Comple: "+ paciente.getComplemento()+" ");
+						txtMostar.append("Cidade: "+ paciente.getCidade()+" ");
+						txtMostar.append("UF: "+ paciente.getUf()+" ");
+						txtMostar.append("Bairro: "+ paciente.getBairro()+" ");
+						txtMostar.append("DataNasc: "+ formatDate.format(date)+" ");
+						txtMostar.append("Cel: "+ paciente.getCelular());
+						txtMostar.append("Email: "+ paciente.getEmail());
+						
+						
+						
+				}
+				}
+				catch(Exception e) {
+					JOptionPane.showMessageDialog(null, "Erro ao Listar na Tela!!!\n"+ e.getMessage());
+					
+				}
+				
+				
+				
+				
+				
+				//===========================================
+			}
+		});
 		btnListar.setToolTipText("Listar");
 		ImageIcon iconListar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/listar.png"));
 		iconListar.setImage(iconListar.getImage().getScaledInstance(50, 50, 50));
