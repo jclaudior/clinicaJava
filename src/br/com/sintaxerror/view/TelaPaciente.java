@@ -31,6 +31,8 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class TelaPaciente extends JFrame {
 
@@ -119,6 +121,15 @@ public class TelaPaciente extends JFrame {
 			JOptionPane.showMessageDialog(null, "Erro na mascara CPF\n");
 		}
 		txtCPF = new JFormattedTextField(ftmCpf);
+		txtCPF.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE ||c == KeyEvent.VK_DELETE)) {
+					e.consume();
+				}
+			}
+		});
 		txtCPF.setBounds(83, 24, 125, 20);
 		contentPane.add(txtCPF);
 		
@@ -198,6 +209,15 @@ public class TelaPaciente extends JFrame {
 			JOptionPane.showMessageDialog(null, "Erro na mascara Data Nascimento\n");
 		}
 		txtDta = new JFormattedTextField(ftmData);
+		txtDta.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE ||c == KeyEvent.VK_DELETE)) {
+					e.consume();
+				}
+			}
+		});
 		txtDta.setBounds(82, 99, 82, 20);
 		contentPane.add(txtDta);
 		
@@ -213,6 +233,15 @@ public class TelaPaciente extends JFrame {
 			JOptionPane.showMessageDialog(null, "Erro na mascara Celular\n");
 		}
 		txtCelular = new JFormattedTextField(ftmCel);
+		txtCelular.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE ||c == KeyEvent.VK_DELETE)) {
+					e.consume();
+				}
+			}
+		});
 		txtCelular.setBounds(440, 99, 119, 20);
 		contentPane.add(txtCelular);
 		
