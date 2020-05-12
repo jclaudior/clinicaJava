@@ -13,7 +13,7 @@ create table PACIENTE (
 	uf char(2),
 	bairro varchar(40),
 	celular varchar(15),
-	dataNasc varchar(20),
+	dataNasc DATE(20),
 	email varchar(50),
 	senha varchar(20),
     

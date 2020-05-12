@@ -41,6 +41,8 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class TelaConsulta extends JFrame {
 
@@ -115,6 +117,15 @@ public class TelaConsulta extends JFrame {
 		contentPane.add(lblCodigo);
 
 		txtCodigo = new JTextField();
+		txtCodigo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE ||c == KeyEvent.VK_DELETE)) {
+					e.consume();
+				}
+			}
+		});
 		txtCodigo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -146,6 +157,15 @@ public class TelaConsulta extends JFrame {
 		contentPane.add(lblCodDentista);
 
 		txtCodDent = new JTextField();
+		txtCodDent.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE ||c == KeyEvent.VK_DELETE)) {
+					e.consume();
+				}
+			}
+		});
 		txtCodDent.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -168,6 +188,15 @@ public class TelaConsulta extends JFrame {
 			JOptionPane.showMessageDialog(null, "Erro mascara CPF");
 		}
 		txtCPF = new JFormattedTextField(ftmCpf);
+		txtCPF.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE ||c == KeyEvent.VK_DELETE)) {
+					e.consume();
+				}
+			}
+		});
 		txtCPF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
@@ -188,6 +217,15 @@ public class TelaConsulta extends JFrame {
 			JOptionPane.showMessageDialog(null, "Erro mascara DATA");
 		}
 		txtData = new JFormattedTextField(ftmData);
+		txtData.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE ||c == KeyEvent.VK_DELETE)) {
+					e.consume();
+				}
+			}
+		});
 		txtData.setBounds(266, 39, 120, 20);
 		contentPane.add(txtData);
 
@@ -202,6 +240,15 @@ public class TelaConsulta extends JFrame {
 			JOptionPane.showMessageDialog(null, "Erro mascara Hora");
 		}
 		txtHora = new JFormattedTextField(ftmHora);
+		txtHora.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE ||c == KeyEvent.VK_DELETE)) {
+					e.consume();
+				}
+			}
+		});
 		txtHora.setBounds(438, 39, 55, 20);
 		contentPane.add(txtHora);
 
