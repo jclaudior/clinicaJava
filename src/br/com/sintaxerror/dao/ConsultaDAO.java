@@ -128,7 +128,7 @@ public class ConsultaDAO {
 	
 	public Consulta consultar(int codConsulta) throws Exception {
 		try {
-			String sql = "SELECT * FROM COD_PACIENTE " + 
+			String sql = "SELECT * FROM CAD_PACIENTE " + 
 					"JOIN CAD_CONSULTA ON CAD_PACIENTE.CPF_PACIENTE = CAD_CONSULTA.PACIENTE_CONSULTA " + 
 					"JOIN CAD_DENTISTA ON CAD_CONSULTA.DENTISTA_CONSULTA = CAD_DENTISTA.COD_DENTISTA " + 
 					"WHERE CAD_CONSULTA.COD_CONSULTA = ?";

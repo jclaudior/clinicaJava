@@ -101,7 +101,7 @@ public class TelaPaciente extends JFrame {
 	 */
 	public TelaPaciente(){
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 649, 470);
+		setBounds(100, 100, 657, 493);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

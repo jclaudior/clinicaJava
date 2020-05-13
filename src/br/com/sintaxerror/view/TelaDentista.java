@@ -56,7 +56,7 @@ public class TelaDentista extends JFrame {
 	 */
 	public TelaDentista() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 555, 365);
+		setBounds(100, 100, 568, 389);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

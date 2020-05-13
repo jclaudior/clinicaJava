@@ -150,12 +150,12 @@ public class PacienteDAO {
 			while (rs.next()) {
 				String cpf2 = rs.getString("CPF_PACIENTE");
 				String nome = rs.getString("NOME_PACIENTE");
-				String sexo = rs.getString("UF_PACIENTE");
+				String sexo = rs.getString("SEXO_PACIENTE");
 				String rua = rs.getString("RUA_PACIENTE");
 				String numero = rs.getString("NUMERO_PACIENTE");
 				String complemento = rs.getString("COMPLE_PACIENTE");
 				String cidade = rs.getString("CIDADE_PACIENTE");
-				String uf = rs.getString("uf");
+				String uf = rs.getString("UF_PACIENTE");
 				String bairro = rs.getString("BAIRRO_PACIENTE");
 				String celular = rs.getString("CEL_PACIENTE");
 				String data = rs.getString("DTANASC_PACIENTE");

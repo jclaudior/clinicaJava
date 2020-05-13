@@ -101,7 +101,7 @@ public class TelaConsulta extends JFrame {
 	 */
 	public TelaConsulta() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 923, 336);
+		setBounds(100, 100, 923, 356);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -253,6 +253,26 @@ public class TelaConsulta extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
+				if(c == KeyEvent.VK_ENTER) {
+					try {
+						if (!txtData.getText().equals("  /  /    ")) {
+							Date dateNow = new Date(System.currentTimeMillis());
+
+							formatDate = new SimpleDateFormat("dd/MM/yyyy");
+							formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
+							Date date = formatDate.parse(txtData.getText());
+
+							if (date.before(dateNow)) {
+								JOptionPane.showMessageDialog(null, "Data deve ser maior que Atual!");
+								txtData.setText(null);
+								txtData.requestFocus();
+							}
+						}
+					} catch (Exception e) {
+						JOptionPane.showMessageDialog(null, "Erro ao validar data!\n" + e.getMessage());
+						txtData.requestFocus();
+					}
+				}
 				if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
 					e.consume();
 				}
