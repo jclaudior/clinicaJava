@@ -239,10 +239,13 @@ public class TelaConsulta extends JFrame {
 
 						if (date.before(dateNow)) {
 							JOptionPane.showMessageDialog(null, "Data deve ser maior que Atual!");
+							txtData.setText(null);
+							txtData.requestFocus();
 						}
 					}
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Erro ao validar data!\n" + e.getMessage());
+					txtData.requestFocus();
 				}
 			}
 		});
