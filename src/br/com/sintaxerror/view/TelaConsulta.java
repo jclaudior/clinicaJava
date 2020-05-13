@@ -483,6 +483,7 @@ public class TelaConsulta extends JFrame {
 					}
 					consultaDAO = new ConsultaDAO();
 					consultaDAO.excluir(Integer.parseInt(txtCodigo.getText()));
+					JOptionPane.showMessageDialog(null, "Consulta Excluida com Sucesso!");
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Erro ao Excluir consulta!\n" + e.getMessage());
 				}
