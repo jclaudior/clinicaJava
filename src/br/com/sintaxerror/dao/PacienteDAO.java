@@ -31,7 +31,7 @@ public class PacienteDAO {
 		boolean state = false;
 		
 		try {
-			String sql = "insert into paciente value(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO CAD_PACIENTE VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			
 			st = con.prepareStatement(sql);
 			
@@ -61,7 +61,7 @@ public class PacienteDAO {
 	
 	public Paciente consultar(String cpf) throws Exception{
 		try {
-			String sql = "select * from paciente where cpf = ?";
+			String sql = "SELECT * FROM CAD_PACIENTE WHERE CPF_PACIENTE = ?";
 			
 			st = con.prepareStatement(sql);
 			st.setString(1, cpf);
@@ -69,21 +69,22 @@ public class PacienteDAO {
 			rs = st.executeQuery();
 			
 			while (rs.next()) {
-				String cpf2 = rs.getString("cpf");
-				String nome = rs.getString("nome");
-				String sexo = rs.getString("uf");
-				String rua = rs.getString("rua");
-				String numero = rs.getString("numero");
-				String complemento = rs.getString("complemento");
-				String uf = rs.getString("uf");
-				String bairro = rs.getString("bairro");
-				String celular = rs.getString("celular");
-				String data = rs.getString("dataNasc");
-				String email = rs.getString("email");
-				String senha = rs.getString("senha");
-				String cidade = rs.getNString("cidade");
+				String cpf2 = rs.getString("CPF_PACIENTE");
+				String nome = rs.getString("NOME_PACIENTE");
+				String sexo = rs.getString("SEXO_PACIENTE");
+				String rua = rs.getString("RUA_PACIENTE");
+				String numero = rs.getString("NUMERO_PACIENTE");
+				String complemento = rs.getString("COMPLE_PACIENTE");
+				String cidade = rs.getNString("CIDADE_PACIENTE");
+				String uf = rs.getString("UF_PACIENTE");
+				String bairro = rs.getString("BAIRRO_PACIENTE");
+				String celular = rs.getString("CEL_PACIENTE");
+				String data = rs.getString("DTANASC_PACIENTE");
+				String email = rs.getString("EMAIL_PACIENTE");
+				String senha = rs.getString("SENHA_PACIENTE");
 				
-				Paciente paciente = new Paciente(cpf2, nome, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha, cidade);
+				
+				Paciente paciente = new Paciente(cpf2, nome, sexo, rua, numero, complemento, cidade, uf, bairro, celular, data, email, senha);
 				
 				return paciente;
 			}
@@ -96,7 +97,7 @@ public class PacienteDAO {
 	
 	public void excluir(String cpf) throws Exception {
 		try {
-			String sql = "delete from paciente where cpf = ?";
+			String sql = "DELETE FROM CAD_PACIENTE WHERE CPF_PACIENTE = ?";
 			 st = con.prepareStatement(sql);
 			 st.setString(1, cpf);
 			 
@@ -109,8 +110,8 @@ public class PacienteDAO {
 	
 	public void alterar(Paciente paciente) throws Exception {
 		try {
-			String sql = "update paciente set nome = ?, sexo = ?, rua = ?, numero = ?, complemento = ?, cidade = ?, uf = ?, bairro = ?, celular = ?, dataNasc = ?, email = ?, senha = ?"
-					+ "where cpf = ?";
+			String sql = "UPDATE CAD_PACIENTE SET NOME_PACIENTE = ?, SEXO_PACIENTE = ?, RUA_PACIENTE = ?, NUMERO_PACIENTE = ?, COMPLE_PACIENTE = ?, CIDADE_PACIENTE = ?, UF_PACIENTE = ?, BAIRRO_PACIENTE = ?, CEL_PACIENTE = ?, DTANASC_PACIENTE = ?, EMAIL_PACIENTE = ?, SENHA_PACIENTE = ?"
+					+ "WHERE CPF_PACIENTE = ?";
 			
 			st = con.prepareStatement(sql);
 			
@@ -140,28 +141,29 @@ public class PacienteDAO {
 		List<Paciente> listaPaciente = new ArrayList<Paciente>();
 		
 		try {
-			String sql = "select * from paciente";
+			String sql = "SELECT * FROM CAD_PACIENTE";
 			
 			st = con.prepareStatement(sql);
 			
 			rs = st.executeQuery();
 			
 			while (rs.next()) {
-				String cpf2 = rs.getString("cpf");
-				String nome = rs.getString("nome");
-				String sexo = rs.getString("uf");
-				String rua = rs.getString("rua");
-				String numero = rs.getString("numero");
-				String complemento = rs.getString("complemento");
+				String cpf2 = rs.getString("CPF_PACIENTE");
+				String nome = rs.getString("NOME_PACIENTE");
+				String sexo = rs.getString("UF_PACIENTE");
+				String rua = rs.getString("RUA_PACIENTE");
+				String numero = rs.getString("NUMERO_PACIENTE");
+				String complemento = rs.getString("COMPLE_PACIENTE");
+				String cidade = rs.getString("CIDADE_PACIENTE");
 				String uf = rs.getString("uf");
-				String bairro = rs.getString("bairro");
-				String celular = rs.getString("celular");
-				String data = rs.getString("dataNasc");
-				String email = rs.getString("email");
-				String senha = rs.getString("senha");
-				String cidade = rs.getString("cidade");
+				String bairro = rs.getString("BAIRRO_PACIENTE");
+				String celular = rs.getString("CEL_PACIENTE");
+				String data = rs.getString("DTANASC_PACIENTE");
+				String email = rs.getString("EMAIL_PACIENTE");
+				String senha = rs.getString("SENHA_PACIENTE");
 				
-				listaPaciente.add(new Paciente(cpf2, nome, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha, cidade));
+				
+				listaPaciente.add(new Paciente(cpf2, nome, sexo, rua, numero, complemento, cidade, uf, bairro, celular, data, email, senha));
 			}
 			return listaPaciente;
 		}

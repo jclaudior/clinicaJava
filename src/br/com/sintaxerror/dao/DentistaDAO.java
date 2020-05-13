@@ -27,7 +27,7 @@ public class DentistaDAO {
 	
 	public boolean salvar(Dentista dentista) throws Exception {
 		try {
-			String sql = "insert into dentista values (?, ?, ?)";
+			String sql = "INSERT INTO CAD_DENTISTA VALUES (?, ?, ?)";
 			
 			st = con.prepareStatement(sql);
 			st.setInt(1, dentista.getCodDentista());
@@ -48,7 +48,7 @@ public class DentistaDAO {
 	
 	public Dentista consultar (int codDentista) throws Exception {
 		try{
-			String sql = "select * from dentista where codDentista = ?";
+			String sql = "SELECT * FROM CAD_DENTISTA WHERE COD_DENTISTA = ?";
 			
 			st = con.prepareStatement(sql);
 			st.setInt(1, codDentista);
@@ -56,9 +56,9 @@ public class DentistaDAO {
 			rs = st.executeQuery();
 			
 			while(rs.next()) {
-				int cod = rs.getInt("codDentista");
-				String nome = rs.getString("nomeDentista");
-				String especialidade = rs.getString("especialidade");
+				int cod = rs.getInt("COD_DENTISTA");
+				String nome = rs.getString("NOME_DENTISTA");
+				String especialidade = rs.getString("ESPEC_DENTISTA");
 				
 				Dentista dentista = new Dentista(cod, nome, especialidade);
 				
@@ -73,7 +73,7 @@ public class DentistaDAO {
 	
 	public void excluir (int codDentista) throws Exception{
 		try {
-			String sql = "delete from dentista where codDentista = ?";
+			String sql = "DELETE FROM CAD_DENTISTA WHERE COD_DENTISTA = ?";
 			
 			st = con.prepareStatement(sql);
 			st.setInt(1, codDentista);
@@ -87,7 +87,7 @@ public class DentistaDAO {
 	
 	public void alterar (Dentista dentista) throws Exception {
 		try {
-			String sql = "update dentista set nome = ?, especialidade = ? where codDentista = ?";
+			String sql = "UPDATE CAD_DENTISTA SET NOME_DENTISTA = ?, ESPEC_DENTISTA = ? WHERE COD_DENTISTA = ?";
 			
 			st = con.prepareStatement(sql);
 			st.setString(1, dentista.getNomeDentista());
@@ -104,16 +104,16 @@ public class DentistaDAO {
 	public List<Dentista> listarTodos() throws Exception {
 		List<Dentista> lista = new ArrayList<Dentista>();
 		try {
-			String sql = "select * from dentista";
+			String sql = "SELECT * FROM CAD_DENTISTA";
 			
 			st = con.prepareStatement(sql);
 			
 			rs = st.executeQuery();
 			
 			while(rs.next()) {
-				int cod = rs.getInt("codDentista");
-				String nome = rs.getString("nomeDentista");
-				String especialidade = rs.getString("especialidade");
+				int cod = rs.getInt("COD_DENTISTA");
+				String nome = rs.getString("NOME_DENTISTA");
+				String especialidade = rs.getString("ESPEC_DENTISTA");
 				
 				lista.add(new Dentista(cod, nome, especialidade));
 			}

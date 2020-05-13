@@ -33,7 +33,7 @@ public class ConsultaDAO {
 	public boolean salvar(Consulta consulta) throws Exception {
 		boolean state = false;
 		try {
-			String sql = "insert into consulta values (?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO CAD_CONSULTA VALUES (?, ?, ?, ?, ?, ?)";
 			
 			st = con.prepareStatement(sql);
 			
@@ -56,7 +56,7 @@ public class ConsultaDAO {
 	
 	public void alterar(Consulta consulta) throws Exception {
 		try {
-			String sql = "update consulta set paciente_FK = ?, dentista_Fk = ?, dia = ?, horario = ?, obs = ?, where codConsulta = ?";
+			String sql = "UPDATE CAD_CONSULTA SET PACIENTE_CONSULTA = ?, DENTISTA_CONSULTA = ?, DTA_CONSULTA = ?, HORARIO_CONSULTA = ?, OBS_CONSULTA = ?, WHERE COD_CONSULTA = ?";
 			
 			st = con.prepareStatement(sql);
 			
@@ -76,10 +76,10 @@ public class ConsultaDAO {
 	
 	public Consulta consultar(String cpfPaciente) throws Exception {
 		try {
-			String sql = "select * from paciente " + 
-					"join consulta on paciente.cpf = consulta.paciente_fk " + 
-					"join dentista on consulta.dentista_fk = dentista.codDentista " + 
-					"where paciente.cpf = ?";
+			String sql = "SELECT * FROM CAD_PACIENTE " + 
+					"JOIN CAD_CONSULTA ON CAD_PACIENTE.CPF_PACIENTE = CAD_CONSULTA.PACIENTE_CONSULTA " + 
+					"JOIN CAD_DENTISTA ON CAD_CONSULTA.DENTISTA_CONSULTA = CAD_DENTISTA.COD_DENTISTA " + 
+					"WHERE CAD_PACIENTE.CPF_PACIENTE = ?";
 			
 			st = con.prepareStatement(sql);
 			st.setString(1, cpfPaciente);
@@ -88,29 +88,29 @@ public class ConsultaDAO {
 			
 			while (rs.next()) {
 				// dados consultas
-				int cod = rs.getInt("codConsulta");
-				String dia = rs.getString("dia");
-				String horario = rs.getString("horario");
-				String obs = rs.getString("obs");
+				int cod = rs.getInt("COD_CONSULTA");
+				String dia = rs.getString("DTA_CONSULTA");
+				String horario = rs.getString("HORARIO_CONSULTA");
+				String obs = rs.getString("OBS_CONSULTA");
 				
 				// dados paciente
-				String cpf = rs.getString("cpf");
-				String nomePaciente = rs.getString("nome");
-				String sexo = rs.getString("uf");
-				String rua = rs.getString("rua");
-				String numero = rs.getString("numero");
-				String complemento = rs.getString("complemento");
-				String uf = rs.getString("uf");
-				String bairro = rs.getString("bairro");
-				String celular = rs.getString("celular");
-				String data = rs.getString("dataNasc");
-				String email = rs.getString("email");
-				String senha = rs.getString("senha");
-				String cidade = rs.getString("cidade");
+				String cpf = rs.getString("CPF_PACIENTE");
+				String nomePaciente = rs.getString("NOME_PACIENTE");
+				String sexo = rs.getString("SEXO_PACIENTE");
+				String rua = rs.getString("RUA_PACIENTE");
+				String numero = rs.getString("NUMERO_PACIENTE");
+				String complemento = rs.getString("COMPLE_PACIENTE");
+				String uf = rs.getString("UF_PACIENTE");
+				String bairro = rs.getString("BAIRRO_PACIENTE");
+				String celular = rs.getString("CEL_PACIENTE");
+				String data = rs.getString("DTANASC_PACIENTE");
+				String email = rs.getString("EMAIL_PACIENTE");
+				String senha = rs.getString("SENHA_PACIENTE");
+				String cidade = rs.getString("CIDADE_PACIENTE");
 				//dados dentista
-				int codDentista = rs.getInt("codDentista");
-				String nomeDentista = rs.getString("nomeDentista");
-				String especialidade = rs.getString("especialidade");
+				int codDentista = rs.getInt("COD_DENTISTA");
+				String nomeDentista = rs.getString("NOME_DENTISTA");
+				String especialidade = rs.getString("ESPEC_DENTISTA");
 				
 				Paciente paciente = new Paciente(cpf, nomePaciente, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha, cidade);
 				Dentista dentista = new Dentista(codDentista, nomeDentista, especialidade);
@@ -128,10 +128,10 @@ public class ConsultaDAO {
 	
 	public Consulta consultar(int codConsulta) throws Exception {
 		try {
-			String sql = "select * from paciente\r\n" + 
-					"join consulta on paciente.cpf = consulta.paciente_fk\r\n" + 
-					"join dentista on consulta.dentista_fk = dentista.codDentista\r\n" + 
-					"where consulta.codConsulta = ?";
+			String sql = "SELECT * FROM COD_PACIENTE " + 
+					"JOIN CAD_CONSULTA ON CAD_PACIENTE.CPF_PACIENTE = CAD_CONSULTA.PACIENTE_CONSULTA " + 
+					"JOIN CAD_DENTISTA ON CAD_CONSULTA.DENTISTA_CONSULTA = CAD_DENTISTA.COD_DENTISTA " + 
+					"WHERE CAD_CONSULTA.COD_CONSULTA = ?";
 			
 			st = con.prepareStatement(sql);
 			st.setInt(1, codConsulta);
@@ -140,30 +140,30 @@ public class ConsultaDAO {
 			
 			while (rs.next()) {
 				// dados consultas
-				int cod = rs.getInt("codConsulta");
-				String dia = rs.getString("dia");
-				String horario = rs.getString("horario");
-				String obs = rs.getString("obs");
+				int cod = rs.getInt("COD_CONSULTA");
+				String dia = rs.getString("DTA_CONSULTA");
+				String horario = rs.getString("HORARIO_CONSULTA");
+				String obs = rs.getString("OBS_CONSULTA");
 				
 				// dados paciente
-				String cpf = rs.getString("cpf");
-				String nomePaciente = rs.getString("nome");
-				String sexo = rs.getString("uf");
-				String rua = rs.getString("rua");
-				String numero = rs.getString("numero");
-				String complemento = rs.getString("complemento");
-				String uf = rs.getString("uf");
-				String bairro = rs.getString("bairro");
-				String celular = rs.getString("celular");
-				String data = rs.getString("dataNasc");
-				String email = rs.getString("email");
-				String senha = rs.getString("senha");
-				String cidade = rs.getString("cidade");
+				String cpf = rs.getString("CPF_PACIENTE");
+				String nomePaciente = rs.getString("NOME_PACIENTE");
+				String sexo = rs.getString("SEXO_PACIENTE");
+				String rua = rs.getString("RUA_PACIENTE");
+				String numero = rs.getString("NUMERO_PACIENTE");
+				String complemento = rs.getString("COMPLE_PACIENTE");
+				String uf = rs.getString("UF_PACIENTE");
+				String bairro = rs.getString("BAIRRO_PACIENTE");
+				String celular = rs.getString("CEL_PACIENTE");
+				String data = rs.getString("DTA_PACIENTE");
+				String email = rs.getString("EMAIL_PACIENTE");
+				String senha = rs.getString("SENHA_PACIENTE");
+				String cidade = rs.getString("CIDADE_PACIENTE");
 				
 				//dados dentista
-				int codDentista = rs.getInt("codDentista");
-				String nomeDentista = rs.getString("nomeDentista");
-				String especialidade = rs.getString("especialidade");
+				int codDentista = rs.getInt("COD_DENTISTA");
+				String nomeDentista = rs.getString("NOME_DENTISTA");
+				String especialidade = rs.getString("ESPEC_DENTISTA");
 				
 				Paciente paciente = new Paciente(cpf, nomePaciente, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha, cidade);
 				Dentista dentista = new Dentista(codDentista, nomeDentista, especialidade);
@@ -181,7 +181,7 @@ public class ConsultaDAO {
 	
 	public void excluir(String cpf) throws Exception {
 		try {
-			String sql = "delete from consulta where paciente_fk = ?";
+			String sql = "DELETE FROM CAD_CONSULTA WHERE PACIENTE_CONSULTA = ?";
 			
 			st = con.prepareStatement(sql);
 			st.setString(1, cpf);
@@ -195,7 +195,7 @@ public class ConsultaDAO {
 	
 	public void excluir(int codConsulta) throws Exception {
 		try {
-			String sql = "delete from consulta where codConsulta = ?";
+			String sql = "DELETE FROM CAD_CONSULTA WHERE COD_CONSULTA = ?";
 			
 			st = con.prepareStatement(sql);
 			st.setInt(1, codConsulta);
@@ -211,9 +211,9 @@ public class ConsultaDAO {
 		List<Consulta> listaConsulta = new ArrayList<Consulta>();
 		
 		try {
-			String sql = "select * from paciente " + 
-					"join consulta on paciente.cpf = consulta.paciente_fk " + 
-					"join dentista on consulta.dentista_fk = dentista.codDentista";
+			String sql = "SELECT * FROM CAD_PACIENTE " + 
+					"JOIN CAD_CONSULTA ON CAD_PACIENTE.CPF_PACIENTE = CAD_CONSULTA.PACIENTE_CONSULTA " + 
+					"JOIN CAD_DENTISTA ON CAD_CONSULTA.DENTISTA_CONSULTA = CAD_DENTISTA.COD_DENTISTA";
 			
 			st = con.prepareStatement(sql);
 			
@@ -221,30 +221,30 @@ public class ConsultaDAO {
 			
 			while (rs.next()) {
 				// dados consultas
-				int cod = rs.getInt("codConsulta");
-				String dia = rs.getString("dia");
-				String horario = rs.getString("horario");
-				String obs = rs.getString("obs");
+				int cod = rs.getInt("COD_CONSULTA");
+				String dia = rs.getString("DTA_CONSULTA");
+				String horario = rs.getString("HORARIO_CONSULTA");
+				String obs = rs.getString("OBS_CONSULTA");
 				
 				// dados paciente
-				String cpf = rs.getString("cpf");
-				String nomePaciente = rs.getString("nome");
-				String sexo = rs.getString("uf");
-				String rua = rs.getString("rua");
-				String numero = rs.getString("numero");
-				String complemento = rs.getString("complemento");
-				String uf = rs.getString("uf");
-				String bairro = rs.getString("bairro");
-				String celular = rs.getString("celular");
-				String data = rs.getString("dataNasc");
-				String email = rs.getString("email");
-				String senha = rs.getString("senha");
-				String cidade = rs.getString("cidade");
+				String cpf = rs.getString("CPF_PACIENTE");
+				String nomePaciente = rs.getString("NOME_PACIENTE");
+				String sexo = rs.getString("SEXO_PACIENTE");
+				String rua = rs.getString("RUA_PACIENTE");
+				String numero = rs.getString("NUMERO_PACIENTE");
+				String complemento = rs.getString("COMPLE_PACIENTE");
+				String uf = rs.getString("UF_PACIENTE");
+				String bairro = rs.getString("BAIRRO_PACIENTE");
+				String celular = rs.getString("CEL_PACIENTE");
+				String data = rs.getString("DTANASC_PACIENTE");
+				String email = rs.getString("EMAIL_PACIENTE");
+				String senha = rs.getString("SENHA_PACIENTE");
+				String cidade = rs.getString("CIDADE_PACIENTE");
 				
 				//dados dentista
-				int codDentista = rs.getInt("codDentista");
-				String nomeDentista = rs.getString("nomeDentista");
-				String especialidade = rs.getString("especialidade");
+				int codDentista = rs.getInt("COD_DENTISTA");
+				String nomeDentista = rs.getString("NOME_DENTISTA");
+				String especialidade = rs.getString("ESPEC_DENTISTA");
 				
 			
 			
@@ -261,23 +261,22 @@ public class ConsultaDAO {
 		}
 	}
 	
-	public int lastId() {
+	public int lastId() throws Exception{
 		try {
-			String sql = "select * from consulta order by codConsulta desc limit 1";
+			String sql = "SELECT * FROM CAD_CONSULTA ORDER BY COD_CONSULTA DESC LIMIT 1";
 			
 			st = con.prepareStatement(sql);
 			
 			rs = st.executeQuery();
 			int id = 0;
 			while (rs.next()) {
-				id = rs.getInt("codConsulta");
+				id = rs.getInt("COD_CONSULTA");
 				
 			}
 			return id;
 		}
 		catch(Exception e) {
-			JOptionPane.showMessageDialog(null, "Erro ao Consultar Ultimo ID!\n" + e.getMessage());
+			throw new Exception();
 		}
-		return 0;
 	}
 }

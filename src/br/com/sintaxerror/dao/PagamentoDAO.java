@@ -28,7 +28,7 @@ public class PagamentoDAO {
 	
 	public boolean salvar(Pagamento pagamento) throws Exception {
 		try {
-			String sql = "insert into pagamento values (?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO CAD_PAG VALUES (?, ?, ?, ?, ?)";
 			
 			st = con.prepareStatement(sql);
 			st.setInt(1, pagamento.getCodPagamento());
@@ -51,9 +51,9 @@ public class PagamentoDAO {
 	
 	public Pagamento consultar(String cpf) throws Exception{
 		try {
-			String sql = "select * from pagamento"
-					+ "join paciente on pagamento.paciente_FK = paciente.cpf"
-					+ "where paciente.cpf = ?";
+			String sql = "SELECT * FROM CAD_PAG "
+					+ "JOIN CAD_PACIENTE ON CAD_PAG.PACIENTE_PAG = CAD_PACIENTE.CPF_PACIENTE"
+					+ "WHERE CAD_PACIENTE.CPF_PACIENTE = ?";
 			
 			st = con.prepareStatement(sql);
 			st.setString(1, cpf);
@@ -62,26 +62,27 @@ public class PagamentoDAO {
 			
 			while (rs.next()) {
 				//dados paciente
-				String cpf2 = rs.getString("cpf");
-				String nome = rs.getString("nome");
-				String sexo = rs.getString("uf");
-				String rua = rs.getString("rua");
-				String numero = rs.getString("numero");
-				String complemento = rs.getString("complemento");
-				String uf = rs.getString("uf");
-				String bairro = rs.getString("bairro");
-				String celular = rs.getString("celular");
-				String data = rs.getString("dataNasc");
-				String email = rs.getString("email");
-				String senha = rs.getString("senha");
-				String cidade = rs.getString("cidade");
+				String cpf2 = rs.getString("CPF_PACIENTE");
+				String nome = rs.getString("NOME_PACIENTE");
+				String sexo = rs.getString("SEXO_PACIENTE");
+				String rua = rs.getString("RUA_PACIENTE");
+				String numero = rs.getString("NUMERO_PACIENTE");
+				String complemento = rs.getString("COMPLE_PACIENTE");
+				String cidade = rs.getString("CIDADE_PACIENTE");
+				String uf = rs.getString("UF_PACIENTE");
+				String bairro = rs.getString("BAIRRO_PACIENTE");
+				String celular = rs.getString("CEL_PACIENTE");
+				String data = rs.getString("DTANASC_PACIENTE");
+				String email = rs.getString("EMAIL_PACIENTE");
+				String senha = rs.getString("SENHA_PACIENTE");
+				
 				
 				Paciente paciente = new Paciente(cpf2, nome, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha,cidade);
 				// dados pagamento
-				int cod = rs.getInt("codPagamento");
-				double valor = rs.getDouble("valor");
-				String dia = rs.getString("dia");
-				String forma = rs.getString("formaPagamento");
+				int cod = rs.getInt("COD_PAG");
+				double valor = rs.getDouble("VL_PAG");
+				String dia = rs.getString("DTA_PAG");
+				String forma = rs.getString("FORMA_PAG");
 				
 				Pagamento pagamento = new Pagamento(cod, paciente, valor, dia, forma);
 				
@@ -96,7 +97,7 @@ public class PagamentoDAO {
 	
 	public void excluir (int codPagamento) throws Exception {
 		try {
-			String sql = "delete from pagamento where codPagamento = ?";
+			String sql = "DELETE FROM CAD_PAG WHERE COD_PAG= ?";
 			
 			st = con.prepareStatement(sql);
 			st.setInt(1, codPagamento);
@@ -110,7 +111,7 @@ public class PagamentoDAO {
 	
 	public void alterar(Pagamento pagamento) throws Exception {
 		try {
-			String sql = "update pagamento set paciente_FK = ?, valor = ?, dia = ?, formaPagamento = ? where codPagamento = ?";
+			String sql = "UPDATE CAD_PAG SET PACIENTE_PAG = ?, VL_PAG = ?, DTA_PAG = ?, FORMA_PAG = ? WHERE COD_PAG = ?";
 			
 			st = con.prepareStatement(sql);
 			st.setString(1, pagamento.getPaciente().getCpf());
@@ -129,7 +130,8 @@ public class PagamentoDAO {
 	public List<Pagamento> listarTodos() throws Exception {
 		try {
 			List<Pagamento> lista = new ArrayList<Pagamento>();
-			String sql = "select * from pagamento";
+			String sql = "SELECT * FROM CAD_PAG "
+					+ "JOIN CAD_PACIENTE ON CAD_PAG.PACIENTE_PAG = CAD_PACIENTE.CPF_PACIENTE";
 			
 			st = con.prepareStatement(sql);
 			
@@ -137,27 +139,28 @@ public class PagamentoDAO {
 			
 			while (rs.next()) {
 				//dados paciente
-				String cpf2 = rs.getString("cpf");
-				String nome = rs.getString("nome");
-				String sexo = rs.getString("uf");
-				String rua = rs.getString("rua");
-				String numero = rs.getString("numero");
-				String complemento = rs.getString("complemento");
-				String uf = rs.getString("uf");
-				String bairro = rs.getString("bairro");
-				String celular = rs.getString("celular");
-				String data = rs.getString("dataNasc");
-				String email = rs.getString("email");
-				String senha = rs.getString("senha");
-				String cidade = rs.getString("cidade");
+				String cpf2 = rs.getString("CPF_PACIENTE");
+				String nome = rs.getString("NOME_PACIENTE");
+				String sexo = rs.getString("SEXO_PACIENTE");
+				String rua = rs.getString("RUA_PACIENTE");
+				String numero = rs.getString("NUMERO_PACIENTE");
+				String complemento = rs.getString("COMPLE_PACIENTE");
+				String cidade = rs.getString("CIDADE_PACIENTE");
+				String uf = rs.getString("UF_PACIENTE");
+				String bairro = rs.getString("BAIRRO_PACIENTE");
+				String celular = rs.getString("CEL_PACIENTE");
+				String data = rs.getString("DTANASC_PACIENTE");
+				String email = rs.getString("EMAIL_PACIENTE");
+				String senha = rs.getString("SENHA_PACIENTEa");
+				
 				
 				Paciente paciente = new Paciente(cpf2, nome, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha, cidade);
 				
 				// dados pagamento
-				int cod = rs.getInt("codPagamento");
-				double valor = rs.getDouble("valor");
-				String dia = rs.getString("dia");
-				String forma = rs.getString("formaPagamento");
+				int cod = rs.getInt("COD_PAG");
+				double valor = rs.getDouble("VL_PAG");
+				String dia = rs.getString("DTA_PAG");
+				String forma = rs.getString("FORMA_PAG");
 				
 				lista.add(new Pagamento(cod, paciente, valor, dia, forma));
 			}
