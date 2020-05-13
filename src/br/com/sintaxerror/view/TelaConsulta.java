@@ -409,10 +409,17 @@ public class TelaConsulta extends JFrame {
 					paciente = new Paciente();
 					pacienteDAO = new PacienteDAO();
 					paciente = pacienteDAO.consultar(txtCPF.getText());
-
+					if(paciente == null) {
+						JOptionPane.showMessageDialog(null, "Paciente Não Cadastrado!");
+						return;
+					}
 					dentista = new Dentista();
 					dentistaDAO = new DentistaDAO();
 					dentista = dentistaDAO.consultar(Integer.parseInt(txtCodDent.getText()));
+					if(dentista == null) {
+						JOptionPane.showMessageDialog(null, "Dentista Não Cadastrado!");
+						return;
+					}
 
 					consulta = new Consulta();
 					consulta.setPaciente(paciente);
