@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
-
 import br.com.sintaxerror.dao.ConsultaDAO;
 import br.com.sintaxerror.dao.DentistaDAO;
 import br.com.sintaxerror.dao.PacienteDAO;
@@ -80,6 +79,7 @@ public class TelaConsulta extends JFrame {
 	private MaskFormatter ftmData;// Atributo formatador para data
 	private MaskFormatter ftmCpf;// Atributo formatador para cpf
 	private MaskFormatter ftmHora;// Atributo formatador para hora
+
 	/**
 	 * Launch the application.
 	 */
@@ -117,11 +117,20 @@ public class TelaConsulta extends JFrame {
 		contentPane.add(lblCodigo);
 
 		txtCodigo = new JTextField();
+		txtCodigo.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				consultaCodigo();
+			}
+		});
 		txtCodigo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				if(!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE ||c == KeyEvent.VK_DELETE)) {
+				if (c == KeyEvent.VK_ENTER) {
+					consultaCodigo();
+				}
+				if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
 					e.consume();
 				}
 			}
@@ -161,7 +170,7 @@ public class TelaConsulta extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				if(!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE ||c == KeyEvent.VK_DELETE)) {
+				if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
 					e.consume();
 				}
 			}
@@ -192,7 +201,7 @@ public class TelaConsulta extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				if(!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE ||c == KeyEvent.VK_DELETE)) {
+				if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
 					e.consume();
 				}
 			}
@@ -209,7 +218,7 @@ public class TelaConsulta extends JFrame {
 		lblData = new JLabel("Data:");
 		lblData.setBounds(222, 42, 34, 14);
 		contentPane.add(lblData);
-		
+
 		try {
 			ftmData = new MaskFormatter("##/##/####");
 		} catch (ParseException e1) {
@@ -217,11 +226,31 @@ public class TelaConsulta extends JFrame {
 			JOptionPane.showMessageDialog(null, "Erro mascara DATA");
 		}
 		txtData = new JFormattedTextField(ftmData);
+		txtData.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				try {
+					if (!txtData.getText().equals("  /  /    ")) {
+						Date dateNow = new Date(System.currentTimeMillis());
+
+						formatDate = new SimpleDateFormat("dd/MM/yyyy");
+						formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
+						Date date = formatDate.parse(txtData.getText());
+
+						if (date.before(dateNow)) {
+							JOptionPane.showMessageDialog(null, "Data deve ser maior que Atual!");
+						}
+					}
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Erro ao validar data!\n" + e.getMessage());
+				}
+			}
+		});
 		txtData.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				if(!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE ||c == KeyEvent.VK_DELETE)) {
+				if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
 					e.consume();
 				}
 			}
@@ -232,7 +261,7 @@ public class TelaConsulta extends JFrame {
 		lblHora = new JLabel("Hora:");
 		lblHora.setBounds(396, 42, 46, 14);
 		contentPane.add(lblHora);
-		
+
 		try {
 			ftmHora = new MaskFormatter("##:##");
 		} catch (ParseException e1) {
@@ -244,7 +273,7 @@ public class TelaConsulta extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				if(!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE ||c == KeyEvent.VK_DELETE)) {
+				if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
 					e.consume();
 				}
 			}
@@ -271,24 +300,39 @@ public class TelaConsulta extends JFrame {
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					if(txtCPF.getText().equals("   .   .   -  ")) {
-						JOptionPane.showMessageDialog(null,"Preencher CPF Paciente!");
+					if (txtCPF.getText().equals("   .   .   -  ")) {
+						JOptionPane.showMessageDialog(null, "Preencher CPF Paciente!");
 						return;
 					}
-					if(txtCodigo.getText().equals("")) {
-						JOptionPane.showMessageDialog(null,"Preencher Codigo Consulta!");
+					if (txtCodigo.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preencher Codigo Consulta!");
 						return;
 					}
-					if(txtData.getText().equals("  /  /    ")) {
-						JOptionPane.showMessageDialog(null,"Preencher Data Consulta!");
+					if (txtData.getText().equals("  /  /    ")) {
+						JOptionPane.showMessageDialog(null, "Preencher Data Consulta!");
 						return;
 					}
-					if(txtData.getText().equals("  :  ")) {
-						JOptionPane.showMessageDialog(null,"Preencher Hora Consulta!");
+					if (txtData.getText().equals("00/00/0000")) {
+						JOptionPane.showMessageDialog(null, "Data Invalida!");
 						return;
 					}
-					if(txtCodDent.getText().equals("")) {
-						JOptionPane.showMessageDialog(null,"Preencher Codigo Dentista!");
+					if (txtData.getText().equals("  :  ")) {
+						JOptionPane.showMessageDialog(null, "Preencher Hora Consulta!");
+						return;
+					}
+					if (txtCodDent.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preencher Codigo Dentista!");
+						return;
+					}
+
+					Date dateNow = new Date(System.currentTimeMillis());
+
+					formatDate = new SimpleDateFormat("dd/MM/yyyy");
+					formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
+					Date date = formatDate.parse(txtData.getText());
+
+					if (date.before(dateNow)) {
+						JOptionPane.showMessageDialog(null, "Data deve ser maior que Atual!!");
 						return;
 					}
 					paciente = new Paciente();
@@ -303,17 +347,14 @@ public class TelaConsulta extends JFrame {
 					consulta.setPaciente(paciente);
 					consulta.setDentista(dentista);
 					consulta.setCodConsulta(Integer.parseInt(txtCodigo.getText()));
-					
-					formatDate = new SimpleDateFormat("dd/MM/yyyy");
-					formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
-					Date date = formatDate.parse(txtData.getText());
+
 					consulta.setDia(formatDateSql.format(date));
 					consulta.setHorario(txtHora.getText());
 					consulta.setObs(txtObs.getText());
-					
+
 					consultaDAO = new ConsultaDAO();
-					if(consultaDAO.consultar(Integer.parseInt(txtCodigo.getText())) != null) {
-						JOptionPane.showMessageDialog(null,"Codigo de Consulta Ja cadastrado!");
+					if (consultaDAO.consultar(Integer.parseInt(txtCodigo.getText())) != null) {
+						JOptionPane.showMessageDialog(null, "Codigo de Consulta Ja cadastrado!");
 						return;
 					}
 					consultaDAO.salvar(consulta);
@@ -336,24 +377,34 @@ public class TelaConsulta extends JFrame {
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					if(txtCPF.getText().equals("   .   .   -  ")) {
-						JOptionPane.showMessageDialog(null,"Preencher CPF Paciente!");
+					if (txtCPF.getText().equals("   .   .   -  ")) {
+						JOptionPane.showMessageDialog(null, "Preencher CPF Paciente!");
 						return;
 					}
-					if(txtCodigo.getText().equals("")) {
-						JOptionPane.showMessageDialog(null,"Preencher Codigo Consulta!");
+					if (txtCodigo.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preencher Codigo Consulta!");
 						return;
 					}
-					if(txtData.getText().equals("  /  /    ")) {
-						JOptionPane.showMessageDialog(null,"Preencher Data Consulta!");
+					if (txtData.getText().equals("  /  /    ")) {
+						JOptionPane.showMessageDialog(null, "Preencher Data Consulta!");
 						return;
 					}
-					if(txtData.getText().equals("  :  ")) {
-						JOptionPane.showMessageDialog(null,"Preencher Hora Consulta!");
+					if (txtData.getText().equals("  :  ")) {
+						JOptionPane.showMessageDialog(null, "Preencher Hora Consulta!");
 						return;
 					}
-					if(txtCodDent.getText().equals("")) {
-						JOptionPane.showMessageDialog(null,"Preencher Codigo Dentista!");
+					if (txtCodDent.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preencher Codigo Dentista!");
+						return;
+					}
+					Date dateNow = new Date(System.currentTimeMillis());
+
+					formatDate = new SimpleDateFormat("dd/MM/yyyy");
+					formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
+					Date date = formatDate.parse(txtData.getText());
+
+					if (date.before(dateNow)) {
+						JOptionPane.showMessageDialog(null, "Data deve ser maior que Atual!");
 						return;
 					}
 					paciente = new Paciente();
@@ -368,10 +419,7 @@ public class TelaConsulta extends JFrame {
 					consulta.setPaciente(paciente);
 					consulta.setDentista(dentista);
 					consulta.setCodConsulta(Integer.parseInt(txtCodigo.getText()));
-					
-					formatDate = new SimpleDateFormat("dd/MM/yyyy");
-					formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
-					Date date = formatDate.parse(txtData.getText());
+
 					consulta.setDia(formatDateSql.format(date));
 					consulta.setHorario(txtHora.getText());
 					consulta.setObs(txtObs.getText());
@@ -395,10 +443,14 @@ public class TelaConsulta extends JFrame {
 		btnConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
+					if (txtCodigo.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preenche codigo da Consulta para Pesquisa!");
+						return;
+					}
 					consultaDAO = new ConsultaDAO();
 					consulta = new Consulta();
 					consulta = consultaDAO.consultar(Integer.parseInt(txtCodigo.getText()));
-					
+
 					formatDate = new SimpleDateFormat("dd/MM/yyyy");
 					formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
 					Date date = formatDateSql.parse(consulta.getDia());
@@ -409,12 +461,10 @@ public class TelaConsulta extends JFrame {
 					txtCodDent.setText(String.valueOf(consulta.getDentista().getCodDentista()));
 					lblDentista.setText(consulta.getDentista().getNomeDentista());
 					txtObs.setText(consulta.getObs());
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Erro ao consultar consulta\n" + e.getMessage());
 				}
-				catch(Exception e) {
-					JOptionPane.showMessageDialog(null, "Erro ao consultar consulta\n"+ e.getMessage());
-				}
-				
-				
+
 			}
 		});
 		btnConsultar.setToolTipText("Consultar");
@@ -428,11 +478,14 @@ public class TelaConsulta extends JFrame {
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
+					if (txtCodigo.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preenche codigo da Consulta para Exclusão!");
+						return;
+					}
 					consultaDAO = new ConsultaDAO();
 					consultaDAO.excluir(Integer.parseInt(txtCodigo.getText()));
-				}
-				catch(Exception e) {
-					JOptionPane.showMessageDialog(null,"Erro ao Excluir consulta!\n" + e.getMessage());
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Erro ao Excluir consulta!\n" + e.getMessage());
 				}
 			}
 		});
@@ -446,29 +499,32 @@ public class TelaConsulta extends JFrame {
 		btnListar = new JButton();
 		btnListar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try{
+				try {
 					txtMostrar.setText(null);
 					List<Consulta> lista = new ArrayList<Consulta>();
 					consultaDAO = new ConsultaDAO();
 					lista = consultaDAO.listarTodos();
-					for(Consulta consulta : lista) {
-						formatDate = new SimpleDateFormat("dd/MM/yyyy");
-						formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
-						Date date = formatDateSql.parse(consulta.getDia());
-						
-						txtMostrar.append("Cod.: "+consulta.getCodConsulta()+" ");
-						txtMostrar.append("Data: "+formatDate.format(date)+" ");
-						txtMostrar.append("Hora: "+consulta.getHorario()+" ");
-						txtMostrar.append("Paciente CPF: "+consulta.getPaciente().getCpf()+" ");
-						txtMostrar.append("Paciente NOME: "+consulta.getPaciente().getNome()+" ");
-						txtMostrar.append("Dentista Codigo: "+consulta.getDentista().getCodDentista()+" ");
-						txtMostrar.append("Dentista Nome: "+consulta.getDentista().getNomeDentista()+" ");
-						txtMostrar.append("Obeservações: "+consulta.getObs()+"\n");
-						
+					if (lista != null) {
+						for (Consulta consulta : lista) {
+							formatDate = new SimpleDateFormat("dd/MM/yyyy");
+							formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
+							Date date = formatDateSql.parse(consulta.getDia());
+
+							txtMostrar.append("Cod.: " + consulta.getCodConsulta() + " ");
+							txtMostrar.append("Data: " + formatDate.format(date) + " ");
+							txtMostrar.append("Hora: " + consulta.getHorario() + " ");
+							txtMostrar.append("Paciente CPF: " + consulta.getPaciente().getCpf() + " ");
+							txtMostrar.append("Paciente NOME: " + consulta.getPaciente().getNome() + " ");
+							txtMostrar.append("Dentista Codigo: " + consulta.getDentista().getCodDentista() + " ");
+							txtMostrar.append("Dentista Nome: " + consulta.getDentista().getNomeDentista() + " ");
+							txtMostrar.append("Obeservações: " + consulta.getObs() + "\n");
+
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "Nenuma Consulta Encontrada!");
 					}
-				}
-				catch(Exception e1) {
-					JOptionPane.showMessageDialog(null,"Erro ao Listar Consultas");
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Erro ao Listar Consultas!\n" + e1.getMessage());
 				}
 			}
 		});
@@ -500,34 +556,69 @@ public class TelaConsulta extends JFrame {
 		btnLimpar.setBounds(654, 224, 83, 74);
 		contentPane.add(btnLimpar);
 	}
-	
+
 	public void mostrarPaciente() {
 		try {
 			paciente = new Paciente();
 			pacienteDAO = new PacienteDAO();
 			paciente = pacienteDAO.consultar(txtCPF.getText());
 			lblPaciente.setText(paciente.getNome());
-			
-		}
-		catch(Exception e) {
+
+		} catch (Exception e) {
 			txtCPF.setText(null);
 			lblPaciente.setText(null);
 			JOptionPane.showMessageDialog(null, "Paciente não cadastrado!");
 		}
 	}
-	
+
 	public void mostrarDentista() {
 		try {
 			dentista = new Dentista();
 			dentistaDAO = new DentistaDAO();
 			dentista = dentistaDAO.consultar(Integer.parseInt(txtCodDent.getText()));
 			lblDentista.setText(dentista.getNomeDentista());
-			
-		}
-		catch(Exception e) {
+
+		} catch (Exception e) {
 			txtCodDent.setText(null);
 			lblDentista.setText(null);
 			JOptionPane.showMessageDialog(null, "Dentista não cadastrado!");
+		}
+	}
+	public void consultaCodigo() {
+		if (txtCodigo.getText().equals("")) {
+			try {
+				consultaDAO = new ConsultaDAO();
+				int id = consultaDAO.lastId();
+				if (id != 0) {
+					id++;
+					txtCodigo.setText(String.valueOf(id));
+					txtData.requestFocus();
+				} else {
+					txtCodigo.setText("1");
+					txtData.requestFocus();
+				}
+
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, "Erro ao consultar Ultimo ID!\n" + e1.getMessage());
+			}
+		} else {
+			try {
+				consultaDAO = new ConsultaDAO();
+				consulta = new Consulta();
+				consulta = consultaDAO.consultar(Integer.parseInt(txtCodigo.getText()));
+				if (consulta != null) {
+					JOptionPane.showMessageDialog(null, "Codigo de consulta ja Cadastrado!");
+					txtCodigo.setText(null);
+					txtCodigo.requestFocus();
+
+				}else {
+					txtData.requestFocus();
+				}
+
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null,
+						"Erro ao Consultar Codigo de consulta ja Existente!\n" + e1.getMessage());
+			}
 		}
 	}
 }

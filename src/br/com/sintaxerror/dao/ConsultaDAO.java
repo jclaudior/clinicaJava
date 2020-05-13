@@ -7,6 +7,8 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import br.com.sintaxerror.model.Consulta;
 import br.com.sintaxerror.model.Dentista;
 import br.com.sintaxerror.model.Paciente;
@@ -209,9 +211,9 @@ public class ConsultaDAO {
 		List<Consulta> listaConsulta = new ArrayList<Consulta>();
 		
 		try {
-			String sql = "select * from paciente\r\n" + 
-					"join consulta on paciente.cpf = consulta.paciente_fk\r\n" + 
-					"join dentista on consulta.dentista_fk = dentista.codDentista\r\n";
+			String sql = "select * from paciente " + 
+					"join consulta on paciente.cpf = consulta.paciente_fk " + 
+					"join dentista on consulta.dentista_fk = dentista.codDentista";
 			
 			st = con.prepareStatement(sql);
 			
@@ -244,7 +246,10 @@ public class ConsultaDAO {
 				String nomeDentista = rs.getString("nomeDentista");
 				String especialidade = rs.getString("especialidade");
 				
+			
+			
 				Paciente paciente = new Paciente(cpf, nomePaciente, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha,cidade);
+				
 				Dentista dentista = new Dentista(codDentista, nomeDentista, especialidade);
 				
 				listaConsulta.add(new Consulta(cod, paciente, dentista, dia, horario, obs));
@@ -254,5 +259,25 @@ public class ConsultaDAO {
 		catch (Exception e) {
 			throw new Exception();
 		}
+	}
+	
+	public int lastId() {
+		try {
+			String sql = "select * from consulta order by codConsulta desc limit 1";
+			
+			st = con.prepareStatement(sql);
+			
+			rs = st.executeQuery();
+			int id = 0;
+			while (rs.next()) {
+				id = rs.getInt("codConsulta");
+				
+			}
+			return id;
+		}
+		catch(Exception e) {
+			JOptionPane.showMessageDialog(null, "Erro ao Consultar Ultimo ID!\n" + e.getMessage());
+		}
+		return 0;
 	}
 }
