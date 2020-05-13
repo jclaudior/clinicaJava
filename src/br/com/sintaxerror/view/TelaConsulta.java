@@ -117,12 +117,7 @@ public class TelaConsulta extends JFrame {
 		contentPane.add(lblCodigo);
 
 		txtCodigo = new JTextField();
-		txtCodigo.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent arg0) {
-				consultaCodigo();
-			}
-		});
+		
 		txtCodigo.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -170,6 +165,9 @@ public class TelaConsulta extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
+				if(c == KeyEvent.VK_ENTER && !txtCodDent.getText().equals("")) {
+					txtObs.requestFocus();
+				}
 				if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
 					e.consume();
 				}
@@ -201,6 +199,9 @@ public class TelaConsulta extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
+				if(c == KeyEvent.VK_ENTER && !txtCPF.getText().equals("   .   .   -  ")) {
+					txtCodDent.requestFocus();
+				}
 				if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
 					e.consume();
 				}
@@ -229,49 +230,15 @@ public class TelaConsulta extends JFrame {
 		txtData.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				try {
-					if (!txtData.getText().equals("  /  /    ")) {
-						Date dateNow = new Date(System.currentTimeMillis());
-
-						formatDate = new SimpleDateFormat("dd/MM/yyyy");
-						formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
-						Date date = formatDate.parse(txtData.getText());
-
-						if (date.before(dateNow)) {
-							JOptionPane.showMessageDialog(null, "Data deve ser maior que Atual!");
-							txtData.setText(null);
-							txtData.requestFocus();
-						}
-					}
-				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Erro ao validar data!\n" + e.getMessage());
-					txtData.requestFocus();
-				}
+				validaData();
 			}
 		});
 		txtData.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				if(c == KeyEvent.VK_ENTER) {
-					try {
-						if (!txtData.getText().equals("  /  /    ")) {
-							Date dateNow = new Date(System.currentTimeMillis());
-
-							formatDate = new SimpleDateFormat("dd/MM/yyyy");
-							formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
-							Date date = formatDate.parse(txtData.getText());
-
-							if (date.before(dateNow)) {
-								JOptionPane.showMessageDialog(null, "Data deve ser maior que Atual!");
-								txtData.setText(null);
-								txtData.requestFocus();
-							}
-						}
-					} catch (Exception e) {
-						JOptionPane.showMessageDialog(null, "Erro ao validar data!\n" + e.getMessage());
-						txtData.requestFocus();
-					}
+				if(c == KeyEvent.VK_ENTER && !txtData.getText().equals("  /  /    ")) {
+					txtHora.requestFocus();
 				}
 				if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
 					e.consume();
@@ -296,6 +263,9 @@ public class TelaConsulta extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
+				if(c == KeyEvent.VK_ENTER && !txtHora.getText().equals("  :  ")) {
+					txtCPF.requestFocus();
+				}
 				if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
 					e.consume();
 				}
@@ -361,11 +331,17 @@ public class TelaConsulta extends JFrame {
 					paciente = new Paciente();
 					pacienteDAO = new PacienteDAO();
 					paciente = pacienteDAO.consultar(txtCPF.getText());
-
+					if(paciente == null) {
+						JOptionPane.showMessageDialog(null, "Paciente Não Cadastrado!");
+						return;
+					}
 					dentista = new Dentista();
 					dentistaDAO = new DentistaDAO();
 					dentista = dentistaDAO.consultar(Integer.parseInt(txtCodDent.getText()));
-
+					if(dentista == null) {
+						JOptionPane.showMessageDialog(null, "Dentista Não Cadastrado!");
+						return;
+					}
 					consulta = new Consulta();
 					consulta.setPaciente(paciente);
 					consulta.setDentista(dentista);
@@ -570,6 +546,7 @@ public class TelaConsulta extends JFrame {
 				lblDentista.setText(null);
 				txtObs.setText(null);
 				txtMostrar.setText(null);
+				txtCodigo.requestFocus();
 			}
 		});
 		btnLimpar.setToolTipText("Limpar");
@@ -642,6 +619,34 @@ public class TelaConsulta extends JFrame {
 				JOptionPane.showMessageDialog(null,
 						"Erro ao Consultar Codigo de consulta ja Existente!\n" + e1.getMessage());
 			}
+		}
+	}
+	
+	public void validaData() {
+		try {
+			/*if(txtData.getText().equals("  /  /    ") ) {
+				JOptionPane.showMessageDialog(null, "Preencher Data!");
+				txtData.requestFocus();
+			}*/
+			if (!txtData.getText().equals("  /  /    ")) {
+				Date dateNow = new Date(System.currentTimeMillis());
+
+				formatDate = new SimpleDateFormat("dd/MM/yyyy");
+				formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
+				Date date = formatDate.parse(txtData.getText());
+
+				if (date.before(dateNow)) {
+					JOptionPane.showMessageDialog(null, "Data deve ser maior que Atual!");
+					txtData.setText(null);
+					txtData.requestFocus();
+				}else {
+					txtHora.requestFocus();
+				}
+			}
+			
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(null, "Erro ao validar data!\n" + e1.getMessage());
+			txtData.requestFocus();
 		}
 	}
 }

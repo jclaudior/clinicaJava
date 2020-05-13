@@ -155,7 +155,7 @@ public class ConsultaDAO {
 				String uf = rs.getString("UF_PACIENTE");
 				String bairro = rs.getString("BAIRRO_PACIENTE");
 				String celular = rs.getString("CEL_PACIENTE");
-				String data = rs.getString("DTA_PACIENTE");
+				String data = rs.getString("DTANASC_PACIENTE");
 				String email = rs.getString("EMAIL_PACIENTE");
 				String senha = rs.getString("SENHA_PACIENTE");
 				String cidade = rs.getString("CIDADE_PACIENTE");
