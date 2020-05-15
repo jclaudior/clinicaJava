@@ -1,26 +1,37 @@
 package br.com.sintaxerror.view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.text.MaskFormatter;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.border.BevelBorder;
 import java.awt.Color;
-import javax.swing.JFormattedTextField;
-import javax.swing.JComboBox;
+import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.TextArea;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
+
+import br.com.sintaxerror.dao.ConsultaDAO;
+import br.com.sintaxerror.dao.DentistaDAO;
+import br.com.sintaxerror.dao.PacienteDAO;
+import br.com.sintaxerror.dao.PagamentoDAO;
+import br.com.sintaxerror.model.Consulta;
+import br.com.sintaxerror.model.Dentista;
+import br.com.sintaxerror.model.Paciente;
+import br.com.sintaxerror.model.Pagamento;
 
 public class TelaPagamento extends JFrame {
 
@@ -46,7 +57,9 @@ public class TelaPagamento extends JFrame {
 	private MaskFormatter ftmCpf;// Atributo formatador para cpf
 	private JFormattedTextField txtCPF;
 	private JButton btnLimpar;
-
+	private Pagamento pagamento;// Inports Dao
+	private PagamentoDAO pagamentoDAO;// Inports Dao
+	
 	/**
 	 * Launch the application.
 	 */
@@ -126,6 +139,7 @@ public class TelaPagamento extends JFrame {
 		contentPane.add(lblFormaPag);
 		
 		cbmFormPag = new JComboBox();
+		cbmFormPag.setModel(new DefaultComboBoxModel(new String[] {"Selecione uma Opçao", "Dinheiro", "Cartao"}));
 		cbmFormPag.setBounds(78, 148, 259, 22);
 		contentPane.add(cbmFormPag);
 		
@@ -138,6 +152,34 @@ public class TelaPagamento extends JFrame {
 		
 		btnCadastrar = new JButton();
 		btnCadastrar.setToolTipText("Cadastrar");
+		btnCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					
+					Paciente paciente = new Paciente();
+					PacienteDAO pacienteDAO = new PacienteDAO();
+					
+					paciente = pacienteDAO.consultar(txtCPF.getText());
+					
+					Pagamento pagamento = new Pagamento();
+					PagamentoDAO pagamentoDAO = new PagamentoDAO();
+					
+					pagamento.setCodPagamento(Integer.parseInt(txtCod.getText()));
+					pagamento.setDia(txtDta.getText());
+					pagamento.setFormaPagamento((String)cbmFormPag.getSelectedItem());
+					pagamento.setValor(Double.parseDouble(txtValor.getText()));
+					
+					pagamento.setPaciente(paciente);
+					
+					pagamentoDAO.salvar(pagamento);
+					
+					JOptionPane.showMessageDialog(null, "Salvo com sucess!");
+					
+				}catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Erro ao gravar!\n" + e.getMessage());
+				}
+			}
+		});
 		ImageIcon iconSalvar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/salvar.png"));
 		iconSalvar.setImage(iconSalvar.getImage().getScaledInstance(50, 50, 50));
 		btnCadastrar.setIcon(iconSalvar);
