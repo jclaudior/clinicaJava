@@ -42,6 +42,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class TelaConsulta extends JFrame {
 
@@ -61,7 +64,6 @@ public class TelaConsulta extends JFrame {
 	private JFormattedTextField txtHora;
 	private JLabel lblObeservaes;
 	private TextArea txtObs;
-	private TextArea txtMostrar;
 	private JButton btnCadastrar;
 	private JButton btnAlterar;
 	private JButton btnConsultar;
@@ -79,6 +81,8 @@ public class TelaConsulta extends JFrame {
 	private MaskFormatter ftmData;// Atributo formatador para data
 	private MaskFormatter ftmCpf;// Atributo formatador para cpf
 	private MaskFormatter ftmHora;// Atributo formatador para hora
+	private JScrollPane scrollPane;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -101,7 +105,7 @@ public class TelaConsulta extends JFrame {
 	 */
 	public TelaConsulta() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 923, 356);
+		setBounds(100, 100, 923, 346);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -281,13 +285,6 @@ public class TelaConsulta extends JFrame {
 		txtObs = new TextArea();
 		txtObs.setBounds(6, 137, 487, 67);
 		contentPane.add(txtObs);
-
-		txtMostrar = new TextArea();
-		txtMostrar.setFocusable(false);
-		txtMostrar.setFocusTraversalKeysEnabled(false);
-		txtMostrar.setEditable(false);
-		txtMostrar.setBounds(500, 33, 405, 171);
-		contentPane.add(txtMostrar);
 
 		btnCadastrar = new JButton();
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -507,26 +504,29 @@ public class TelaConsulta extends JFrame {
 		btnListar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					txtMostrar.setText(null);
 					List<Consulta> lista = new ArrayList<Consulta>();
 					consultaDAO = new ConsultaDAO();
 					lista = consultaDAO.listarTodos();
 					if (lista != null) {
+						DefaultTableModel model = (DefaultTableModel) table.getModel(); 
 						for (Consulta consulta : lista) {
 							formatDate = new SimpleDateFormat("dd/MM/yyyy");
 							formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
 							Date date = formatDateSql.parse(consulta.getDia());
-
-							txtMostrar.append("Cod.: " + consulta.getCodConsulta() + " ");
-							txtMostrar.append("Data: " + formatDate.format(date) + " ");
-							txtMostrar.append("Hora: " + consulta.getHorario() + " ");
-							txtMostrar.append("Paciente CPF: " + consulta.getPaciente().getCpf() + " ");
-							txtMostrar.append("Paciente NOME: " + consulta.getPaciente().getNome() + " ");
-							txtMostrar.append("Dentista Codigo: " + consulta.getDentista().getCodDentista() + " ");
-							txtMostrar.append("Dentista Nome: " + consulta.getDentista().getNomeDentista() + " ");
-							txtMostrar.append("Obeservações: " + consulta.getObs() + "\n");
-
+							
+							model.addRow(new Object[] {
+									consulta.getCodConsulta(),
+									formatDate.format(date),
+									consulta.getHorario(),
+									consulta.getPaciente().getCpf(),
+									consulta.getPaciente().getNome(),
+									consulta.getDentista().getCodDentista(),
+									consulta.getDentista().getNomeDentista(),
+									consulta.getObs()
+									
+							});
 						}
+						
 					} else {
 						JOptionPane.showMessageDialog(null, "Nenuma Consulta Encontrada!");
 					}
@@ -553,7 +553,7 @@ public class TelaConsulta extends JFrame {
 				lblPaciente.setText(null);
 				lblDentista.setText(null);
 				txtObs.setText(null);
-				txtMostrar.setText(null);
+				
 				txtCodigo.requestFocus();
 			}
 		});
@@ -563,6 +563,21 @@ public class TelaConsulta extends JFrame {
 		btnLimpar.setIcon(iconLimpar);
 		btnLimpar.setBounds(654, 224, 83, 74);
 		contentPane.add(btnLimpar);
+		
+		scrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setBounds(500, 38, 405, 173);
+		contentPane.add(scrollPane);
+		
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"C\u00F3digo", "Data", "Horario", "CPF", "Paciente", "Cod Dentista", "Dentista", "Observa\u00E7\u00F5es"
+			}
+		));
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		scrollPane.setViewportView(table);
 	}
 
 	public void mostrarPaciente() {
