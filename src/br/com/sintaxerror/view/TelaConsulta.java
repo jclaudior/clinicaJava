@@ -553,7 +553,7 @@ public class TelaConsulta extends JFrame {
 				lblPaciente.setText(null);
 				lblDentista.setText(null);
 				txtObs.setText(null);
-				
+				DefaultTableModel model = (DefaultTableModel)table.getModel(); model.setNumRows(0);
 				txtCodigo.requestFocus();
 			}
 		});
