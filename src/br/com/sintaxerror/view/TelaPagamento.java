@@ -60,9 +60,8 @@ public class TelaPagamento extends JFrame {
 	private Pagamento pagamento;// Inports Dao
 	private PagamentoDAO pagamentoDAO;// Inports Dao
 	
-	/**
-	 * Launch the application.
-	 */
+	// Abrindo aplicação
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -76,9 +75,8 @@ public class TelaPagamento extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	// Criando frame
+	
 	public TelaPagamento() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 754, 312);
@@ -156,27 +154,24 @@ public class TelaPagamento extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					
+					pagamento = new Pagamento();
+					
 					Paciente paciente = new Paciente();
 					PacienteDAO pacienteDAO = new PacienteDAO();
-					
 					paciente = pacienteDAO.consultar(txtCPF.getText());
-					
-					Pagamento pagamento = new Pagamento();
-					PagamentoDAO pagamentoDAO = new PagamentoDAO();
 					
 					pagamento.setCodPagamento(Integer.parseInt(txtCod.getText()));
 					pagamento.setDia(txtDta.getText());
-					pagamento.setFormaPagamento((String)cbmFormPag.getSelectedItem());
 					pagamento.setValor(Double.parseDouble(txtValor.getText()));
+					pagamento.setFormaPagamento((String)cbmFormPag.getSelectedItem());
 					
 					pagamento.setPaciente(paciente);
 					
+					pagamentoDAO = new PagamentoDAO();
 					pagamentoDAO.salvar(pagamento);
-					
 					JOptionPane.showMessageDialog(null, "Salvo com sucess!");
-					
 				}catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Erro ao gravar!\n" + e.getMessage());
+					JOptionPane.showMessageDialog(null, "Erro ao salvar!\n" + e.getMessage());
 				}
 			}
 		});

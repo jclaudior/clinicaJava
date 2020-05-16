@@ -3,6 +3,8 @@ package br.com.sintaxerror.util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import javax.swing.JOptionPane;
+
 public class ConnectionFactory {
 	public static Connection getConnection() throws Exception {
 		try {
@@ -18,4 +20,15 @@ public class ConnectionFactory {
 			throw new Exception(e.getMessage());
 		}
 	}
+	//Testar Conecxao
+	/*public static void main(String[] args) {
+		
+		try {
+			Connection conn = ConnectionFactory.getConnection();
+			
+			JOptionPane.showMessageDialog(null, "Conectado");
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}*/
 }
