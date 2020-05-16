@@ -565,10 +565,14 @@ public class TelaConsulta extends JFrame {
 		contentPane.add(btnLimpar);
 		
 		scrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setFocusable(false);
+		scrollPane.setFocusTraversalKeysEnabled(false);
 		scrollPane.setBounds(500, 38, 405, 173);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
+		table.setFocusTraversalKeysEnabled(false);
+		table.setFocusable(false);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},

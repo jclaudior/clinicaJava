@@ -36,6 +36,8 @@ import java.awt.event.KeyEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class TelaPaciente extends JFrame {
 
@@ -126,10 +128,27 @@ public class TelaPaciente extends JFrame {
 			JOptionPane.showMessageDialog(null, "Erro na mascara CPF\n");
 		}
 		txtCPF = new JFormattedTextField(ftmCpf);
+		txtCPF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				try {
+					pacientedao = new PacienteDAO();
+					if(pacientedao.consultar(txtCPF.getText()) != null) {
+						JOptionPane.showMessageDialog(null, "Paciente com este CPF ja Cadastrado!");
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, "Erro ao consultar se o Paciente \nja esta cadastrado!");
+				}
+			}
+		});
 		txtCPF.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
+				if(c== KeyEvent.VK_ENTER && !txtCPF.getText().equals("   .   .   -  ")) {
+					txtNome.requestFocus();
+				}
 				if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
 					e.consume();
 				}
