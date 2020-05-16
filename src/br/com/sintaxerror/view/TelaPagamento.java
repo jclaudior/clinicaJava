@@ -155,15 +155,19 @@ public class TelaPagamento extends JFrame {
 				try {
 					
 					pagamento = new Pagamento();
-					
+					JOptionPane.showMessageDialog(null, "null cpf");
 					Paciente paciente = new Paciente();
 					PacienteDAO pacienteDAO = new PacienteDAO();
 					paciente = pacienteDAO.consultar(txtCPF.getText());
-					
+					JOptionPane.showMessageDialog(null, "null 1");
 					pagamento.setCodPagamento(Integer.parseInt(txtCod.getText()));
+					JOptionPane.showMessageDialog(null, "null 2");
 					pagamento.setDia(txtDta.getText());
+					JOptionPane.showMessageDialog(null, "null 3");
 					pagamento.setValor(Double.parseDouble(txtValor.getText()));
+					JOptionPane.showMessageDialog(null, "null 4");
 					pagamento.setFormaPagamento((String)cbmFormPag.getSelectedItem());
+					JOptionPane.showMessageDialog(null, "null 5");
 					
 					pagamento.setPaciente(paciente);
 					

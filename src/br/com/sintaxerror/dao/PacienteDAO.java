@@ -75,7 +75,7 @@ public class PacienteDAO {
 				String rua = rs.getString("RUA_PACIENTE");
 				String numero = rs.getString("NUMERO_PACIENTE");
 				String complemento = rs.getString("COMPLE_PACIENTE");
-				String cidade = rs.getNString("CIDADE_PACIENTE");
+				String cidade = rs.getString("CIDADE_PACIENTE");
 				String uf = rs.getString("UF_PACIENTE");
 				String bairro = rs.getString("BAIRRO_PACIENTE");
 				String celular = rs.getString("CEL_PACIENTE");
