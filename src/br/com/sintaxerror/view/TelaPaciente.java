@@ -33,6 +33,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class TelaPaciente extends JFrame {
 
@@ -67,7 +70,6 @@ public class TelaPaciente extends JFrame {
 	private JButton btnConsultar;
 	private JButton btnExcluir;
 	private JButton btnListar;
-	private TextArea txtMostar;
 	private JButton btnLimpar;
 	private MaskFormatter ftmData;// Atributo formatador para data
 	private MaskFormatter ftmCpf;// Atributo formatador para cpf
@@ -78,6 +80,8 @@ public class TelaPaciente extends JFrame {
 	private JLabel lblNumero;
 	private SimpleDateFormat formatDate;
 	private SimpleDateFormat formatDateSql;
+	private JScrollPane scrollPane;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -97,24 +101,25 @@ public class TelaPaciente extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * @throws ParseException 
+	 * 
+	 * @throws ParseException
 	 */
-	public TelaPaciente(){
+	public TelaPaciente() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 657, 493);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		lblCpf = new JLabel("            CPF:");
 		lblCpf.setBounds(10, 27, 70, 14);
 		contentPane.add(lblCpf);
-		
+
 		lblNome = new JLabel("Nome:");
 		lblNome.setBounds(228, 27, 46, 14);
 		contentPane.add(lblNome);
-		
+
 		try {
 			ftmCpf = new MaskFormatter("###.###.###-##");
 		} catch (ParseException e) {
@@ -125,83 +130,82 @@ public class TelaPaciente extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				if(!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE ||c == KeyEvent.VK_DELETE)) {
+				if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
 					e.consume();
 				}
 			}
 		});
 		txtCPF.setBounds(83, 24, 125, 20);
 		contentPane.add(txtCPF);
-		
+
 		txtNome = new JTextField();
 		txtNome.setBounds(274, 24, 252, 20);
 		contentPane.add(txtNome);
 		txtNome.setColumns(10);
-		
+
 		lblCadastroDePacientes = new JLabel("Cadastro de Pacientes");
 		lblCadastroDePacientes.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblCadastroDePacientes.setBounds(10, 2, 200, 20);
 		contentPane.add(lblCadastroDePacientes);
-		
+
 		lblSexo = new JLabel("Sexo:");
 		lblSexo.setBounds(543, 27, 39, 14);
 		contentPane.add(lblSexo);
-		
+
 		cbmSexo = new JComboBox();
-		cbmSexo.setModel(new DefaultComboBoxModel(new String[] {"M", "F"}));
+		cbmSexo.setModel(new DefaultComboBoxModel(new String[] { "M", "F" }));
 		cbmSexo.setBounds(585, 24, 46, 20);
 		contentPane.add(cbmSexo);
-		
+
 		lblRua = new JLabel("            Rua:");
 		lblRua.setBounds(10, 52, 70, 14);
 		contentPane.add(lblRua);
-		
+
 		txtRua = new JTextField();
 		txtRua.setBounds(83, 49, 239, 20);
 		contentPane.add(txtRua);
 		txtRua.setColumns(10);
-		
+
 		lblCidade = new JLabel("       Cidade:");
 		lblCidade.setBounds(10, 77, 70, 14);
 		contentPane.add(lblCidade);
-		
+
 		txtCidade = new JTextField();
 		txtCidade.setBounds(83, 74, 200, 20);
 		contentPane.add(txtCidade);
 		txtCidade.setColumns(10);
-		
+
 		lblComplemento = new JLabel("Comple:");
-		lblComplemento.setBounds(489,52, 53, 14);
+		lblComplemento.setBounds(489, 52, 53, 14);
 		contentPane.add(lblComplemento);
-		
+
 		txtComple = new JTextField();
-		txtComple.setBounds(543, 49,86, 20);
+		txtComple.setBounds(543, 49, 86, 20);
 		contentPane.add(txtComple);
 		txtComple.setColumns(10);
-		
+
 		lblUf = new JLabel("     UF:");
 		lblUf.setBounds(283, 77, 39, 14);
 		contentPane.add(lblUf);
-		
+
 		cbmUF = new JComboBox();
-		cbmUF.setModel(new DefaultComboBoxModel(new String[] {"UF", "SP"}));
+		cbmUF.setModel(new DefaultComboBoxModel(new String[] { "UF", "SP" }));
 		cbmUF.setBounds(327, 74, 46, 20);
 		contentPane.add(cbmUF);
-		
+
 		lblBairro = new JLabel("Bairro:");
 		lblBairro.setBounds(391, 77, 46, 14);
 		contentPane.add(lblBairro);
-		
+
 		txtBairro = new JTextField();
 		txtBairro.setBounds(440, 74, 191, 20);
 		contentPane.add(txtBairro);
 		txtBairro.setColumns(10);
-		
-		
+
 		lblDataNasc = new JLabel("Data Nasc.:");
 		lblDataNasc.setBounds(10, 102, 70, 14);
 		contentPane.add(lblDataNasc);
-		
+
 		try {
 			ftmData = new MaskFormatter("##/##/####");
 		} catch (ParseException e1) {
@@ -213,19 +217,18 @@ public class TelaPaciente extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				if(!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE ||c == KeyEvent.VK_DELETE)) {
+				if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
 					e.consume();
 				}
 			}
 		});
 		txtDta.setBounds(82, 99, 82, 20);
 		contentPane.add(txtDta);
-		
-		
+
 		lblCelular = new JLabel("Celular:");
 		lblCelular.setBounds(385, 102, 52, 14);
 		contentPane.add(lblCelular);
-		
+
 		try {
 			ftmCel = new MaskFormatter("(##)#####-####");
 		} catch (ParseException e) {
@@ -237,169 +240,82 @@ public class TelaPaciente extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				if(!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE ||c == KeyEvent.VK_DELETE)) {
+				if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
 					e.consume();
 				}
 			}
 		});
 		txtCelular.setBounds(440, 99, 119, 20);
 		contentPane.add(txtCelular);
-		
+
 		lblEmail = new JLabel("        E-mail:");
 		lblEmail.setBounds(10, 127, 70, 14);
 		contentPane.add(lblEmail);
-		
+
 		txtEmail = new JTextField();
 		txtEmail.setBounds(82, 124, 296, 20);
 		contentPane.add(txtEmail);
 		txtEmail.setColumns(10);
-		
+
 		lblSenha = new JLabel(" Senha:");
 		lblSenha.setBounds(385, 127, 45, 14);
 		contentPane.add(lblSenha);
-		
+
 		txtPass = new JPasswordField();
 		txtPass.setBounds(440, 124, 191, 20);
 		contentPane.add(txtPass);
-		
+
 		btnCadastrar = new JButton();
 		btnCadastrar.addActionListener(new ActionListener() {
-			
+
 			public void actionPerformed(ActionEvent arg0) {
-				//########################################
+				// ########################################
 				try {
-				if(txtCPF.getText().equals("   .   .   -  "))	{
-					JOptionPane.showMessageDialog(null,"Preencher CPF Válido!!!");
-					return;
-				}
-				if(txtNome.getText().equals(""))	{
-					JOptionPane.showMessageDialog(null,"Preencher NOME Válido!!!");
-					return;
-				}
-				if(txtRua.getText().equals(""))	{
-					JOptionPane.showMessageDialog(null,"Preencher Nome da Rua Válido!!!");
-					return;
-				}
-				if(cbmUF.getSelectedIndex()==0)	{
-					JOptionPane.showMessageDialog(null,"Preencher UF Válido!!!");
-					return;
-				}
-				if(txtCidade.getText().equals(""))	{
-					JOptionPane.showMessageDialog(null,"Preencher CIDADE Válida!!");
-					return;
-				}
-				if(txtBairro.getText().equals(""))	{
-					JOptionPane.showMessageDialog(null,"Preencher BAIRRO Válido!!!");
-					return;
-				}
-				if(txtDta.getText().equals("  /  /    "))	{
-					JOptionPane.showMessageDialog(null,"Preencher Data de Nascimento Válida!!!");
-					return;
-				}
-				if(txtCelular.getText().equals("(  )     -    "))	{
-					JOptionPane.showMessageDialog(null,"Preencher CELULAR Válido!!!");
-					return;
-				}
-				if(txtEmail.getText().equals(""))	{
-					JOptionPane.showMessageDialog(null,"Preencher E-MAIL Válido!!!");
-					return;
-				}
-				if(txtPass.getText().equals(""))	{
-					JOptionPane.showMessageDialog(null,"Preencher SENHA Válida!!!");
-					return;
-				}
-				if(txtNumero.getText().equals(""))	{
-					JOptionPane.showMessageDialog(null,"Preencher NÚMERO Válido!!!");
-					return;
-				}
-				paciente = new Paciente ();
-				paciente.setCpf(txtCPF.getText());
-				paciente.setNome(txtNome.getText());
-				paciente.setRua(txtRua.getText());
-				paciente.setComplemento(txtComple.getText());
-				paciente.setUf(String.valueOf(cbmUF.getSelectedItem()));
-				paciente.setCidade(txtCidade.getText());
-				paciente.setBairro(txtBairro.getText());
-				formatDate = new SimpleDateFormat("dd/MM/yyyy");
-				formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
-				Date date = formatDate.parse(txtDta.getText());
-				paciente.setDataNasc(formatDateSql.format(date));
-				paciente.setCelular(txtCelular.getText());
-				paciente.setEmail(txtEmail.getText());
-				paciente.setSenha(txtPass.getText());
-				paciente.setNumero(txtNumero.getText());
-				paciente.setSexo(String.valueOf(cbmSexo.getSelectedItem()));
-				
-				pacientedao= new PacienteDAO ();
-				pacientedao.salvar(paciente);
-				JOptionPane.showMessageDialog(null,"Gravado com Sucesso!!!");
-				}
-				catch ( Exception e ) {
-					JOptionPane.showMessageDialog(null, "Erro ao gravar paciente!!\n" + e.getMessage());
-					
-				
-				}
-				//########################################
-				
-			}
-			
-		});
-		btnCadastrar.setToolTipText("Cadastrar");
-		ImageIcon iconSalvar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/salvar.png"));
-		iconSalvar.setImage(iconSalvar.getImage().getScaledInstance(50, 50, 50));
-		btnCadastrar.setIcon(iconSalvar);
-		btnCadastrar.setBounds(30, 351, 89, 87);
-		contentPane.add(btnCadastrar);
-		
-		btnAlterar = new JButton();
-		btnAlterar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					if(txtCPF.getText().equals("   .   .   -  "))	{
-						JOptionPane.showMessageDialog(null,"Preencher CPF Válido!!!");
+					if (txtCPF.getText().equals("   .   .   -  ")) {
+						JOptionPane.showMessageDialog(null, "Preencher CPF Válido!!!");
 						return;
 					}
-					if(txtNome.getText().equals(""))	{
-						JOptionPane.showMessageDialog(null,"Preencher NOME Válido!!!");
+					if (txtNome.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preencher NOME Válido!!!");
 						return;
 					}
-					if(txtRua.getText().equals(""))	{
-						JOptionPane.showMessageDialog(null,"Preencher Nome da Rua Válido!!!");
+					if (txtRua.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preencher Nome da Rua Válido!!!");
 						return;
 					}
-					if(cbmUF.getSelectedIndex()==0)	{
-						JOptionPane.showMessageDialog(null,"Preencher UF Válido!!!");
+					if (cbmUF.getSelectedIndex() == 0) {
+						JOptionPane.showMessageDialog(null, "Preencher UF Válido!!!");
 						return;
 					}
-					if(txtCidade.getText().equals(""))	{
-						JOptionPane.showMessageDialog(null,"Preencher CIDADE Válida!!");
+					if (txtCidade.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preencher CIDADE Válida!!");
 						return;
 					}
-					if(txtBairro.getText().equals(""))	{
-						JOptionPane.showMessageDialog(null,"Preencher BAIRRO Válido!!!");
+					if (txtBairro.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preencher BAIRRO Válido!!!");
 						return;
 					}
-					if(txtDta.getText().equals("  /  /    "))	{
-						JOptionPane.showMessageDialog(null,"Preencher Data de Nascimento Válida!!!");
+					if (txtDta.getText().equals("  /  /    ")) {
+						JOptionPane.showMessageDialog(null, "Preencher Data de Nascimento Válida!!!");
 						return;
 					}
-					if(txtCelular.getText().equals("(  )     -    "))	{
-						JOptionPane.showMessageDialog(null,"Preencher CELULAR Válido!!!");
+					if (txtCelular.getText().equals("(  )     -    ")) {
+						JOptionPane.showMessageDialog(null, "Preencher CELULAR Válido!!!");
 						return;
 					}
-					if(txtEmail.getText().equals(""))	{
-						JOptionPane.showMessageDialog(null,"Preencher E-MAIL Válido!!!");
+					if (txtEmail.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preencher E-MAIL Válido!!!");
 						return;
 					}
-					if(txtPass.getText().equals(""))	{
-						JOptionPane.showMessageDialog(null,"Preencher SENHA Válida!!!");
+					if (txtPass.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preencher SENHA Válida!!!");
 						return;
 					}
-					if(txtNumero.getText().equals(""))	{
-						JOptionPane.showMessageDialog(null,"Preencher NÚMERO Válido!!!");
+					if (txtNumero.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preencher NÚMERO Válido!!!");
 						return;
 					}
-					paciente = new Paciente ();
+					paciente = new Paciente();
 					paciente.setCpf(txtCPF.getText());
 					paciente.setNome(txtNome.getText());
 					paciente.setRua(txtRua.getText());
@@ -416,16 +332,99 @@ public class TelaPaciente extends JFrame {
 					paciente.setSenha(txtPass.getText());
 					paciente.setNumero(txtNumero.getText());
 					paciente.setSexo(String.valueOf(cbmSexo.getSelectedItem()));
-					
-					pacientedao= new PacienteDAO ();
+
+					pacientedao = new PacienteDAO();
+					pacientedao.salvar(paciente);
+					JOptionPane.showMessageDialog(null, "Gravado com Sucesso!!!");
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Erro ao gravar paciente!!\n" + e.getMessage());
+
+				}
+				// ########################################
+
+			}
+
+		});
+		btnCadastrar.setToolTipText("Cadastrar");
+		ImageIcon iconSalvar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/salvar.png"));
+		iconSalvar.setImage(iconSalvar.getImage().getScaledInstance(50, 50, 50));
+		btnCadastrar.setIcon(iconSalvar);
+		btnCadastrar.setBounds(30, 351, 89, 87);
+		contentPane.add(btnCadastrar);
+
+		btnAlterar = new JButton();
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if (txtCPF.getText().equals("   .   .   -  ")) {
+						JOptionPane.showMessageDialog(null, "Preencher CPF Válido!!!");
+						return;
+					}
+					if (txtNome.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preencher NOME Válido!!!");
+						return;
+					}
+					if (txtRua.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preencher Nome da Rua Válido!!!");
+						return;
+					}
+					if (cbmUF.getSelectedIndex() == 0) {
+						JOptionPane.showMessageDialog(null, "Preencher UF Válido!!!");
+						return;
+					}
+					if (txtCidade.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preencher CIDADE Válida!!");
+						return;
+					}
+					if (txtBairro.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preencher BAIRRO Válido!!!");
+						return;
+					}
+					if (txtDta.getText().equals("  /  /    ")) {
+						JOptionPane.showMessageDialog(null, "Preencher Data de Nascimento Válida!!!");
+						return;
+					}
+					if (txtCelular.getText().equals("(  )     -    ")) {
+						JOptionPane.showMessageDialog(null, "Preencher CELULAR Válido!!!");
+						return;
+					}
+					if (txtEmail.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preencher E-MAIL Válido!!!");
+						return;
+					}
+					if (txtPass.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preencher SENHA Válida!!!");
+						return;
+					}
+					if (txtNumero.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preencher NÚMERO Válido!!!");
+						return;
+					}
+					paciente = new Paciente();
+					paciente.setCpf(txtCPF.getText());
+					paciente.setNome(txtNome.getText());
+					paciente.setRua(txtRua.getText());
+					paciente.setComplemento(txtComple.getText());
+					paciente.setUf(String.valueOf(cbmUF.getSelectedItem()));
+					paciente.setCidade(txtCidade.getText());
+					paciente.setBairro(txtBairro.getText());
+					formatDate = new SimpleDateFormat("dd/MM/yyyy");
+					formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
+					Date date = formatDate.parse(txtDta.getText());
+					paciente.setDataNasc(formatDateSql.format(date));
+					paciente.setCelular(txtCelular.getText());
+					paciente.setEmail(txtEmail.getText());
+					paciente.setSenha(txtPass.getText());
+					paciente.setNumero(txtNumero.getText());
+					paciente.setSexo(String.valueOf(cbmSexo.getSelectedItem()));
+
+					pacientedao = new PacienteDAO();
 					pacientedao.alterar(paciente);
-					JOptionPane.showMessageDialog(null,"Alterado com Sucesso!!!");
-					}
-					catch ( Exception e1 ) {
-						JOptionPane.showMessageDialog(null, "Erro ao alterar paciente!!\n" + e1.getMessage());
-					
-					
-					}
+					JOptionPane.showMessageDialog(null, "Alterado com Sucesso!!!");
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Erro ao alterar paciente!!\n" + e1.getMessage());
+
+				}
 			}
 		});
 		btnAlterar.setToolTipText("Alterar");
@@ -434,13 +433,12 @@ public class TelaPaciente extends JFrame {
 		btnAlterar.setIcon(iconAlterar);
 		btnAlterar.setBounds(129, 351, 89, 87);
 		contentPane.add(btnAlterar);
-		
+
 		btnConsultar = new JButton();
 		btnConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//============================================
-				
-				
+				// ============================================
+
 				try {
 					paciente = new Paciente();
 					pacientedao = new PacienteDAO();
@@ -459,17 +457,12 @@ public class TelaPaciente extends JFrame {
 					txtDta.setText(formatDate.format(date));
 					txtCelular.setText(paciente.getCelular());
 					txtEmail.setText(paciente.getEmail());
-					
-					
-									
-					
+
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Erro ao realizar Consulta");
 				}
-				
-							
-				
-				//============================================
+
+				// ============================================
 			}
 		});
 		btnConsultar.setToolTipText("Consultar");
@@ -478,25 +471,22 @@ public class TelaPaciente extends JFrame {
 		btnConsultar.setIcon(iconConsultar);
 		btnConsultar.setBounds(228, 351, 89, 87);
 		contentPane.add(btnConsultar);
-		
+
 		btnExcluir = new JButton();
 		btnExcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//========================================
-				
+				// ========================================
+
 				try {
 					pacientedao = new PacienteDAO();
 					pacientedao.excluir(txtCPF.getText());
 					JOptionPane.showMessageDialog(null, "Paciente excluído com sucesso!!!");
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Erro ao excluir paciente!!!\n" + e.getMessage());
+
 				}
-				catch(Exception e) {
-					JOptionPane.showMessageDialog(null, "Erro ao excluir paciente!!!\n"+e.getMessage());
-					
-				}
-				
-				
-				
-				//========================================
+
+				// ========================================
 			}
 		});
 		btnExcluir.setToolTipText("Excluir");
@@ -505,47 +495,34 @@ public class TelaPaciente extends JFrame {
 		btnExcluir.setIcon(iconExcluir);
 		btnExcluir.setBounds(327, 351, 89, 87);
 		contentPane.add(btnExcluir);
-		
+
 		btnListar = new JButton();
 		btnListar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//===========================================
+				// ===========================================
 				try {
-					txtMostar.setText(null);
 					List<Paciente> lista = new ArrayList<Paciente>();
 					pacientedao = new PacienteDAO();
 					lista = pacientedao.listarTodos();
-					for(Paciente paciente : lista) {
-						formatDate = new SimpleDateFormat("dd/MM/yyyy");
-						formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
-						Date date = formatDateSql.parse(paciente.getDataNasc());
-						txtMostar.append("CPF: "+ paciente.getCpf()+" ");
-						txtMostar.append("Nome: "+ paciente.getNome()+" ");
-						txtMostar.append("Sexo: "+ paciente.getSexo()+" ");
-						txtMostar.append("Rua: "+ paciente.getRua()+" ");
-						txtMostar.append("Numero: "+ paciente.getNumero()+" ");
-						txtMostar.append("Comple: "+ paciente.getComplemento()+" ");
-						txtMostar.append("Cidade: "+ paciente.getCidade()+" ");
-						txtMostar.append("UF: "+ paciente.getUf()+" ");
-						txtMostar.append("Bairro: "+ paciente.getBairro()+" ");
-						txtMostar.append("DataNasc: "+ formatDate.format(date)+" ");
-						txtMostar.append("Cel: "+ paciente.getCelular());
-						txtMostar.append("Email: "+ paciente.getEmail());
-						
-						
-						
+					if (lista != null) {
+						DefaultTableModel model = (DefaultTableModel) table.getModel();
+						for (Paciente paciente : lista) {
+							formatDate = new SimpleDateFormat("dd/MM/yyyy");
+							formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
+							Date date = formatDateSql.parse(paciente.getDataNasc());
+							model.addRow(new Object[] { paciente.getCpf(), paciente.getNome(), paciente.getSexo(),
+									paciente.getRua(), paciente.getNumero(), paciente.getComplemento(),
+									paciente.getCidade(), paciente.getUf(), paciente.getBairro(),
+									formatDate.format(date), paciente.getCelular(), paciente.getEmail() });
+						}
+
+					}
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Erro ao Listar na Tela!!!\n" + e.getMessage());
+
 				}
-				}
-				catch(Exception e) {
-					JOptionPane.showMessageDialog(null, "Erro ao Listar na Tela!!!\n"+ e.getMessage());
-					
-				}
-				
-				
-				
-				
-				
-				//===========================================
+
+				// ===========================================
 			}
 		});
 		btnListar.setToolTipText("Listar");
@@ -554,19 +531,12 @@ public class TelaPaciente extends JFrame {
 		btnListar.setIcon(iconListar);
 		btnListar.setBounds(426, 351, 89, 87);
 		contentPane.add(btnListar);
-		
-		txtMostar = new TextArea();
-		txtMostar.setFocusable(false);
-		txtMostar.setFocusTraversalKeysEnabled(false);
-		txtMostar.setEditable(false);
-		txtMostar.setBounds(10, 153, 621, 192);
-		contentPane.add(txtMostar);
-		
+
 		btnLimpar = new JButton();
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//=============================================
-				String t=null;
+				// =============================================
+				String t = null;
 				txtCPF.setText(t);
 				txtNome.setText(t);
 				cbmSexo.setSelectedIndex(0);
@@ -579,9 +549,9 @@ public class TelaPaciente extends JFrame {
 				txtDta.setText(t);
 				txtCelular.setText(t);
 				txtEmail.setText(t);
-				txtPass.setText(t);	
-				
-				//=============================================
+				txtPass.setText(t);
+
+				// =============================================
 			}
 		});
 		btnLimpar.setToolTipText("Limpar");
@@ -590,16 +560,31 @@ public class TelaPaciente extends JFrame {
 		btnLimpar.setIcon(iconLimpar);
 		btnLimpar.setBounds(525, 351, 89, 87);
 		contentPane.add(btnLimpar);
-		
+
 		txtNumero = new JTextField();
 		txtNumero.setBounds(393, 49, 86, 20);
 		contentPane.add(txtNumero);
 		txtNumero.setColumns(10);
-		
+
 		lblNumero = new JLabel("Numero:");
 		lblNumero.setBounds(335, 52, 63, 14);
 		contentPane.add(lblNumero);
-		
-		
+
+		scrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setBounds(10, 152, 629, 187);
+		contentPane.add(scrollPane);
+
+		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"CPF", "Nome", "Sexo", "Rua", "Numero", "Complemento", "Cidade", "UF", "Bairro", "Data Nasc", "Celular", "E-mail"
+			}
+		));
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		scrollPane.setViewportView(table);
+
 	}
 }
