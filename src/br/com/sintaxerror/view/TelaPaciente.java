@@ -135,6 +135,7 @@ public class TelaPaciente extends JFrame {
 					pacientedao = new PacienteDAO();
 					if(pacientedao.consultar(txtCPF.getText()) != null) {
 						JOptionPane.showMessageDialog(null, "Paciente com este CPF ja Cadastrado!");
+						
 					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -158,6 +159,15 @@ public class TelaPaciente extends JFrame {
 		contentPane.add(txtCPF);
 
 		txtNome = new JTextField();
+		txtNome.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(c== KeyEvent.VK_ENTER && !txtNome.getText().equals("")) {
+					cbmSexo.requestFocus();
+				}
+			}
+		});
 		txtNome.setBounds(274, 24, 252, 20);
 		contentPane.add(txtNome);
 		txtNome.setColumns(10);
@@ -172,6 +182,15 @@ public class TelaPaciente extends JFrame {
 		contentPane.add(lblSexo);
 
 		cbmSexo = new JComboBox();
+		cbmSexo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(c== KeyEvent.VK_ENTER) {
+					txtRua.requestFocus();
+				}
+			}
+		});
 		cbmSexo.setModel(new DefaultComboBoxModel(new String[] { "M", "F" }));
 		cbmSexo.setBounds(585, 24, 46, 20);
 		contentPane.add(cbmSexo);
@@ -181,6 +200,15 @@ public class TelaPaciente extends JFrame {
 		contentPane.add(lblRua);
 
 		txtRua = new JTextField();
+		txtRua.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(c== KeyEvent.VK_ENTER && !txtRua.getText().equals("")) {
+					txtNumero.requestFocus();
+				}
+			}
+		});
 		txtRua.setBounds(83, 49, 239, 20);
 		contentPane.add(txtRua);
 		txtRua.setColumns(10);
@@ -190,6 +218,15 @@ public class TelaPaciente extends JFrame {
 		contentPane.add(lblCidade);
 
 		txtCidade = new JTextField();
+		txtCidade.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(c== KeyEvent.VK_ENTER && !txtCidade.getText().equals("")) {
+					cbmUF.requestFocus();
+				}
+			}
+		});
 		txtCidade.setBounds(83, 74, 200, 20);
 		contentPane.add(txtCidade);
 		txtCidade.setColumns(10);
@@ -199,6 +236,15 @@ public class TelaPaciente extends JFrame {
 		contentPane.add(lblComplemento);
 
 		txtComple = new JTextField();
+		txtComple.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(c== KeyEvent.VK_ENTER) {
+					txtCidade.requestFocus();
+				}
+			}
+		});
 		txtComple.setBounds(543, 49, 86, 20);
 		contentPane.add(txtComple);
 		txtComple.setColumns(10);
@@ -208,7 +254,17 @@ public class TelaPaciente extends JFrame {
 		contentPane.add(lblUf);
 
 		cbmUF = new JComboBox();
-		cbmUF.setModel(new DefaultComboBoxModel(new String[] { "UF", "SP" }));
+		cbmUF.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(c== KeyEvent.VK_ENTER && cbmUF.getSelectedIndex() != 0) {
+					txtBairro.requestFocus();
+				}
+			}
+		});
+		cbmUF.setModel(new DefaultComboBoxModel(new String[] { "UF", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS",
+				"MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
 		cbmUF.setBounds(327, 74, 46, 20);
 		contentPane.add(cbmUF);
 
@@ -217,6 +273,15 @@ public class TelaPaciente extends JFrame {
 		contentPane.add(lblBairro);
 
 		txtBairro = new JTextField();
+		txtBairro.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(c== KeyEvent.VK_ENTER && !txtBairro.getText().equals("")) {
+					txtDta.requestFocus();
+				}
+			}
+		});
 		txtBairro.setBounds(440, 74, 191, 20);
 		contentPane.add(txtBairro);
 		txtBairro.setColumns(10);
@@ -236,6 +301,9 @@ public class TelaPaciente extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
+				if(c== KeyEvent.VK_ENTER && !txtDta.getText().equals("  /  /    ")) {
+					txtCelular.requestFocus();
+				}
 				if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
 					e.consume();
 				}
@@ -259,6 +327,9 @@ public class TelaPaciente extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
+				if(c== KeyEvent.VK_ENTER && !txtCelular.getText().equals("(  )     -    ")) {
+					txtEmail.requestFocus();
+				}
 				if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
 					e.consume();
 				}
@@ -272,6 +343,15 @@ public class TelaPaciente extends JFrame {
 		contentPane.add(lblEmail);
 
 		txtEmail = new JTextField();
+		txtEmail.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(c== KeyEvent.VK_ENTER && !txtEmail.getText().equals("")) {
+					txtPass.requestFocus();
+				}
+			}
+		});
 		txtEmail.setBounds(82, 124, 296, 20);
 		contentPane.add(txtEmail);
 		txtEmail.setColumns(10);
@@ -332,6 +412,12 @@ public class TelaPaciente extends JFrame {
 					}
 					if (txtNumero.getText().equals("")) {
 						JOptionPane.showMessageDialog(null, "Preencher NÚMERO Válido!!!");
+						return;
+					}
+					
+					pacientedao = new PacienteDAO();
+					if(pacientedao.consultar(txtCPF.getText()) != null) {
+						JOptionPane.showMessageDialog(null, "Paciente com este CPF ja Cadastrado!!!");
 						return;
 					}
 					paciente = new Paciente();
@@ -581,6 +667,15 @@ public class TelaPaciente extends JFrame {
 		contentPane.add(btnLimpar);
 
 		txtNumero = new JTextField();
+		txtNumero.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if(c== KeyEvent.VK_ENTER && !txtNumero.getText().equals("")) {
+					txtComple.requestFocus();
+				}
+			}
+		});
 		txtNumero.setBounds(393, 49, 86, 20);
 		contentPane.add(txtNumero);
 		txtNumero.setColumns(10);
