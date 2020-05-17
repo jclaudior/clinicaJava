@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import br.com.sintaxerror.dao.DentistaDAO;
+import br.com.sintaxerror.dao.PacienteDAO;
 import br.com.sintaxerror.model.Dentista;
 
 import javax.swing.JLabel;
@@ -225,6 +226,22 @@ public class TelaDentista extends JFrame {
 		contentPane.add(btnConsultar);
 		
 		btnExcluir = new JButton();
+		btnExcluir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//=========================
+				try {
+					dentistadao = new DentistaDAO();
+					dentistadao.excluir(Integer.parseInt(txtCod.getText()));
+					JOptionPane.showMessageDialog(null, "Paciente excluído com sucesso!!!");
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(null, "Erro ao excluir paciente!!!\n" + e1.getMessage());
+
+				}
+				
+				
+				//=========================
+			}
+		});
 		btnExcluir.setToolTipText("Excluir");
 		ImageIcon iconExcluir = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/excluir.png"));
 		iconExcluir.setImage(iconExcluir.getImage().getScaledInstance(50, 50, 50));
