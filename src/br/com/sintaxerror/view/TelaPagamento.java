@@ -172,7 +172,7 @@ public class TelaPagamento extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"Código", "CPF", "Nome", "Data", "Valor", "Form Pagamento"
+				"Código", "CPF", "Nome", "Data", "Valor", "Forma de Pagamento"
 			}
 		));
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -236,20 +236,25 @@ public class TelaPagamento extends JFrame {
 					PacienteDAO pacienteDAO = new PacienteDAO();
 					paciente = pacienteDAO.consultar(txtCPF.getText());
 					
-					Date dateNow = new Date(System.currentTimeMillis());
+					JOptionPane.showMessageDialog(null, "Debug 1");
 					formatDate = new SimpleDateFormat("dd/MM/yyyy");
 					formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
 					Date date = formatDate.parse(txtDta.getText());
 					
+					JOptionPane.showMessageDialog(null, "Debug 2");
 					pagamento = new Pagamento();
 					pagamento.setCodPagamento(Integer.parseInt(txtCod.getText()));
+					JOptionPane.showMessageDialog(null, "Debug 3");
 					
 					pagamento.setDia(formatDateSql.format(date));
 					pagamento.setValor(Double.parseDouble(txtValor.getText()));
 					pagamento.setFormaPagamento((String)cbmFormPag.getSelectedItem());
+					JOptionPane.showMessageDialog(null, "Debug 4");
 					
-					pagamentoDAO = new PagamentoDAO();
-					pagamentoDAO.salvar(pagamento);
+					pagamento.setPaciente(paciente);
+					pagamentoDAO.alterar(pagamento);
+					
+					JOptionPane.showMessageDialog(null, "Debug 5");
 					JOptionPane.showMessageDialog(null, "Alterado com Sucesso!");
 
 				} catch (Exception e) {
@@ -272,15 +277,16 @@ public class TelaPagamento extends JFrame {
 					
 					pagamento = new Pagamento();
 					pagamentoDAO = new PagamentoDAO();
-					pagamento = pagamentoDAO.consultar(txtCPF.getText());
+					pagamento = pagamentoDAO.consultar(Integer.parseInt(txtCod.getText()));
 					
-					txtCod.setText(String.valueOf(pagamento.getCodPagamento()));
 					lblNome.setText(pagamento.getPaciente().getNome());
+					txtCPF.setText(pagamento.getPaciente().getCpf());
 					
 					formatDate = new SimpleDateFormat("dd/MM/yyyy");
 					formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
 					Date date = formatDateSql.parse(pagamento.getDia());
 					txtDta.setText(formatDate.format(date));
+					
 					txtValor.setText(String.valueOf(pagamento.getValor()));
 					cbmFormPag.setSelectedItem(pagamento.getFormaPagamento());
 
@@ -377,6 +383,7 @@ public class TelaPagamento extends JFrame {
 				txtValor.setText(null);
 				lblNome.setText(null);
 				cbmFormPag.setSelectedIndex(0);
+				DefaultTableModel model = (DefaultTableModel)table.getModel(); model.setNumRows(0);
 				txtCod.requestFocus();
 			}
 		});
