@@ -6,7 +6,13 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import br.com.sintaxerror.dao.DentistaDAO;
+import br.com.sintaxerror.model.Dentista;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -15,6 +21,9 @@ import java.awt.Button;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.DefaultComboBoxModel;
 
 public class TelaDentista extends JFrame {
 
@@ -33,7 +42,8 @@ public class TelaDentista extends JFrame {
 	private JButton btnExcluir;
 	private JButton btnListar;
 	private JButton btnLimpar;
-
+	private Dentista dentista;
+	private DentistaDAO dentistadao;
 	/**
 	 * Launch the application.
 	 */
@@ -90,6 +100,7 @@ public class TelaDentista extends JFrame {
 		contentPane.add(lblEspecialidade);
 		
 		cbmEsp = new JComboBox();
+		cbmEsp.setModel(new DefaultComboBoxModel(new String[] {"clareamento dental\t", "implante dentario", "dor de dente", "ortodontia", "endodontia", "protese dentaria", "aparelho ortodontico", "periodontia", "tratamento de canal", "odontopediatria", "aparelho dentario", "protese", "implante", "aparelho de dente", "aparelho dental", "dentes de porcelana", "dentadura", "clareamento", "protese fixa"}));
 		cbmEsp.setBounds(95, 61, 446, 22);
 		contentPane.add(cbmEsp);
 		
@@ -98,6 +109,44 @@ public class TelaDentista extends JFrame {
 		contentPane.add(txtMostrar);
 		
 		btnCadastrar = new JButton();
+		btnCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//============================
+				try {
+					if (txtCod.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Instira um Codigo válido!");
+						return;
+					}
+					if (txtNome.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Instira um nome válido!");
+						return;
+					}
+			
+					if (cbmEsp.getSelectedIndex() == 0){
+						JOptionPane.showMessageDialog(null, "Escolha a especialidade válida!");
+					}
+				
+					dentistadao  = new DentistaDAO();
+					if (dentistadao.consultar(Integer.parseInt(txtCod.getText())) !=null) {
+				JOptionPane.showMessageDialog(null, "Código cadastrado, insira um novo. ");
+					}
+				
+					dentista = new Dentista ();
+					dentista.setCodDentista(Integer.parseInt(txtCod.getText()));
+					dentista.setNomeDentista(txtNome.getText());
+					dentista.setEspecialidade(String.valueOf(cbmEsp.getSelectedItem()));
+				
+					
+					dentistadao = new DentistaDAO();
+					dentistadao.salvar(dentista);
+					JOptionPane.showMessageDialog(null, "Dados salvos com sucesso!");
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Erro ao gravar o dentista!\n" + e.getMessage());
+				}
+				
+				//===========================
+			}
+		});
 		btnCadastrar.setToolTipText("Cadastrar");
 		ImageIcon iconSalvar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/salvar.png"));
 		iconSalvar.setImage(iconSalvar.getImage().getScaledInstance(50, 50, 50));
@@ -106,6 +155,37 @@ public class TelaDentista extends JFrame {
 		contentPane.add(btnCadastrar);
 		
 		btnAlterar = new JButton();
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					if (txtCod.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Instira um Codigo válido!");
+						return;
+					}
+					if (txtNome.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Instira um nome válido!");
+						return;
+					}
+			
+					if (cbmEsp.getSelectedIndex() == 0){
+						JOptionPane.showMessageDialog(null, "Escolha a especialidade válida!");
+					}
+				
+				
+					dentista = new Dentista ();
+					dentista.setCodDentista(Integer.parseInt(txtCod.getText()));
+					dentista.setNomeDentista(txtNome.getText());
+					dentista.setEspecialidade(String.valueOf(cbmEsp.getSelectedItem()));
+				
+					
+					dentistadao = new DentistaDAO();
+					dentistadao.alterar(dentista);
+					JOptionPane.showMessageDialog(null, "Dados alterados com sucesso!");
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Erro ao alterar o dentista!\n" + e.getMessage());
+				}
+			}
+		});
 		btnAlterar.setToolTipText("Alterar");
 		ImageIcon iconAlterar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/alterar.png"));
 		iconAlterar.setImage(iconAlterar.getImage().getScaledInstance(50, 50, 50));
