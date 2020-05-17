@@ -157,6 +157,7 @@ public class TelaDentista extends JFrame {
 		btnAlterar = new JButton();
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//===================
 				try {
 					if (txtCod.getText().equals("")) {
 						JOptionPane.showMessageDialog(null, "Instira um Codigo válido!");
@@ -184,6 +185,7 @@ public class TelaDentista extends JFrame {
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Erro ao alterar o dentista!\n" + e.getMessage());
 				}
+				//=================
 			}
 		});
 		btnAlterar.setToolTipText("Alterar");
@@ -194,6 +196,27 @@ public class TelaDentista extends JFrame {
 		contentPane.add(btnAlterar);
 		
 		btnConsultar = new JButton();
+		btnConsultar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//===============================
+				try {
+					dentista = new Dentista();
+					dentistadao = new DentistaDAO();
+					dentista = dentistadao.consultar(Integer.parseInt(txtCod.getText()));
+					txtNome.setText(dentista.getNomeDentista());
+					cbmEsp.setSelectedItem(dentista.getEspecialidade());
+					
+				} catch (Exception e1) {
+					
+					JOptionPane.showMessageDialog(null, "Erro ao realizar a consulta!");
+				}
+				
+				
+				
+				
+				//===============================
+			}
+		});
 		btnConsultar.setToolTipText("Consultar");
 		ImageIcon iconConsultar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/consultar.png"));
 		iconConsultar.setImage(iconConsultar.getImage().getScaledInstance(50, 50, 50));
