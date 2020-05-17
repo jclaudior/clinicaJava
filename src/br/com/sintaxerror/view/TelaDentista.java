@@ -10,9 +10,11 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import br.com.sintaxerror.dao.ConsultaDAO;
 import br.com.sintaxerror.dao.DentistaDAO;
 import br.com.sintaxerror.dao.PacienteDAO;
 import br.com.sintaxerror.dao.PagamentoDAO;
+import br.com.sintaxerror.model.Consulta;
 import br.com.sintaxerror.model.Dentista;
 import br.com.sintaxerror.model.Paciente;
 import br.com.sintaxerror.model.Pagamento;
@@ -102,6 +104,9 @@ public class TelaDentista extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
+				if (c == KeyEvent.VK_ENTER) {
+					consultaCodigo();
+				}
 				if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
 					e.consume();
 				}
@@ -330,4 +335,43 @@ public class TelaDentista extends JFrame {
 		btnLimpar.setBounds(458, 255, 83, 74);
 		contentPane.add(btnLimpar);
 	}
+	
+	public void consultaCodigo() {
+		if (txtCod.getText().equals("")) {
+			try {
+				dentistadao = new DentistaDAO();
+				int id = dentistadao.lastId();
+				if (id != 0) {
+					id++;
+					txtCod.setText(String.valueOf(id));
+					txtNome.requestFocus();
+				} else {
+					txtCod.setText("1");
+					txtNome.requestFocus();
+				}
+
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, "Erro ao consultar Ultimo ID!\n" + e1.getMessage());
+			}
+		} else {
+			try {
+				dentistadao = new DentistaDAO();
+				dentista = new Dentista();
+				dentista = dentistadao.consultar(Integer.parseInt(txtCod.getText()));
+				if (dentista != null) {
+					JOptionPane.showMessageDialog(null, "Codigo do dentista ja Cadastrado!");
+					txtCod.setText(null);
+					txtCod.requestFocus();
+
+				}else {
+					txtNome.requestFocus();
+				}
+
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null,
+						"Erro ao Consultar Codigo do dentista ja Existente!\n" + e1.getMessage());
+			}
+		}
+	}
+	
 }

@@ -134,6 +134,9 @@ public class TelaPagamento extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
+				if (c == KeyEvent.VK_ENTER) {
+					consultaCodigo();
+				}
 				if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
 					e.consume();
 				}
@@ -482,5 +485,43 @@ public class TelaPagamento extends JFrame {
 		btnLimpar.setIcon(iconLimpar);
 		btnLimpar.setBounds(584, 181, 91, 81);
 		contentPane.add(btnLimpar);
+	}
+	
+	public void consultaCodigo() {
+		if (txtCod.getText().equals("")) {
+			try {
+				pagamentoDAO = new PagamentoDAO();
+				int id = pagamentoDAO.lastId();
+				if (id != 0) {
+					id++;
+					txtCod.setText(String.valueOf(id));
+					txtCPF.requestFocus();
+				} else {
+					txtCod.setText("1");
+					txtCPF.requestFocus();
+				}
+
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, "Erro ao consultar Ultimo ID!\n" + e1.getMessage());
+			}
+		} else {
+			try {
+				pagamentoDAO = new PagamentoDAO();
+				pagamento = new Pagamento();
+				pagamento = pagamentoDAO.consultar(Integer.parseInt(txtCod.getText()));
+				if (pagamento != null) {
+					JOptionPane.showMessageDialog(null, "Codigo de pagamento ja Cadastrado!");
+					txtCod.setText(null);
+					txtCod.requestFocus();
+
+				}else {
+					txtCPF.requestFocus();
+				}
+
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null,
+						"Erro ao Consultar Codigo de pagamento ja Existente!\n" + e1.getMessage());
+			}
+		}
 	}
 }

@@ -219,4 +219,23 @@ public class PagamentoDAO {
 			throw new Exception(e.getMessage());
 		}
 	}
+	
+	public int lastId() throws Exception{
+		try {
+			String sql = "SELECT * FROM CAD_PAG ORDER BY COD_PAG DESC LIMIT 1";
+			
+			st = con.prepareStatement(sql);
+			
+			rs = st.executeQuery();
+			int id = 0;
+			while (rs.next()) {
+				id = rs.getInt("COD_PAG");
+				
+			}
+			return id;
+		}
+		catch(Exception e) {
+			throw new Exception();
+		}
+	}
 }

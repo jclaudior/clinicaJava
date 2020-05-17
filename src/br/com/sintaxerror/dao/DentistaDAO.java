@@ -123,4 +123,23 @@ public class DentistaDAO {
 			throw new Exception(e.getMessage());
 		}
 	}
+	
+	public int lastId() throws Exception{
+		try {
+			String sql = "SELECT * FROM CAD_DENTISTA ORDER BY COD_DENTISTA DESC LIMIT 1";
+			
+			st = con.prepareStatement(sql);
+			
+			rs = st.executeQuery();
+			int id = 0;
+			while (rs.next()) {
+				id = rs.getInt("COD_DENTISTA");
+				
+			}
+			return id;
+		}
+		catch(Exception e) {
+			throw new Exception();
+		}
+	}
 }
