@@ -37,6 +37,8 @@ import br.com.sintaxerror.model.Consulta;
 import br.com.sintaxerror.model.Dentista;
 import br.com.sintaxerror.model.Paciente;
 import br.com.sintaxerror.model.Pagamento;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class TelaPagamento extends JFrame {
 
@@ -150,6 +152,23 @@ public class TelaPagamento extends JFrame {
 			JOptionPane.showMessageDialog(null, "Erro na mascara CPF\n");
 		}
 		txtCPF = new JFormattedTextField(ftmCpf);
+		txtCPF.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				try {
+					PacienteDAO pacienteDAO = new PacienteDAO();
+					Paciente paciente = new Paciente();
+					paciente = pacienteDAO.consultar(txtCPF.getText());
+					if(paciente != null) {
+						lblNome.setText(paciente.getNome());
+					}else {
+						JOptionPane.showMessageDialog(null, "Paciente não cadastrado\n");
+					}
+				}catch(Exception e) {
+					JOptionPane.showMessageDialog(null, "Erro ao consultar paciente \n");
+				}
+			}
+		});
 		txtCPF.setBounds(239, 48, 98, 17);
 		contentPane.add(txtCPF);
 		
