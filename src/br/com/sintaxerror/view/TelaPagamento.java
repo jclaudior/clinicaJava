@@ -211,6 +211,31 @@ public class TelaPagamento extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					
+					if (txtCod.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preencher Codigo do Pagamento!");
+						return;
+					}
+					if (txtCPF.getText().equals("   .   .   -  ")) {
+						JOptionPane.showMessageDialog(null, "Preencher CPF Paciente!");
+						return;
+					}
+					if (txtDta.getText().equals("  /  /    ")) {
+						JOptionPane.showMessageDialog(null, "Preencher Data Consulta!");
+						return;
+					}
+					if (txtDta.getText().equals("00/00/0000")) {
+						JOptionPane.showMessageDialog(null, "Data Invalida!");
+						return;
+					}
+					if (txtValor.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preencher Valor!");
+						return;
+					}
+					if (cbmFormPag.getSelectedItem().equals("Selecione uma Opçao")) {
+						JOptionPane.showMessageDialog(null, "Selecione um Metodo de Pagamento!");
+						return;
+					}
+					
 					pagamento = new Pagamento();
 					
 					Paciente paciente = new Paciente();
@@ -250,6 +275,31 @@ public class TelaPagamento extends JFrame {
 		btnAlterar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
+					
+					if (txtCod.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preencher Codigo do Pagamento!");
+						return;
+					}
+					if (txtCPF.getText().equals("   .   .   -  ")) {
+						JOptionPane.showMessageDialog(null, "Preencher CPF Paciente!");
+						return;
+					}
+					if (txtDta.getText().equals("  /  /    ")) {
+						JOptionPane.showMessageDialog(null, "Preencher Data Consulta!");
+						return;
+					}
+					if (txtDta.getText().equals("00/00/0000")) {
+						JOptionPane.showMessageDialog(null, "Data Invalida!");
+						return;
+					}
+					if (txtValor.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Preencher Valor!");
+						return;
+					}
+					if (cbmFormPag.getSelectedItem().equals("Selecione uma Opçao")) {
+						JOptionPane.showMessageDialog(null, "Selecione um Metodo de Pagamento!");
+						return;
+					}
 					
 					Paciente paciente = new Paciente();
 					PacienteDAO pacienteDAO = new PacienteDAO();
