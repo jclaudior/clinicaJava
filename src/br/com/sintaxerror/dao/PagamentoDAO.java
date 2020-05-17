@@ -77,7 +77,7 @@ public class PagamentoDAO {
 				String senha = rs.getString("SENHA_PACIENTE");
 				
 				
-				Paciente paciente = new Paciente(cpf2, nome, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha,cidade);
+				Paciente paciente = new Paciente(cpf2, nome, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha, cidade);
 				// dados pagamento
 				int cod = rs.getInt("COD_PAG");
 				double valor = rs.getDouble("VL_PAG");
@@ -151,7 +151,7 @@ public class PagamentoDAO {
 				String celular = rs.getString("CEL_PACIENTE");
 				String data = rs.getString("DTANASC_PACIENTE");
 				String email = rs.getString("EMAIL_PACIENTE");
-				String senha = rs.getString("SENHA_PACIENTEa");
+				String senha = rs.getString("SENHA_PACIENTE");
 				
 				
 				Paciente paciente = new Paciente(cpf2, nome, sexo, rua, numero, complemento, uf, bairro, celular, data, email, senha, cidade);
