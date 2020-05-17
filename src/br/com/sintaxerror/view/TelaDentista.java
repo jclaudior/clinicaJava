@@ -155,6 +155,37 @@ public class TelaDentista extends JFrame {
 		contentPane.add(btnCadastrar);
 		
 		btnAlterar = new JButton();
+		btnAlterar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					if (txtCod.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Instira um Codigo válido!");
+						return;
+					}
+					if (txtNome.getText().equals("")) {
+						JOptionPane.showMessageDialog(null, "Instira um nome válido!");
+						return;
+					}
+			
+					if (cbmEsp.getSelectedIndex() == 0){
+						JOptionPane.showMessageDialog(null, "Escolha a especialidade válida!");
+					}
+				
+				
+					dentista = new Dentista ();
+					dentista.setCodDentista(Integer.parseInt(txtCod.getText()));
+					dentista.setNomeDentista(txtNome.getText());
+					dentista.setEspecialidade(String.valueOf(cbmEsp.getSelectedItem()));
+				
+					
+					dentistadao = new DentistaDAO();
+					dentistadao.alterar(dentista);
+					JOptionPane.showMessageDialog(null, "Dados alterados com sucesso!");
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Erro ao alterar o dentista!\n" + e.getMessage());
+				}
+			}
+		});
 		btnAlterar.setToolTipText("Alterar");
 		ImageIcon iconAlterar = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/alterar.png"));
 		iconAlterar.setImage(iconAlterar.getImage().getScaledInstance(50, 50, 50));
