@@ -9,6 +9,7 @@ import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JMenu;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -115,6 +116,12 @@ public class TelaPrincipal extends JFrame {
 		menuBar.add(mnPagamento);
 		
 		mnSobre = new JMenu("Sobre");
+		mnSobre.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				JOptionPane.showMessageDialog(null, "Syntax Error\nGrupo:\nJoão Claudio Ribeiro\nFabiano Alves Guimarães\nAllan Marques Felix\nAugusto de Brito Caldas\nGuilherme Aparecido Viana\n\nUNICID 2ºB ADS");
+			}
+		});
 		menuBar.add(mnSobre);
 		
 		lblcopyrightSintaxError = new JLabel("@Copyright Sintax Error");

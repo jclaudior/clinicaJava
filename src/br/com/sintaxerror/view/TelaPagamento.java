@@ -39,6 +39,8 @@ import br.com.sintaxerror.model.Paciente;
 import br.com.sintaxerror.model.Pagamento;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class TelaPagamento extends JFrame {
 
@@ -128,11 +130,29 @@ public class TelaPagamento extends JFrame {
 		contentPane.add(lblFormaPag);
 		
 		txtCod = new JTextField();
+		txtCod.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
+					e.consume();
+				}
+			}
+		});
 		txtCod.setBounds(57, 45, 86, 20);
 		contentPane.add(txtCod);
 		txtCod.setColumns(10);
 		
 		txtValor = new JTextField();
+		txtValor.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
+					e.consume();
+				}
+			}
+		});
 		txtValor.setBounds(239, 107, 98, 20);
 		contentPane.add(txtValor);
 		txtValor.setColumns(10);

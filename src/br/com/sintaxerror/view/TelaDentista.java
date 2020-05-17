@@ -35,6 +35,8 @@ import java.util.Date;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class TelaDentista extends JFrame {
 
@@ -96,6 +98,15 @@ public class TelaDentista extends JFrame {
 		contentPane.add(lblCodigo);
 		
 		txtCod = new JTextField();
+		txtCod.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
+					e.consume();
+				}
+			}
+		});
 		txtCod.setBounds(58, 36, 86, 20);
 		contentPane.add(txtCod);
 		txtCod.setColumns(10);
