@@ -121,6 +121,15 @@ public class TelaDentista extends JFrame {
 		contentPane.add(lblNome);
 		
 		txtNome = new JTextField();
+		txtNome.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if (c == KeyEvent.VK_ENTER && !txtNome.getText().equals("")) {
+					cbmEsp.requestFocus();
+				}
+			}
+		});
 		txtNome.setBounds(197, 37, 344, 20);
 		contentPane.add(txtNome);
 		txtNome.setColumns(10);

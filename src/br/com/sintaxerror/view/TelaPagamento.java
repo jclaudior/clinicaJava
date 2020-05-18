@@ -151,6 +151,9 @@ public class TelaPagamento extends JFrame {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
+				if (c == KeyEvent.VK_ENTER && !txtValor.getText().equals("")) {
+					cbmFormPag.requestFocus();
+				}
 				if (!(Character.isDigit(c) || c == KeyEvent.VK_BACK_SPACE || c == KeyEvent.VK_DELETE)) {
 					e.consume();
 				}
@@ -166,6 +169,15 @@ public class TelaPagamento extends JFrame {
 			JOptionPane.showMessageDialog(null, "Erro na mascara Data Nascimento\n");
 		}
 		txtDta = new JFormattedTextField(ftmData);
+		txtDta.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if (c == KeyEvent.VK_ENTER && !txtDta.getText().equals("  /  /    ")) {
+					txtValor.requestFocus();
+				}
+			}
+		});
 		txtDta.setBounds(44, 110, 106, 20);
 		contentPane.add(txtDta);
 		
@@ -175,6 +187,15 @@ public class TelaPagamento extends JFrame {
 			JOptionPane.showMessageDialog(null, "Erro na mascara CPF\n");
 		}
 		txtCPF = new JFormattedTextField(ftmCpf);
+		txtCPF.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if (c == KeyEvent.VK_ENTER && !txtCPF.getText().equals("   .   .   -  ")) {
+					txtDta.requestFocus();
+				}
+			}
+		});
 		txtCPF.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent arg0) {
