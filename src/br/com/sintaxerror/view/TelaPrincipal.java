@@ -137,7 +137,7 @@ public class TelaPrincipal extends JFrame {
 		ImageIcon iconDentista = new ImageIcon(getClass().getResource("/br/com/sintaxerror/img/dentista.jpg"));
 		iconDentista.setImage(iconDentista.getImage().getScaledInstance(600, 300, 300));
 		btnNewButton.setIcon(iconDentista);
-		btnNewButton.setBounds(20, 65, 686, 342);
+		btnNewButton.setBounds(20, 65, 660, 342);
 		contentPane.add(btnNewButton);
 		
 	}
