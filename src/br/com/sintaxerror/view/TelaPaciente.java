@@ -113,6 +113,7 @@ public class TelaPaciente extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 
 		lblCpf = new JLabel("            CPF:");
 		lblCpf.setBounds(10, 27, 70, 14);

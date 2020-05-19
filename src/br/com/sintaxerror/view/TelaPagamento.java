@@ -98,6 +98,7 @@ public class TelaPagamento extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 		
 		lblPagamentos = new JLabel("Pagamentos");
 		lblPagamentos.setFont(new Font("Tahoma", Font.PLAIN, 16));

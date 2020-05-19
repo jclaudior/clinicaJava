@@ -110,6 +110,7 @@ public class TelaConsulta extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 
 		lblConsulta = new JLabel("Consulta");
 		lblConsulta.setFont(new Font("Tahoma", Font.PLAIN, 16));

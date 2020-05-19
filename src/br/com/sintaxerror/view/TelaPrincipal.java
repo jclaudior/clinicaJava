@@ -61,6 +61,7 @@ public class TelaPrincipal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
 		
 		menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 706, 21);

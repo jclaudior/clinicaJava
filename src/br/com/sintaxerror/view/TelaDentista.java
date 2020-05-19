@@ -89,6 +89,8 @@ public class TelaDentista extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setLocationRelativeTo(null);
+		setLocationRelativeTo(null);
 		
 		lblCadastroDentista = new JLabel("Cadastro Dentista");
 		lblCadastroDentista.setFont(new Font("Tahoma", Font.PLAIN, 16));
