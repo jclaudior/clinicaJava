@@ -68,7 +68,7 @@ public class TelaPagamento extends JFrame {
 	private MaskFormatter ftmCpf;// Atributo formatador para cpf
 	private JFormattedTextField txtCPF;
 	private JButton btnLimpar;
-	private Pagamento pagamento;// Inports Dao
+	private Pagamento pagamento;// Inports
 	private PagamentoDAO pagamentoDAO;// Inports Dao
 	private JScrollPane scrollPane;
 	private JTable table;
@@ -349,25 +349,20 @@ public class TelaPagamento extends JFrame {
 					PacienteDAO pacienteDAO = new PacienteDAO();
 					paciente = pacienteDAO.consultar(txtCPF.getText());
 					
-					JOptionPane.showMessageDialog(null, "Debug 1");
 					formatDate = new SimpleDateFormat("dd/MM/yyyy");
 					formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
 					Date date = formatDate.parse(txtDta.getText());
 					
-					JOptionPane.showMessageDialog(null, "Debug 2");
 					pagamento = new Pagamento();
 					pagamento.setCodPagamento(Integer.parseInt(txtCod.getText()));
-					JOptionPane.showMessageDialog(null, "Debug 3");
 					
 					pagamento.setDia(formatDateSql.format(date));
 					pagamento.setValor(Double.parseDouble(txtValor.getText()));
 					pagamento.setFormaPagamento((String)cbmFormPag.getSelectedItem());
-					JOptionPane.showMessageDialog(null, "Debug 4");
 					
 					pagamento.setPaciente(paciente);
 					pagamentoDAO.alterar(pagamento);
 					
-					JOptionPane.showMessageDialog(null, "Debug 5");
 					JOptionPane.showMessageDialog(null, "Alterado com Sucesso!");
 
 				} catch (Exception e) {
