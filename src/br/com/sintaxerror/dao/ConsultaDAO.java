@@ -56,7 +56,7 @@ public class ConsultaDAO {
 	
 	public void alterar(Consulta consulta) throws Exception {
 		try {
-			String sql = "UPDATE CAD_CONSULTA SET PACIENTE_CONSULTA = ?, DENTISTA_CONSULTA = ?, DTA_CONSULTA = ?, HORARIO_CONSULTA = ?, OBS_CONSULTA = ?, WHERE COD_CONSULTA = ?";
+			String sql = "UPDATE CAD_CONSULTA SET PACIENTE_CONSULTA = ?, DENTISTA_CONSULTA = ?, DTA_CONSULTA = ?, HORARIO_CONSULTA = ?, OBS_CONSULTA = ? WHERE COD_CONSULTA = ?";
 			
 			st = con.prepareStatement(sql);
 			

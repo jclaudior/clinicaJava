@@ -656,7 +656,7 @@ public class TelaPaciente extends JFrame {
 				txtCelular.setText(t);
 				txtEmail.setText(t);
 				txtPass.setText(t);
-
+				DefaultTableModel model = (DefaultTableModel)table.getModel(); model.setNumRows(0);
 				// =============================================
 			}
 		});

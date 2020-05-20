@@ -399,7 +399,6 @@ public class TelaConsulta extends JFrame {
 					formatDate = new SimpleDateFormat("dd/MM/yyyy");
 					formatDateSql = new SimpleDateFormat("yyyy-MM-dd");
 					Date date = formatDate.parse(txtData.getText());
-
 					if (date.before(dateNow)) {
 						JOptionPane.showMessageDialog(null, "Data deve ser maior que Atual!");
 						return;
@@ -418,17 +417,16 @@ public class TelaConsulta extends JFrame {
 						JOptionPane.showMessageDialog(null, "Dentista Não Cadastrado!");
 						return;
 					}
-
 					consulta = new Consulta();
 					consulta.setPaciente(paciente);
 					consulta.setDentista(dentista);
 					consulta.setCodConsulta(Integer.parseInt(txtCodigo.getText()));
-
 					consulta.setDia(formatDateSql.format(date));
 					consulta.setHorario(txtHora.getText());
 					consulta.setObs(txtObs.getText());
 					consultaDAO = new ConsultaDAO();
-					consultaDAO.salvar(consulta);
+					consultaDAO.alterar(consulta);
+					
 					JOptionPane.showMessageDialog(null, "Consulta Alterada com sucesso!");
 
 				} catch (Exception e) {
